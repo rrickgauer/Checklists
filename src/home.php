@@ -19,21 +19,22 @@ $user = getUser($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);  // get user data
 </head>
 <body>
   <?php include('navbar.php'); ?>
+
   <div class="container">
     <h1 class="text-center mt-5">Welcome <?php echo $user['name_first']; ?></h1>
 
     <?php
       // display alert if user attempted to create a checklist
-      if (isset($_SESSION['checklist-created'])) {
-        $created = $_SESSION['checklist-created'];
-        if ($created == true)
-          echo getAlert('Checklist created successfully.');
-        else
-          echo getAlert('Error when attempting to create checklist.', 'danger');
+    if (isset($_SESSION['checklist-created'])) {
+      $created = $_SESSION['checklist-created'];
+      if ($created == true)
+        echo getAlert('Checklist created successfully.');
+      else
+        echo getAlert('Error when attempting to create checklist.', 'danger');
 
         // clear out session variable
-        unset($_SESSION['checklist-created']);
-      }
+      unset($_SESSION['checklist-created']);
+    }
     ?>
 
     <!-- new checklist modal trigger button -->
@@ -61,7 +62,7 @@ $user = getUser($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);  // get user data
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class='bx bx-list-check'></i></span>
                   </div>
-                  <input type="text" class="form-control" name="new-checklist-name" required4>
+                  <input type="text" class="form-control" name="new-checklist-name" required>
                 </div>
               </div>
 
@@ -71,25 +72,8 @@ $user = getUser($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);  // get user data
         </div>
       </div>
     </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   </div>
+
 
   <?php include('footer.php'); ?>
   <script src="js/home-js.js"></script>

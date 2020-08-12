@@ -6,8 +6,8 @@ include('functions.php');
 // create new account
 if (isset($_POST['new-email'], $_POST['new-name-first'], $_POST['new-name-last'], $_POST['new-password'])) {
   // check if email is already taken
-  $checkEmail = getUserIdFromEmail($_POST['new-email']);
-  if ($checkEmail == null) {
+  $checkEmail = getUserIdFromEmail($_POST['new-email'])->fetchAll(PDO::FETCH_ASSOC);
+  if (count($checkEmail) == 1) {
     header('Location: login.php?create-account=failed&reason=email-exists');
     exit;
   }
@@ -17,7 +17,8 @@ if (isset($_POST['new-email'], $_POST['new-name-first'], $_POST['new-name-last']
 
   // if account creation was successful go to their home page
   if ($result->rowCount() == 1) {
-    $_SESSION['userID'] = getUserIdFromEmail($_POST['new-email']);
+    $result = getUserIdFromEmail($_POST['new-email'])->fetch(PDO::FETCH_ASSOC);
+    $_SESSION['userID'] = $result['id'];
     header('Location: home.php');
     exit;
   } 

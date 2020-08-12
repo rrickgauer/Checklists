@@ -18,6 +18,21 @@ include('functions.php');
 
     <h1 class="text-center mt-5 mb-5">Login to checklists</h1>
     
+
+    <?php
+      // error when creating account
+      if (isset($_GET['create-account']) && $_GET['create-account'] == 'failed') {
+        $reason = $_GET['reason'];
+
+        // email already exists.
+        if ($reason == 'email-exists')
+          echo getAlert('Error. Email is already taken. Please try again.', 'danger');
+        // unknown error
+        else if ($reason == 'unknown')
+          echo getAlert('There was an error creating your account. Please try again.', 'danger');
+      }
+    ?>
+
     <!-- create new account form -->
     <h4>Create account</h4>
     <form class="form-create-account" method="post" action="api.checklists.php">
@@ -68,6 +83,19 @@ include('functions.php');
       <input type="submit" class="btn btn-primary" value="Create account">
     </form>
 
+    <?php
+      // error when loggin in
+      if (isset($_GET['login']) && $_GET['login'] == 'failed') {
+        $reason = $_GET['reason'];
+
+        // email does not exist.
+        if ($reason == 'email-undetected')
+          echo getAlert('Email does not exist..', 'danger');
+        // email and password do not match
+        else if ($reason == 'email-password-match')
+          echo getAlert('Email and password do not match.', 'danger');
+      }
+    ?>
 
     <!-- login form -->
     <h4 class="mt-5">Login to your account</h4>

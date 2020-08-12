@@ -5,12 +5,12 @@ include('functions.php');
 
 // create new account
 if (isset($_POST['new-email'], $_POST['new-name-first'], $_POST['new-name-last'], $_POST['new-password'])) {
+  
   // check if email is already taken
-  $checkEmail = getUserIdFromEmail($_POST['new-email'])->fetchAll(PDO::FETCH_ASSOC);
-  if (count($checkEmail) == 1) {
+  if (doesEmailExist($_POST['new-email'])) {
     header('Location: login.php?create-account=failed&reason=email-exists');
     exit;
-  }
+  } 
 
   // insert the new user
   $result = insertUser($_POST['new-email'], $_POST['new-password'], $_POST['new-name-first'], $_POST['new-name-last']);
@@ -29,11 +29,6 @@ if (isset($_POST['new-email'], $_POST['new-name-first'], $_POST['new-name-last']
     exit;
   }
 }
-
-
-
-
-
 
 
 ?>

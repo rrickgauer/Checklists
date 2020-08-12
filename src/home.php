@@ -9,6 +9,8 @@ if (!isset($_SESSION['userID'])) {
 
 include('functions.php');
 
+$user = getUser($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);  // get user data
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -19,7 +21,7 @@ include('functions.php');
 <body>
   <?php include('navbar.php'); ?>
   <div class="container">
-    <h1 class="text-center mt-5">Checklists</h1>
+    <h1 class="text-center mt-5">Welcome <?php echo $user['name_first']; ?></h1>
 
 
   </div>

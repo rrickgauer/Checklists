@@ -1,11 +1,13 @@
 <?php 
 session_start();
-include('functions.php');
 
+// goto login.php if session is not set
 if (!isset($_SESSION['userID'])) {
   header('Location: login.php');
   exit;
 }
+
+include('functions.php');
 
 ?>
 <!DOCTYPE html>
@@ -18,7 +20,8 @@ if (!isset($_SESSION['userID'])) {
   <?php include('navbar.php'); ?>
   <div class="container">
     <h1 class="text-center mt-5">Checklists</h1>
-    
+
+
   </div>
 
   <?php include('footer.php'); ?>

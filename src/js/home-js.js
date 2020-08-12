@@ -1,5 +1,13 @@
 
 // main function
 $(document).ready(function() {
-  // code here
+  addEventListeners();
 });
+
+function addEventListeners() {
+  $(".btn-toggle-sidebar").on('click', toggleSidebar);
+}
+
+function toggleSidebar() {
+  $('.sidebar').toggleClass('active');
+}

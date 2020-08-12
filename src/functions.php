@@ -102,5 +102,38 @@ function isValidEmailAndPassword($email, $password) {
   return password_verify($password, $hash);
 }
 
+/******************************************************************************
+ * Returns a user's data
+ * 
+ * id
+ * name_first
+ * name_last
+ * date_created
+ * date_created_display_time
+ * date_created_display_date
+ ******************************************************************************/
+function getUser($id) {
+  $stmt = '
+  SELECT id,
+         email,
+         name_first,
+         name_last,
+         date_created,
+         DATE_FORMAT(date_created, "%l:%i %p") AS date_created_display_time,
+         DATE_FORMAT(date_created, "%c/%d/%Y") AS date_created_display_date
+  FROM   Users
+  WHERE  id = :id
+  LIMIT  1';
+
+  $sql = dbConnect()->prepare($stmt);
+
+  // sanitize and bind id
+  $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
+  $sql->bindParam(':id', $id, PDO::PARAM_INT);
+
+  $sql->execute();
+  return $sql;
+}
+
 
 ?>

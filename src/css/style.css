@@ -2,4 +2,36 @@ body {
   margin-bottm: 300px;
 }
 
+.wrapper {
+  display: flex;
+  width: 100%;
+  align-items: stretch;
+  align-content: stretch;
+}
+
+.sidebar {
+  transition: all 0.2s;
+  min-width: 250px;
+  max-width: 250px;
+  min-height: 100vh;
+  margin-left: -250px;
+}
+
+.sidebar.active {
+  margin-left: 0px;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    margin-left: 250px;
+  }
+
+  .sidebar.active {
+    margin-left: -250px;
+  }
+}
+.content {
+  width: 100%;
+}
+
 /*# sourceMappingURL=style.css.map */

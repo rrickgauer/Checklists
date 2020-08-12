@@ -74,4 +74,23 @@ function doesEmailExist($email) {
     return false;
 }
 
+
+// checks if email and password are a match
+function isValidEmailAndPassword($email, $password) {
+  $pdo = dbConnect();
+  $sql = $pdo->prepare('SELECT password FROM Users WHERE email=:email LIMIT 1');
+
+  // sanitize and bind username
+  $email = filter_var($email, FILTER_SANITIZE_EMAIL);
+  $sql->bindParam(':email', $email, PDO::PARAM_STR);
+  
+  $sql->execute();
+
+  // check if password matches the hashed password stored in the db
+  $hash = $sql->fetch(PDO::FETCH_ASSOC);
+  $hash = $hash['password'];
+  return password_verify($password, $hash);
+}
+
+
 ?>

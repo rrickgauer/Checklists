@@ -59,4 +59,18 @@ else if (isset($_POST['login-email'], $_POST['login-password'])) {
   }
 }
 
+// create new checklist
+else if (isset($_POST['new-checklist-name'])) {
+  $name = $_POST['new-checklist-name'];
+  $result = insertChecklist($_SESSION['userID'], $name);
+
+  if ($result->rowCount() == 1) 
+    $_SESSION['checklist-created'] = true;
+  else
+    $_SESSION['checklist-created'] = false;
+
+  header('Location: home.php');
+  exit;
+}
+
 ?>

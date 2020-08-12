@@ -1,0 +1,3 @@
+src/*.php linguist-language=PHP
+*.sql linguist-language=sql
+

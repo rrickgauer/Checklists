@@ -45,4 +45,24 @@ function insertUser($email, $password, $firstName, $lastName) {
   return $sql;
 }
 
+// return the id of a user based on their email
+function getUserIdFromEmail($email) {
+  $stmt = '
+  SELECT id
+  FROM   Users
+  WHERE  email = :email
+  LIMIT  1';
+
+  $sql = dbConnect()->prepare($stmt);
+
+  // email
+  $email = filter_var($email, FILTER_SANITIZE_STRING);
+  $sql->bindParam(':email', $email, PDO::PARAM_STR);
+
+  // get result and return the id
+  $sql->execute();
+  $result = $sql->fetch(PDO::FETCH_ASSOC);
+  return $result['id'];
+}
+
 ?>

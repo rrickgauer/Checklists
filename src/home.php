@@ -3,12 +3,12 @@
 <html>
 <head>
   <?php include('header.php'); ?>
-  <title>Template - home</title>
+  <title>Checklists</title>
 </head>
 <body>
   <?php include('navbar.php'); ?>
   <div class="container">
-    <h1 class="text-center mt-5">WChecklists</h1>
+    <h1 class="text-center mt-5">Checklists</h1>
 
 
     

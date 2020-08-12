@@ -61,8 +61,7 @@ function getUserIdFromEmail($email) {
 
   // get result and return the id
   $sql->execute();
-  $result = $sql->fetch(PDO::FETCH_ASSOC);
-  return $result['id'];
+  return $sql;
 }
 
 ?>

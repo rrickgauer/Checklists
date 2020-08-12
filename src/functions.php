@@ -64,4 +64,14 @@ function getUserIdFromEmail($email) {
   return $sql;
 }
 
+// returns true if email exists
+// returns false if email does not exist
+function doesEmailExist($email) {
+  $checkEmail = getUserIdFromEmail($email)->fetchAll(PDO::FETCH_ASSOC);
+  if (count($checkEmail) == 1)
+    return true;
+  else
+    return false;
+}
+
 ?>

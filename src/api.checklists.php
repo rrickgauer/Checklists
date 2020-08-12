@@ -2,10 +2,9 @@
 session_start();
 include('functions.php');
 
-
 // create new account
 if (isset($_POST['new-email'], $_POST['new-name-first'], $_POST['new-name-last'], $_POST['new-password'])) {
-  
+
   // check if email is already taken
   if (doesEmailExist($_POST['new-email'])) {
     header('Location: login.php?create-account=failed&reason=email-exists');
@@ -30,5 +29,33 @@ if (isset($_POST['new-email'], $_POST['new-name-first'], $_POST['new-name-last']
   }
 }
 
+// user log in
+else if (isset($_POST['login-email'], $_POST['login-password'])) {
+  $email = $_POST['login-email'];
+  $password = $_POST['login-password'];
+
+  // if email does not exist, go back to login page
+  if (!doesEmailExist($email)) {
+    header('Location: login.php?login=failed&reason=email-undetected');
+    exit;
+  }
+
+  // if email and password don't match, go back to login page
+  else if (!isValidEmailAndPassword($email, $password)) {
+    header('Location: login.php?login=failed&reason=email-password-match');
+    exit;
+  }
+
+  // successful login
+  else {
+    // set user id session variable
+    $result = getUserIdFromEmail($email)->fetch(PDO::FETCH_ASSOC);
+    $_SESSION['userID'] = $result['id'];
+
+    // go to user home page
+    header('Location: home.php');
+    exit;
+  }
+}
 
 ?>

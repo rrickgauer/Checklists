@@ -16,6 +16,16 @@ function dbConnect() {
   }
 }
 
+// prints out a bootstrap alert
+function getAlert($message, $alertType = 'success') {
+  return "
+  <div class=\"alert alert-$alertType alert-dismissible mt-5 mb-5 fade show\" role=\"alert\">
+    $message
+    <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">
+      <span aria-hidden=\"true\">&times;</span>
+    </button>
+  </div>";
+}
 
 
 // create new account

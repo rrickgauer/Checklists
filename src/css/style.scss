@@ -4,7 +4,7 @@ body {
 
 .wrapper {
    display: flex;
-   width: 100%;
+   // width: 100%;
    align-items: stretch;
    align-content: stretch;
 }
@@ -14,7 +14,10 @@ body {
    min-width: 250px;
    max-width: 250px;
    min-height: 100vh;
+   max-height: 100vh;
    margin-left: -250px;
+   overflow-y: auto;
+   overflow-x: hidden;
 
    .list-group-item-checklist {text-align: left;}
 }
@@ -35,4 +38,40 @@ body {
 
 .content {
   width: 100%;
+}
+
+
+#checklists-open {
+  display: flex;
+  overflow-x: auto;
+  flex-wrap: wrap;
+
+  .card-checklist .card-body {
+    resize: both;
+    overflow: hidden;
+  }
+
+
+  .input-group-new-item {
+    margin-bottom: 20px;
+  }
+
+
+  .item {
+    display: flex;
+    justify-content: space-between;
+
+    .right {
+      margin-left: 10px;
+    }
+    
+    .left {
+      display: flex;
+      align-items: baseline;
+
+      * {margin: 0px 5px;}
+    }
+  }
+
+
 }

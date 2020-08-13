@@ -8,6 +8,10 @@ $(document).ready(function() {
 
 function addEventListeners() {
   $(".btn-toggle-sidebar").on('click', toggleSidebar);
+
+  $(".sidebar").on('click', '.list-group-item-checklist', function() {
+    openChecklist(this);
+  }); 
 }
 
 function toggleSidebar() {
@@ -49,6 +53,26 @@ function getChecklistSidebarHtml(checklist) {
   return html;
 }
 
+
+// open a checklist
+function openChecklist(selector) {
+
+  var checklistID = $(selector).attr('data-checklist-id');
+
+}
+
+
+// get a checklist data
+function getChecklist(checklistID) {
+  var data = {
+    function: 'get-checklist',
+    id: checklistID,
+  }
+
+  $.get(API, data, function(response)) {
+    console.log(response);
+  }
+}
 
 
 

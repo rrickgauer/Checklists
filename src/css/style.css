@@ -4,7 +4,6 @@ body {
 
 .wrapper {
   display: flex;
-  width: 100%;
   align-items: stretch;
   align-content: stretch;
 }
@@ -14,7 +13,10 @@ body {
   min-width: 250px;
   max-width: 250px;
   min-height: 100vh;
+  max-height: 100vh;
   margin-left: -250px;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 .sidebar .list-group-item-checklist {
   text-align: left;
@@ -35,6 +37,33 @@ body {
 }
 .content {
   width: 100%;
+}
+
+#checklists-open {
+  display: flex;
+  overflow-x: auto;
+  flex-wrap: wrap;
+}
+#checklists-open .card-checklist .card-body {
+  resize: both;
+  overflow: hidden;
+}
+#checklists-open .input-group-new-item {
+  margin-bottom: 20px;
+}
+#checklists-open .item {
+  display: flex;
+  justify-content: space-between;
+}
+#checklists-open .item .right {
+  margin-left: 10px;
+}
+#checklists-open .item .left {
+  display: flex;
+  align-items: baseline;
+}
+#checklists-open .item .left * {
+  margin: 0px 5px;
 }
 
 /*# sourceMappingURL=style.css.map */

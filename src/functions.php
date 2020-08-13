@@ -193,4 +193,31 @@ function getChecklists($userID) {
   return $sql;
 }
 
+
+function getItems($checklistID) {
+
+  $stmt = '
+  SELECT Items.id,
+         Items.checklist_id,
+         Items.completed,
+         Items.date_created,
+         Items.date_modified,
+         Items.rank
+  FROM   Items
+  WHERE  Items.checklist_id = :checklistID
+  ORDER  BY Items.rank ASC';
+
+
+
+  $sql = dbConnect()->prepare($stmt);
+  $checklistID = filter_var($checklistID, FILTER_SANITIZE_NUMBER_INT);
+  $sql->bindParam(':checklistID', $checklistID, PDO::PARAM_INT);
+
+  $sql->execute();
+  return $sql;
+}
+
+
+
+
 ?>

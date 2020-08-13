@@ -24,6 +24,8 @@ $user = getUser($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);  // get user data
     <!-- checklist sidebar -->
     <div class="sidebar active">
 
+      <h6>Your checklists</h6>
+
       <!-- checklists go here -->
       <div class="list-group"></div>
     </div>
@@ -31,15 +33,77 @@ $user = getUser($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);  // get user data
     <!-- open checklists -->
     <div class="content">
       <div class="container-fluid">
-        <h1 class="text-center">Welcome <?php echo $user['name_first']; ?></h1>
-        <?php displayChecklistCreated() ?>
 
-        <button type="button" class="btn btn-secondary btn-toggle-sidebar">Toggle sidebar</button>
+        <div class="home-header mt-5 mb-5 mr-3 ml-3">
+          <h1 class="text-center">Welcome <?php echo $user['name_first']; ?></h1>
+          <?php displayChecklistCreated() ?>
 
-        <!-- new checklist modal trigger button -->
-        <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#modal-new-checklist">
-          New checklist
-        </button>
+          <button type="button" class="btn btn-secondary btn-toggle-sidebar">Toggle sidebar</button>
+
+          <!-- new checklist modal trigger button -->
+          <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#modal-new-checklist">
+            New checklist
+          </button>
+        </div>
+
+        
+        <div id="checklists-open">
+
+
+          <div class="card card-checklist" data-checklist-id="2">
+            <div class="card-header">
+              <h4>Checklist_Name</h4>
+            </div>
+            <div class="card-body">
+
+              <!-- input -->
+              <div class="input-group input-group-new-item">
+<!--                 <div class="input-group-prepend">
+                  <button class="btn btn-outline-secondary btn-add-item" type="button">
+                    <i class='bx bx-plus-circle'></i>
+                  </button>
+                </div>
+                <input type="text" class="form-control item-input-new">
+              </div>
+              
+              <div class="items">
+                <div class="item" data-item-id="232">
+                  <div class="left">
+                    <input class="item-checkbox" type="checkbox">
+                    <span class="item-content">This is the content of the item</span>
+                  </div>
+                  <div class="right">
+                    <div class="dropleft">
+                        <i class='bx bx-dots-horizontal-rounded' data-toggle="dropdown"></i>
+                      <div class="dropdown-menu">
+                        <button class="dropdown-item" type="button">Action</button>
+                      </div>
+                    </div>
+                  </div>
+                </div> -->
+              </div>
+
+            </div>
+            <div class="card-footer">
+              <button type="button" class="btn btn-sm btn-secondary">Action</button>
+            </div>
+          </div>
+
+
+
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
 
         <!-- new checklist modal -->
         <div class="modal fade" id="modal-new-checklist" tabindex="-1">

@@ -153,7 +153,42 @@ function insertChecklist($userID, $name) {
 
   $sql->execute();
   return $sql;
+}
 
+
+/*****************************************************************
+ * returns all user checklists
+ * 
+ * name
+ * date_created
+ * date_modified
+ * date_display_date
+ * date_display_time
+ * date_modified_date
+ * date_modified_time
+ * 
+******************************************************************/
+
+function getChecklists($userID) {
+  $stmt = '
+  SELECT Checklists.name,
+         Checklists.date_created,
+         Checklists.date_modified,
+         DATE_FORMAT(Checklists.date_created, "%c/%d/%Y")  AS date_created_display_date,
+         DATE_FORMAT(Checklists.date_created, "%l:%i %p")  AS date_created_display_time,
+         DATE_FORMAT(Checklists.date_modified, "%c/%d/%Y") AS date_modified_display_date,
+         DATE_FORMAT(Checklists.date_modified, "%l:%i %p") AS date_modified_display_time
+  FROM   Checklists
+  WHERE  user_id = :userID';
+
+  $sql = dbConnect()->prepare($stmt);
+
+  // filter and bind user id
+  $userID = filter_var($userID, FILTER_SANITIZE_NUMBER_INT);
+  $sql->bindParam(':userID', $userID, PDO::PARAM_INT);
+
+  $sql->execute();
+  return $sql;
 }
 
 ?>

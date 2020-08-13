@@ -159,6 +159,7 @@ function insertChecklist($userID, $name) {
 /*****************************************************************
  * returns all user checklists
  * 
+ * id
  * name
  * date_created
  * date_modified
@@ -171,7 +172,8 @@ function insertChecklist($userID, $name) {
 
 function getChecklists($userID) {
   $stmt = '
-  SELECT Checklists.name,
+  SELECT Checklists.id,
+         Checklists.name,
          Checklists.date_created,
          Checklists.date_modified,
          DATE_FORMAT(Checklists.date_created, "%c/%d/%Y")  AS date_created_display_date,

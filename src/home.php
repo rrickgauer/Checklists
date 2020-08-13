@@ -23,12 +23,9 @@ $user = getUser($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);  // get user data
   <div class="wrapper">
     <!-- checklist sidebar -->
     <div class="sidebar active">
-      <div class="list-group">
-        <button type="button" class="list-group-item">Dapibus ac facilisis in</button>
-        <button type="button" class="list-group-item">Morbi leo risus</button>
-        <button type="button" class="list-group-item">Porta ac consectetur ac</button>
-        <button type="button" class="list-group-item">Vestibulum at eros</button>
-      </div>
+
+      <!-- checklists go here -->
+      <div class="list-group"></div>
     </div>
 
     <!-- open checklists -->

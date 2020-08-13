@@ -73,4 +73,12 @@ else if (isset($_POST['new-checklist-name'])) {
   exit;
 }
 
+// retrieve user checklists
+else if (isset($_GET['function'], $_SESSION['userID']) && $_GET['function'] == 'get-checklists') {
+  $userID = $_SESSION['userID'];
+  $checklists = getChecklists($userID)->fetchAll(PDO::FETCH_ASSOC);
+  echo json_encode($checklists);
+  exit;
+}
+
 ?>

@@ -43,7 +43,7 @@ function displayChecklists(checklists) {
 // generates and returns the sidebar checklist html
 function getChecklistSidebarHtml(checklist) {
   var html = '';
-  html += '<button type="button" class="list-group-item" data-checklist-id="' + checklist.id + '">';
+  html += '<button type="button" class="list-group-item list-group-item-checklist" data-checklist-id="' + checklist.id + '">';
   html += checklist.name + '</button>';
 
   return html;

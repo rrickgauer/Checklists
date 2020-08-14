@@ -106,4 +106,23 @@ else if (isset($_POST['function'], $_POST['itemID'], $_POST['content'], $_POST['
 
 }
 
+
+// add item to a checklist
+else if (isset($_POST['function'], $_POST['checklistID'], $_POST['content']) && $_POST['function'] == 'add-item') {
+  $checklistID = $_POST['checklistID'];
+  $content = $_POST['content'];
+  $result = addItem($checklistID, $content);
+
+  // return that there was an error
+  if ($result->rowCount() != 1) {
+    echo 'error';
+    exit;
+  }
+
+  // return the most recent added item
+  $item = getLatestChecklistItem($checklistID)->fetch(PDO::FETCH_ASSOC);
+  echo json_encode($item);
+  exit;
+}
+
 ?>

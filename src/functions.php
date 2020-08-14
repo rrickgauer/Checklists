@@ -242,7 +242,7 @@ function updateItem($itemID, $content, $completed) {
 
   // filter and bind id
   $itemID = filter_var($itemID, FILTER_SANITIZE_NUMBER_INT);
-  $sql->bindParam(':itemID', $itemID, PDO::PARAM_STR);
+  $sql->bindParam(':itemID', $itemID, PDO::PARAM_INT);
 
   // filter and bind content
   $content = filter_var($content, FILTER_SANITIZE_STRING);
@@ -255,6 +255,79 @@ function updateItem($itemID, $content, $completed) {
   $sql->execute();
   return $sql;
 
+}
+
+
+function addItem($checklistID, $content) {
+
+  $stmt = '
+  INSERT INTO Items
+  (
+    checklist_id,
+    content,
+    date_created,
+    date_modified
+  )
+  VALUES
+  (
+    :checklistID,
+    :content,
+    NOW(),
+    NOW()
+  ) ';
+
+  $sql = dbConnect()->prepare($stmt);
+
+  // filter and bind checklist id
+  $itemID = filter_var($checklistID, FILTER_SANITIZE_NUMBER_INT);
+  $sql->bindParam(':checklistID', $checklistID, PDO::PARAM_INT);
+
+  // filter and bind content
+  $content = filter_var($content, FILTER_SANITIZE_STRING);
+  $sql->bindParam(':content', $content, PDO::PARAM_STR);
+
+  $sql->execute();
+  return $sql;
+}
+
+/********************************************************************
+ * Returns the most recent item that was added to a checklist
+ * 
+ * id
+ * checklist_id
+ * checklist_name
+ * completed
+ * content
+ * date_created
+ * date_modified
+ * rank
+ * 
+ ********************************************************************/
+function getLatestChecklistItem($checklistID) {
+  $stmt = '
+  SELECT Items.id,
+         Items.checklist_id,
+         Checklists.name AS checklist_name,
+         Items.completed,
+         Items.content,
+         Items.date_created,
+         Items.date_modified,
+         Items.rank
+  FROM   Items
+         LEFT JOIN Checklists
+                ON Items.checklist_id = Checklists.id
+  WHERE  Items.checklist_id = :checklistID
+  ORDER  BY Items.id DESC
+  LIMIT  1';
+
+  $sql = dbConnect()->prepare($stmt);
+
+  // filter and bind checklist id
+  $checklistID = filter_var($checklistID, FILTER_SANITIZE_NUMBER_INT);
+  $sql->bindParam(':checklistID', $checklistID, PDO::PARAM_INT);
+  $sql->execute();
+
+  return $sql;
 }
 
 

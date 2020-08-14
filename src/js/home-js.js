@@ -21,6 +21,18 @@ function addEventListeners() {
   $("#checklists-open").on('click', ".close-checklist", function() {
     closeChecklist(this);
   });
+
+  $("#checklists-open").on('click', ".btn-add-item", function() {
+    addItem(this);
+  });
+
+  // add item when enter key is hit
+  $("#checklists-open").on('keypress', ".item-input-new", function(e) {
+    if (e.keyCode == 13) {
+      e.preventDefault();
+      addItem(this);
+    }
+  });
 }
 
 function toggleSidebar() {
@@ -167,8 +179,8 @@ function getChecklistItemHtml(item) {
 
 // toggle an item's completed status
 function toggleItemComplete(checkbox) {
-  var item = $(checkbox).closest('.item');
-  var itemID = $(item).attr('data-item-id');
+  var item    = $(checkbox).closest('.item');
+  var itemID  = $(item).attr('data-item-id');
   var content = $(item).find('.item-content').text();
 
   // check if checkbox is checked
@@ -194,7 +206,27 @@ function toggleItemComplete(checkbox) {
 
 // close a checklist
 function closeChecklist(closeBtn) {
-  var item = $(closeBtn).closest('.card-checklist');
-  $(item).remove();
+  var checklist = $(closeBtn).closest('.card-checklist');
+  $(checklist).remove();
+}
+
+
+// add an item to a checklist
+function addItem(addItemBtn) {
+  var checklist   = $(addItemBtn).closest(".card-checklist");
+  var checklistID = $(checklist).attr('data-checklist-id');
+  var content     = $(checklist).find('.item-input-new').val();
+
+  var data = {
+    function: 'add-item',
+    checklistID: checklistID,
+    content: content,
+  }
+
+  $.post(API, data, function(response) {
+    var itemHtml = getChecklistItemHtml(JSON.parse(response));
+    $(checklist).find('.items').prepend(itemHtml);
+    $(checklist).find('.item-input-new').val('');
+  });
 }
 

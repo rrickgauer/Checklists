@@ -227,6 +227,32 @@ function getItems($checklistID) {
 }
 
 
+function updateItem($itemID, $content, $completed) {
+  $stmt = '
+  UPDATE Items
+  SET    content = :content,
+         completed = :completed
+  WHERE  id = :itemID';
+
+  $sql = dbConnect()->prepare($stmt);
+
+  // filter and bind id
+  $itemID = filter_var($itemID, FILTER_SANITIZE_NUMBER_INT);
+  $sql->bindParam(':itemID', $itemID, PDO::PARAM_STR);
+
+  // filter and bind content
+  $content = filter_var($content, FILTER_SANITIZE_STRING);
+  $sql->bindParam(':content', $content, PDO::PARAM_STR);
+
+  // filter and bind completed
+  $completed = filter_var($completed, FILTER_SANITIZE_STRING);
+  $sql->bindParam(':completed', $completed, PDO::PARAM_STR);
+
+  $sql->execute();
+  return $sql;
+
+}
+
 
 
 ?>

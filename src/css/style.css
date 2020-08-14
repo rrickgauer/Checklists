@@ -9,17 +9,17 @@ body {
 }
 
 .sidebar {
-  transition: all 0.2s;
   min-width: 250px;
-  max-width: 250px;
   min-height: 100vh;
   max-height: 100vh;
   margin-left: -250px;
   overflow-y: auto;
   overflow-x: hidden;
+  resize: horizontal;
 }
 .sidebar .list-group-item-checklist {
   text-align: left;
+  text-overflow: ellipsis;
 }
 
 .sidebar.active {
@@ -73,6 +73,9 @@ body {
 }
 #checklists-open .item .left * {
   margin: 0px 5px;
+}
+#checklists-open .item-completed .item-content {
+  text-decoration: line-through;
 }
 
 /*# sourceMappingURL=style.css.map */

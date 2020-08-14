@@ -124,9 +124,21 @@ function getChecklistFooterHtml() {
 
 
 function getChecklistItemHtml(item) {
-  var html = '<div class="item" data-item-id="';
+
+  var html = '';
+
+  if (item.completed == 'n')
+    html = '<div class="item" data-item-id="';
+  else
+    html = '<div class="item item-completed" data-item-id="';
+
   html += item.id + '">';
-  html += '<div class="left"><input class="item-checkbox" type="checkbox">';
+
+  if (item.completed == 'n')
+    html += '<div class="left"><input class="item-checkbox" type="checkbox">';
+  else
+    html += '<div class="left"><input class="item-checkbox" type="checkbox" checked>';
+  
   html += '<span class="item-content">' + item.content + '</span></div>';
   html += '<div class="right">';
   html += '<div class="dropleft">';

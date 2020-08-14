@@ -42,14 +42,19 @@ body {
 #checklists-open {
   display: flex;
   overflow-x: auto;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+}
+#checklists-open .checklists-wrapper {
+  position: absolute;
 }
 #checklists-open .card-checklist {
   margin: 20px;
+  min-width: 100px;
+  flex-shrink: 0;
 }
 #checklists-open .card-checklist .card-body {
   resize: both;
-  overflow: hidden;
+  overflow: auto;
 }
 #checklists-open .input-group-new-item {
   margin-bottom: 20px;

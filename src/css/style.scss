@@ -44,15 +44,22 @@ body {
 #checklists-open {
   display: flex;
   overflow-x: auto;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+
+
+  .checklists-wrapper {
+    position: absolute;
+  }
 
   .card-checklist {
     margin: 20px;
+    min-width: 100px;
+    flex-shrink: 0;
   }
 
   .card-checklist .card-body {
     resize: both;
-    overflow: hidden;
+    overflow: auto;
   }
 
 
@@ -77,6 +84,5 @@ body {
       * {margin: 0px 5px;}
     }
   }
-
-
 }
+

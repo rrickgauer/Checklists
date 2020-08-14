@@ -32,7 +32,6 @@ $user = getUser($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);  // get user data
 
     <!-- open checklists -->
     <div class="content">
-      <div class="container-fluid">
 
         <div class="home-header mt-5 mb-5 mr-3 ml-3">
           <h1 class="text-center">Welcome <?php echo $user['name_first']; ?></h1>
@@ -47,7 +46,10 @@ $user = getUser($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);  // get user data
         </div>
 
         <!-- open checklists -->
-        <div id="checklists-open"></div>
+        <div class="checklists-wrapper">
+          <div id="checklists-open"></div>
+        </div>
+        
 
 
         <!-- new checklist modal -->
@@ -81,7 +83,7 @@ $user = getUser($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);  // get user data
           </div>
         </div>
 
-      </div>
+    
     </div>
   </div>
 

@@ -198,6 +198,7 @@ function getChecklists($userID) {
  * 
  * id
  * checklist_id
+ * checklist_name
  * completed
  * content
  * date_created
@@ -209,12 +210,15 @@ function getItems($checklistID) {
   $stmt = '
   SELECT Items.id,
          Items.checklist_id,
+         Checklists.NAME AS checklist_name,
          Items.completed,
          Items.content,
          Items.date_created,
          Items.date_modified,
          Items.rank
   FROM   Items
+         LEFT JOIN Checklists
+                ON Items.checklist_id = Checklists.id
   WHERE  Items.checklist_id = :checklistID
   ORDER  BY Items.rank ASC';
 

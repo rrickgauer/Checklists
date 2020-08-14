@@ -50,6 +50,7 @@ body {
   display: flex;
   overflow-x: auto;
   flex-wrap: nowrap;
+  align-items: flex-start;
 
 
   .checklists-wrapper {
@@ -60,12 +61,19 @@ body {
     margin: 20px;
     min-width: 100px;
     flex-shrink: 0;
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .card-body {
+      resize: both;
+      overflow: auto;
+    }
   }
 
-  .card-checklist .card-body {
-    resize: both;
-    overflow: auto;
-  }
 
 
   .input-group-new-item {

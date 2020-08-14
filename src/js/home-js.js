@@ -17,6 +17,10 @@ function addEventListeners() {
   $("#checklists-open").on('click', ".item-checkbox", function() {
     toggleItemComplete(this);
   });
+
+  $("#checklists-open").on('click', ".close-checklist", function() {
+    closeChecklist(this);
+  });
 }
 
 function toggleSidebar() {
@@ -85,7 +89,7 @@ function displayChecklist(items) {
   var checklistID = items[0].checklist_id;
 
   // header
-  var html = getChecklistHeaderHtml(checklistID);
+  var html = getChecklistHeaderHtml(checklistID, items[0].checklist_name);
 
   // body
   for (var count = 0; count < size; count++) 
@@ -98,10 +102,14 @@ function displayChecklist(items) {
   $("#checklists-open").append(html);
 }
 
-function getChecklistHeaderHtml(checklistID) {
+function getChecklistHeaderHtml(checklistID, checklistName) {
   var html = '<div class="card card-checklist" data-checklist-id="';
   html += checklistID + '">';
-  html += '<div class="card-header"><h4>Checklist_Name</h4>';
+  html += '<div class="card-header"><h4>' + checklistName + '</h4>';
+
+  // close button
+  html += '<button type="button" class="close close-checklist"><span aria-hidden="true">&times;</span></button>';
+
   html += '</div><div class="card-body">';
   html += '<div class="input-group input-group-new-item">';
   html += '<div class="input-group-prepend">';
@@ -183,4 +191,10 @@ function toggleItemComplete(checkbox) {
   });
 
 } 
+
+// close a checklist
+function closeChecklist(closeBtn) {
+  var item = $(closeBtn).closest('.card-checklist');
+  $(item).remove();
+}
 

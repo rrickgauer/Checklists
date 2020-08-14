@@ -169,7 +169,6 @@ function insertChecklist($userID, $name) {
  * date_modified_time
  * 
 ******************************************************************/
-
 function getChecklists($userID) {
   $stmt = '
   SELECT Checklists.id,
@@ -194,20 +193,30 @@ function getChecklists($userID) {
 }
 
 
+/**********************************************************************
+ * Return a checklist's items
+ * 
+ * id
+ * checklist_id
+ * completed
+ * content
+ * date_created
+ * date_modified
+ * rank
+ * 
+***********************************************************************/
 function getItems($checklistID) {
-
   $stmt = '
   SELECT Items.id,
          Items.checklist_id,
          Items.completed,
+         Items.content,
          Items.date_created,
          Items.date_modified,
          Items.rank
   FROM   Items
   WHERE  Items.checklist_id = :checklistID
   ORDER  BY Items.rank ASC';
-
-
 
   $sql = dbConnect()->prepare($stmt);
   $checklistID = filter_var($checklistID, FILTER_SANITIZE_NUMBER_INT);

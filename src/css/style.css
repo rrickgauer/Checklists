@@ -44,6 +44,9 @@ body {
   overflow-x: auto;
   flex-wrap: wrap;
 }
+#checklists-open .card-checklist {
+  margin: 20px;
+}
 #checklists-open .card-checklist .card-body {
   resize: both;
   overflow: hidden;
@@ -54,6 +57,7 @@ body {
 #checklists-open .item {
   display: flex;
   justify-content: space-between;
+  margin: 10px;
 }
 #checklists-open .item .right {
   margin-left: 10px;

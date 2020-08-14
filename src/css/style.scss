@@ -46,6 +46,10 @@ body {
   overflow-x: auto;
   flex-wrap: wrap;
 
+  .card-checklist {
+    margin: 20px;
+  }
+
   .card-checklist .card-body {
     resize: both;
     overflow: hidden;
@@ -60,6 +64,7 @@ body {
   .item {
     display: flex;
     justify-content: space-between;
+    margin: 10px;
 
     .right {
       margin-left: 10px;

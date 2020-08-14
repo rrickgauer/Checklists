@@ -89,4 +89,21 @@ else if (isset($_GET['function'], $_GET['id']) && $_GET['function'] == 'get-chec
   exit;
 }
 
+// update an item 
+else if (isset($_POST['function'], $_POST['itemID'], $_POST['content'], $_POST['completed']) && $_POST['function'] == 'update-item') {
+
+  $itemID    = $_POST['itemID'];
+  $content   = $_POST['content'];
+  $completed = $_POST['completed'];
+  $result = updateItem($itemID, $content, $completed);
+  
+  if ($result->rowCount() == 1)
+    echo 'success';
+  else
+    echo 'failure';
+
+  exit;
+
+}
+
 ?>

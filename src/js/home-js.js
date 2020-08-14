@@ -12,6 +12,11 @@ function addEventListeners() {
   $(".sidebar").on('click', '.list-group-item-checklist', function() {
     openChecklist(this);
   }); 
+
+
+  $("#checklists-open").on('click', ".item-checkbox", function() {
+    toggleItemComplete(this);
+  });
 }
 
 function toggleSidebar() {
@@ -124,7 +129,6 @@ function getChecklistFooterHtml() {
 
 
 function getChecklistItemHtml(item) {
-
   var html = '';
 
   if (item.completed == 'n')
@@ -153,6 +157,30 @@ function getChecklistItemHtml(item) {
   return html;
 }
 
+// toggle an item's completed status
+function toggleItemComplete(checkbox) {
+  var item = $(checkbox).closest('.item');
+  var itemID = $(item).attr('data-item-id');
+  var content = $(item).find('.item-content').text();
+
+  // check if checkbox is checked
+  var completed = 'n';
+  if ($(checkbox).is(":checked")) 
+    completed = 'y';
+
+  var data = {
+    function: "update-item",
+    itemID: itemID,
+    content: content,
+    completed: completed,
+  }
 
 
+  $.post(API, data, function(response) {
+    if (response == 'success') {
+      $(item).toggleClass('item-completed');
+    }
+  });
+
+} 
 

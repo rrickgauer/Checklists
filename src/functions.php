@@ -167,6 +167,7 @@ function insertChecklist($userID, $name) {
  * date_display_time
  * date_modified_date
  * date_modified_time
+ * count_items
  * 
 ******************************************************************/
 function getChecklists($userID) {
@@ -178,7 +179,10 @@ function getChecklists($userID) {
          DATE_FORMAT(Checklists.date_created, "%c/%d/%Y")  AS date_created_display_date,
          DATE_FORMAT(Checklists.date_created, "%l:%i %p")  AS date_created_display_time,
          DATE_FORMAT(Checklists.date_modified, "%c/%d/%Y") AS date_modified_display_date,
-         DATE_FORMAT(Checklists.date_modified, "%l:%i %p") AS date_modified_display_time
+         DATE_FORMAT(Checklists.date_modified, "%l:%i %p") AS date_modified_display_time,
+         (SELECT Count(id)
+          FROM   Items
+          WHERE  checklist_id = Checklists.id)             AS count_items
   FROM   Checklists
   WHERE  user_id = :userID';
 

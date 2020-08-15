@@ -20,6 +20,8 @@ body {
 .sidebar .list-group-item-checklist {
   text-align: left;
   text-overflow: ellipsis;
+  display: flex;
+  justify-content: space-between;
 }
 
 .sidebar.active {

@@ -85,8 +85,9 @@ function displayChecklists(checklists) {
 function getChecklistSidebarHtml(checklist) {
   var html = '';
   html += '<button type="button" class="list-group-item list-group-item-checklist" data-checklist-id="' + checklist.id + '">';
-  html += checklist.name + '</button>';
-
+  html += checklist.name;
+  html += '<span class="badge badge-secondary badge-pill">' + checklist.count_items + '</span>';
+  html += '</button>';
   return html;
 }
 

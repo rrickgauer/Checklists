@@ -94,8 +94,12 @@ function getChecklistSidebarHtml(checklist) {
 // open a checklist
 function openChecklist(selector) {
 
+  if ($(selector).hasClass('active'))
+    return;
+
   var checklistID = $(selector).attr('data-checklist-id');
   getChecklist(checklistID);
+  $(selector).addClass('active');
 
 }
 
@@ -224,7 +228,10 @@ function toggleItemComplete(checkbox) {
 // close a checklist
 function closeChecklist(closeBtn) {
   var checklist = $(closeBtn).closest('.card-checklist');
+  var checklistID = $(checklist).attr('data-checklist-id');
   $(checklist).remove();
+
+  var sideBarChecklist = $('.sidebar .list-group-item-checklist[data-checklist-id="' + checklistID + '"]').removeClass('active');
 }
 
 

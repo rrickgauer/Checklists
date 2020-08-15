@@ -2,6 +2,11 @@ body {
   margin-bottm: 300px;
 }
 
+.hamburger:focus {
+  border: none;
+  border-color: inherit;
+}
+
 .wrapper {
   display: flex;
   align-items: stretch;
@@ -10,6 +15,7 @@ body {
 
 .sidebar {
   min-width: 250px;
+  max-width: 250px;
   min-height: 100vh;
   max-height: 100vh;
   margin-left: -250px;

@@ -57,6 +57,7 @@ function addEventListeners() {
 
 function toggleSidebar() {
   $('.sidebar').toggleClass('active');
+  $(".btn-toggle-sidebar").toggleClass('is-active');
 }
 
 

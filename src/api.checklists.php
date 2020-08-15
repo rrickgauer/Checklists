@@ -125,4 +125,19 @@ else if (isset($_POST['function'], $_POST['checklistID'], $_POST['content']) && 
   exit;
 }
 
+
+// delete an item request
+else if (isset($_POST['function'], $_POST['itemID']) && $_POST['function'] == 'delete-item') {
+  $itemID = $_POST['itemID'];
+
+  $result = deleteItem($itemID);
+
+  if ($result->rowCount() == 1)
+    echo 'success';
+  else
+    echo 'error';
+
+  exit;
+}
+
 ?>

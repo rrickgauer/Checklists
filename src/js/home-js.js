@@ -33,6 +33,14 @@ function addEventListeners() {
       addItem(this);
     }
   });
+
+  $("#checklists-open").on('click', ".btn-delete-item", function() {
+    deleteItem(this);
+  });
+
+  $("#checklists-open").on('click', ".btn-edit-item", function() {
+    editItem(this);
+  });
 }
 
 function toggleSidebar() {
@@ -168,7 +176,8 @@ function getChecklistItemHtml(item) {
   html += '<div class="dropleft">';
   html += '<i class="bx bx-dots-horizontal-rounded" data-toggle="dropdown"></i>';
   html += '<div class="dropdown-menu">';
-  html += '<button class="dropdown-item" type="button">Action</button>';
+  html += '<button class="dropdown-item btn-edit-item" type="button">Edit</button>';
+  html += '<button class="dropdown-item btn-delete-item" type="button">Delete</button>';
   html += '</div>';
   html += '</div>';
   html += '</div>';
@@ -230,3 +239,19 @@ function addItem(addItemBtn) {
   });
 }
 
+
+function deleteItem(btn) {
+  var item = $(btn).closest(".item");
+  var itemID = $(item).attr('data-item-id');
+
+  var data = {
+    function: 'delete-item',
+    itemID: itemID,
+  }
+
+  $.post(API, data, function(response) {
+    if (response == 'success') {
+      $(item).remove();
+    }
+  });
+}

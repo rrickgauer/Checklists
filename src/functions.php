@@ -331,5 +331,24 @@ function getLatestChecklistItem($checklistID) {
 }
 
 
+function deleteItem($itemID) {
+  $stmt = 'DELETE from Items where id = :itemID';
+
+  $stmt = '
+  DELETE FROM Items
+  WHERE  id = :itemID';
+
+  $sql = dbConnect()->prepare($stmt);
+
+  // filter and bind item id
+  $itemID = filter_var($itemID, FILTER_SANITIZE_NUMBER_INT);
+  $sql->bindParam(':itemID', $itemID, PDO::PARAM_INT);
+
+  $sql->execute();
+  return $sql;
+
+}
+
+
 
 ?>

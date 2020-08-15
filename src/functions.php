@@ -346,7 +346,47 @@ function deleteItem($itemID) {
 
   $sql->execute();
   return $sql;
+}
 
+
+/********************************************************************
+ * Returns the most recent item that was added to a checklist
+ * 
+ * id
+ * checklist_id
+ * checklist_name
+ * completed
+ * content
+ * date_created
+ * date_modified
+ * rank
+ * 
+ ********************************************************************/
+function getItem($itemID) {
+  $stmt = '
+  SELECT Items.id,
+         Items.checklist_id,
+         Checklists.name AS checklist_name,
+         Items.completed,
+         Items.content,
+         Items.date_created,
+         Items.date_modified,
+         Items.rank
+  FROM   Items
+         LEFT JOIN Checklists
+                ON Items.checklist_id = Checklists.id
+  WHERE  Items.id = :itemID
+  ORDER  BY Items.id DESC
+  LIMIT  1';
+
+  $sql = dbConnect()->prepare($stmt);
+
+  // filter and bind checklist id
+  $itemID = filter_var($itemID, FILTER_SANITIZE_NUMBER_INT);
+  $sql->bindParam(':itemID', $itemID, PDO::PARAM_INT);
+  $sql->execute();
+
+  return $sql;
 }
 
 

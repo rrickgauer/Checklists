@@ -280,7 +280,6 @@ function editItem(btn) {
 
 
 function saveItemEdit(btn) {
-
   var item = $(btn).closest('.item');
   var itemID = $(item).attr('data-item-id');
   var newContent = $(item).find('.edit-content-input').val();
@@ -310,6 +309,21 @@ function saveItemEdit(btn) {
   });
 }
 
+function cancelItemEdit(btn) {
+  var item = $(btn).closest('.item');
+  var itemID = $(item).attr('data-item-id');
+
+  var data = {
+    function: "get-item",
+    itemID: itemID,
+  }
+
+  $.get(API, data, function(response) {
+    var itemHtml = getChecklistItemHtml(JSON.parse(response));
+    $(item).replaceWith(itemHtml);
+  });
+
+}
 
 
 

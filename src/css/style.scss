@@ -104,9 +104,16 @@ body {
       display: flex;
       justify-content: space-between;
       width: 100%;
+      align-items: center;
 
       .input {
         flex-grow: 2;
+        margin-right: 10px;
+      }
+
+      .buttons .btn {
+        margin: 0px 5px;
+        padding: 2px 4px;
       }
     }
 

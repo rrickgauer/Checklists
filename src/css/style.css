@@ -87,9 +87,15 @@ body {
   display: flex;
   justify-content: space-between;
   width: 100%;
+  align-items: center;
 }
 #checklists-open .item .edit-content .input {
   flex-grow: 2;
+  margin-right: 10px;
+}
+#checklists-open .item .edit-content .buttons .btn {
+  margin: 0px 5px;
+  padding: 2px 4px;
 }
 #checklists-open .item-completed .item-content {
   text-decoration: line-through;

@@ -140,4 +140,12 @@ else if (isset($_POST['function'], $_POST['itemID']) && $_POST['function'] == 'd
   exit;
 }
 
+// get an item based on its id
+else if (isset($_GET['function'], $_GET['itemID']) && $_GET['function'] == 'get-item') {
+  $itemID = $_GET['itemID'];
+  $item = getItem($itemID)->fetch(PDO::FETCH_ASSOC);
+  echo json_encode($item);
+  exit;
+}
+
 ?>

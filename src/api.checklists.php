@@ -148,4 +148,22 @@ else if (isset($_GET['function'], $_GET['itemID']) && $_GET['function'] == 'get-
   exit;
 }
 
+
+// delete a checklist
+else if (isset($_POST['function'], $_POST['checklistID']) && $_POST['function'] == 'delete-checklist') {
+  $checklistID = $_POST['checklistID'];
+  $result = deleteChecklist($checklistID);
+
+
+
+  if ($result->rowCount() == 1) {
+    echo 'success';
+  } else {
+    echo 'error';
+  }
+
+  exit;
+
+}
+
 ?>

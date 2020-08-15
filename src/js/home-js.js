@@ -49,6 +49,10 @@ function addEventListeners() {
   $("#checklists-open").on('click', ".btn-edit-item-cancel", function() {
     cancelItemEdit(this);
   });
+
+  $("#checklists-open").on('click', ".btn-delete-checklist", function() {
+    deleteChecklist(this);
+  });
 }
 
 function toggleSidebar() {
@@ -161,7 +165,8 @@ function getChecklistFooterHtml() {
   var html = '</div>'; // end items
   html += '</div>';
   html += '<div class="card-footer">';
-  html += '<button type="button" class="btn btn-sm btn-secondary">Action</button>';
+  html += '<button type="button" class="btn btn-sm btn-secondary btn-edit-checklist-name">Edit name</button>';
+  html += '<button type="button" class="btn btn-sm btn-danger btn-delete-checklist">Delete</button>';
   html += '</div>';
   html += '</div>';
 
@@ -233,6 +238,10 @@ function closeChecklist(closeBtn) {
   $(checklist).remove();
 
   var sideBarChecklist = $('.sidebar .list-group-item-checklist[data-checklist-id="' + checklistID + '"]').removeClass('active');
+}
+
+function getSidebarChecklist(checklistID) {
+  return $('.sidebar .list-group-item-checklist[data-checklist-id="' + checklistID + '"]');
 }
 
 
@@ -334,5 +343,26 @@ function cancelItemEdit(btn) {
 }
 
 
+function deleteChecklist(btn) {
+
+  if (!confirm('Are you sure you want to delete this checklist?'))
+    return;
+
+  var checklist = $(btn).closest('.card-checklist');
+  var checklistID = $(checklist).attr('data-checklist-id');
+
+  var data = {
+    function: 'delete-checklist',
+    checklistID: checklistID,
+  }
+
+  $.post(API, data, function(response) {
+    if (response == 'success') {
+      $(checklist).remove();
+      var sideBarChecklist = getSidebarChecklist(checklistID);
+      $(sideBarChecklist).remove();
+    }
+  });
+}
 
 

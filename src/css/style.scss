@@ -24,7 +24,6 @@ body {
    .list-group-item-checklist {
     text-align: left;
     text-overflow: ellipsis;
-
     display: flex;
     justify-content: space-between;
   }
@@ -74,6 +73,10 @@ body {
     .card-body {
       resize: both;
       overflow: auto;
+    }
+
+    .card-footer .btn {
+      margin: 0px 5px;
     }
   }
 

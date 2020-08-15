@@ -64,6 +64,9 @@ body {
   resize: both;
   overflow: auto;
 }
+#checklists-open .card-checklist .card-footer .btn {
+  margin: 0px 5px;
+}
 #checklists-open .input-group-new-item {
   margin-bottom: 20px;
 }

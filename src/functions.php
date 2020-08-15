@@ -385,7 +385,7 @@ function getItem($itemID) {
 
   $sql = dbConnect()->prepare($stmt);
 
-  // filter and bind checklist id
+  // filter and bind item id
   $itemID = filter_var($itemID, FILTER_SANITIZE_NUMBER_INT);
   $sql->bindParam(':itemID', $itemID, PDO::PARAM_INT);
   $sql->execute();
@@ -393,6 +393,21 @@ function getItem($itemID) {
   return $sql;
 }
 
+
+function deleteChecklist($checklistID) {
+  $stmt = '
+  DELETE FROM Checklists
+  WHERE  id = :checklistID';
+
+  $sql = dbConnect()->prepare($stmt);
+
+  // filter and bind checklist id
+  $checklistID = filter_var($checklistID, FILTER_SANITIZE_NUMBER_INT);
+  $sql->bindParam(':checklistID', $checklistID, PDO::PARAM_INT);
+  $sql->execute();
+
+  return $sql;
+}
 
 
 ?>

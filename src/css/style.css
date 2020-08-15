@@ -80,6 +80,17 @@ body {
 #checklists-open .item .left * {
   margin: 0px 5px;
 }
+#checklists-open .item .left .item-content {
+  width: 100%;
+}
+#checklists-open .item .edit-content {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+#checklists-open .item .edit-content .input {
+  flex-grow: 2;
+}
 #checklists-open .item-completed .item-content {
   text-decoration: line-through;
 }

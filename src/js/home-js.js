@@ -41,6 +41,14 @@ function addEventListeners() {
   $("#checklists-open").on('click', ".btn-edit-item", function() {
     editItem(this);
   });
+
+  $("#checklists-open").on('click', ".btn-edit-item-save", function() {
+    saveItemEdit(this);
+  });
+
+  $("#checklists-open").on('click', ".btn-edit-item-cancel", function() {
+    cancelItemEdit(this);
+  });
 }
 
 function toggleSidebar() {
@@ -255,3 +263,54 @@ function deleteItem(btn) {
     }
   });
 }
+
+function editItem(btn) {
+  var item = $(btn).closest(".item");
+  var itemID = $(item).attr('data-item-id');
+  var originalContent = $(item).find('.item-content').text();
+
+  var html = '<div class="edit-content"><div class="input">';
+  html += '<input type="text" class="form-control edit-content-input" value="' + originalContent + '"></div>';
+  html += '<div class="buttons">';
+  html += '<button type="button" class="btn btn-sm btn-primary btn-edit-item-save">Save</button>';
+  html += '<button type="button" class="btn btn-sm btn-danger btn-edit-item-cancel">Cancel</button>';
+  html += '</div></div>';
+  $(item).html(html);
+}
+
+
+function saveItemEdit(btn) {
+
+  var item = $(btn).closest('.item');
+  var itemID = $(item).attr('data-item-id');
+  var newContent = $(item).find('.edit-content-input').val();
+
+  var completed = 'n';
+  if ($(item).hasClass('item-completed'))
+    completed = 'y';
+
+  var data = {
+    function: 'update-item',
+    itemID: itemID,
+    content: newContent,
+    completed: completed,
+  }
+
+  $.post(API, data, function(response) {
+    if (response == 'success') {
+      var updatedItem = {
+        id: itemID,
+        content: newContent,
+        completed: completed,
+      }
+
+      var newHtml = getChecklistItemHtml(updatedItem);
+      $(item).replaceWith(newHtml);
+    }
+  });
+}
+
+
+
+
+

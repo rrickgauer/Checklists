@@ -94,7 +94,22 @@ body {
       display: flex;
       align-items: baseline;
       * {margin: 0px 5px;}
+
+      .item-content {
+        width: 100%;
+      }
     }
+
+    .edit-content {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+
+      .input {
+        flex-grow: 2;
+      }
+    }
+
   }
 
   .item-completed {

@@ -112,4 +112,8 @@ body {
   text-decoration: line-through;
 }
 
+.hamburger:focus {
+  outline: none;
+}
+
 /*# sourceMappingURL=style.css.map */

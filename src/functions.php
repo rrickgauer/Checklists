@@ -432,5 +432,35 @@ function updateChecklistName($checklistID, $name) {
 
 }
 
+function updateUserInfo($userID, $email, $firstName, $lastName) {
+  $stmt = '
+  UPDATE Users 
+  SET    email      = :email, 
+         name_first = :firstName, 
+         name_last  = :lastName 
+  WHERE  id = :userID';
+
+  $sql = dbConnect()->prepare($stmt);
+
+  // id
+  $userID = filter_var($userID, FILTER_SANITIZE_NUMBER_INT);
+  $sql->bindParam(':userID', $userID, PDO::PARAM_INT);
+
+  // email
+  $email = filter_var($email, FILTER_SANITIZE_STRING);
+  $sql->bindParam(':email', $email, PDO::PARAM_STR);
+
+  // first name
+  $firstName = filter_var($firstName, FILTER_SANITIZE_STRING);
+  $sql->bindParam(':firstName', $firstName, PDO::PARAM_STR);
+
+  // last name
+  $lastName = filter_var($lastName, FILTER_SANITIZE_STRING);
+  $sql->bindParam(':lastName', $lastName, PDO::PARAM_STR);
+
+  $sql->execute();
+  return $sql;
+}
+
 
 ?>

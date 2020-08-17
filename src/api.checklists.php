@@ -178,4 +178,26 @@ else if (isset($_POST['function'], $_POST['checklistID'], $_POST['name']) && $_P
   exit;
 }
 
+
+// update user info
+else if (isset($_SESSION['userID'], $_POST['edit-email'], $_POST['edit-name-first'], $_POST['edit-name-last'])) {
+  $userID    = $_SESSION['userID'];
+  $email     = $_POST['edit-email'];
+  $firstName = $_POST['edit-name-first'];
+  $lastName  = $_POST['edit-name-last'];
+
+  $result = updateUserInfo($userID, $email, $firstName, $lastName);
+
+  if ($result->rowCount() == 1)
+    $_SESSION['user-info-updated'] = true;
+  else {
+    $_SESSION['user-info-updated'] = false;
+    $_SESSION['reason'] = 'unknown';
+  }
+
+  header('Location: settings.php');
+  exit;
+
+}
+
 ?>

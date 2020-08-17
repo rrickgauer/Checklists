@@ -154,16 +154,28 @@ else if (isset($_POST['function'], $_POST['checklistID']) && $_POST['function'] 
   $checklistID = $_POST['checklistID'];
   $result = deleteChecklist($checklistID);
 
-
-
-  if ($result->rowCount() == 1) {
+  if ($result->rowCount() == 1)
     echo 'success';
-  } else {
+  else 
     echo 'error';
-  }
 
   exit;
+}
 
+
+// update checklist name
+else if (isset($_POST['function'], $_POST['checklistID'], $_POST['name']) && $_POST['function'] == 'update-checklist-name') {
+  $checklistID = $_POST['checklistID'];
+  $name = $_POST['name'];
+
+  $result = updateChecklistName($checklistID, $name);
+
+  if ($result->rowCount() == 1)
+    echo 'success';
+  else
+    echo 'error';
+
+  exit;
 }
 
 ?>

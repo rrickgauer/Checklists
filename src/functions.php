@@ -410,4 +410,27 @@ function deleteChecklist($checklistID) {
 }
 
 
+function updateChecklistName($checklistID, $name) {
+  $stmt = '
+  UPDATE Checklists
+  SET    name = :name
+  WHERE  id = :checklistID';
+
+  $sql = dbConnect()->prepare($stmt);
+
+  // filter and bind checklist id
+  $checklistID = filter_var($checklistID, FILTER_SANITIZE_NUMBER_INT);
+  $sql->bindParam(':checklistID', $checklistID, PDO::PARAM_INT);
+
+  // filter and bind name
+  $name = filter_var($name, FILTER_SANITIZE_STRING);
+  $sql->bindParam(':name', $name, PDO::PARAM_STR);
+
+  $sql->execute();
+
+  return $sql;
+
+}
+
+
 ?>

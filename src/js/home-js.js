@@ -53,6 +53,12 @@ function addEventListeners() {
   $("#checklists-open").on('click', ".btn-delete-checklist", function() {
     deleteChecklist(this);
   });
+
+  $("#checklists-open").on('click', ".btn-edit-checklist-name", function() {
+    openEditChecklistModal(this);
+  });
+
+  $("#modal-edit-checklist .btn-save-checklist-name").on('click', updateChecklistName);
 }
 
 function toggleSidebar() {
@@ -245,6 +251,10 @@ function getSidebarChecklist(checklistID) {
   return $('.sidebar .list-group-item-checklist[data-checklist-id="' + checklistID + '"]');
 }
 
+function getOpenedChecklist(checklistID) {
+  return checklist = $('.card-checklist[data-checklist-id="' + checklistID + '"]');
+}
+
 
 // add an item to a checklist
 function addItem(addItemBtn) {
@@ -345,7 +355,6 @@ function cancelItemEdit(btn) {
 
 
 function deleteChecklist(btn) {
-
   if (!confirm('Are you sure you want to delete this checklist?'))
     return;
 
@@ -367,3 +376,50 @@ function deleteChecklist(btn) {
 }
 
 
+function openEditChecklistModal(btn) {
+  var checklist          = $(btn).closest('.card-checklist');
+  var checklistID        = $(checklist).attr('data-checklist-id');
+  var oldChecklistName   = $(checklist).find('.card-header h4').text();
+  var editChecklistModal = $("#modal-edit-checklist");
+
+  // load the original name into the edit checklist modal name input
+  $(editChecklistModal).find("input[name='edit-checklist-name']").val(oldChecklistName);
+
+  // set the id of the modal
+  $(editChecklistModal).attr('data-checklist-id', checklistID);
+
+  // show the modal
+  $('#modal-edit-checklist').modal('show');
+}
+
+
+function updateChecklistName() {
+  var modal       = $("#modal-edit-checklist");
+  var checklistID = $(modal).attr('data-checklist-id');
+  var newName     = $(modal).find('input[name="edit-checklist-name"]').val();
+
+  var data = {
+    function: "update-checklist-name",
+    checklistID: checklistID,
+    name: newName,
+  }
+
+  $.post(API, data, function(response) {
+    if (response == 'success') {
+      setChecklistName(checklistID, newName);
+      $(modal).modal('hide');
+    }
+  });
+
+}
+
+
+function setChecklistName(id, name) {
+  // update sidebar name
+  var sidebarChecklist = getSidebarChecklist(id);
+  $(sidebarChecklist).find('.checklist-name').text(name);
+
+  // update open checklist
+  var openChecklist = getOpenedChecklist(id);
+  $(openChecklist).find('.card-header h4').text(name);
+}

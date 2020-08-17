@@ -48,6 +48,7 @@ $user = getUser($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);  // get user data
           <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#modal-new-checklist">
             New checklist
           </button>
+
         </div>
 
         <!-- open checklists -->
@@ -83,6 +84,37 @@ $user = getUser($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);  // get user data
                   </div>
 
                   <input type="submit" class="btn btn-primary float-right" value="Save checklist">
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- edit checklist modal -->
+        <div class="modal fade" id="modal-edit-checklist" tabindex="-1">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Edit Checklist</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <!-- new checklist form -->
+                <form class="form-edit-checklist">
+                  <!-- name -->
+                  <div class="form-group">
+                    <label>Name</label>
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class='bx bx-list-check'></i></span>
+                      </div>
+                      <input type="text" class="form-control" name="edit-checklist-name" required>
+                    </div>
+                  </div>
+
+                  <button type="button" class="btn btn-primary btn-save-checklist-name float-right">Save</button>
                 </form>
               </div>
             </div>

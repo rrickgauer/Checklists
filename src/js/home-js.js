@@ -1,4 +1,6 @@
 const API = 'api.checklists.php';
+const ANIMATION_ENTRANCE = 'animate__flipInX';
+const ANIMATION_EXIT = 'animate__flipOutX';
 
 // main function
 $(document).ready(function() {
@@ -147,7 +149,7 @@ function displayChecklist(checklistID, checklistName, items) {
 }
 
 function getChecklistHeaderHtml(checklistID, checklistName) {
-  var html = '<div class="card card-checklist" data-checklist-id="';
+  var html = '<div class="card card-checklist animate__animated animate__faster  ' + ANIMATION_ENTRANCE + '" data-checklist-id="';
   html += checklistID + '">';
   html += '<div class="card-header"><h4>' + checklistName + '</h4>';
 
@@ -242,7 +244,12 @@ function toggleItemComplete(checkbox) {
 function closeChecklist(closeBtn) {
   var checklist = $(closeBtn).closest('.card-checklist');
   var checklistID = $(checklist).attr('data-checklist-id');
-  $(checklist).remove();
+
+  $(checklist).removeClass(ANIMATION_ENTRANCE).addClass(ANIMATION_EXIT);
+
+  setTimeout(function(){ $(checklist).remove(); }, 700);
+
+  // $(checklist).remove();
 
   var sideBarChecklist = $('.sidebar .list-group-item-checklist[data-checklist-id="' + checklistID + '"]').removeClass('active');
 }

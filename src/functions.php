@@ -168,6 +168,7 @@ function insertChecklist($userID, $name) {
  * date_modified_date
  * date_modified_time
  * count_items
+ * date_modified_items
  * 
 ******************************************************************/
 function getChecklists($userID) {
@@ -180,11 +181,17 @@ function getChecklists($userID) {
          DATE_FORMAT(Checklists.date_created, "%l:%i %p")  AS date_created_display_time,
          DATE_FORMAT(Checklists.date_modified, "%c/%d/%Y") AS date_modified_display_date,
          DATE_FORMAT(Checklists.date_modified, "%l:%i %p") AS date_modified_display_time,
-         (SELECT Count(id)
+         (SELECT COUNT(id)
           FROM   Items
-          WHERE  checklist_id = Checklists.id)             AS count_items
+          WHERE  checklist_id = Checklists.id)             AS count_items,
+         (SELECT Items.date_modified
+          FROM   Items
+          WHERE  checklist_id = Checklists.id
+          ORDER  BY Items.date_modified DESC
+          LIMIT  1)                                        AS date_modified_items
   FROM   Checklists
-  WHERE  user_id = :userID';
+  WHERE  user_id = :userID
+  ORDER  BY date_modified_items DESC, date_created DESC';
 
   $sql = dbConnect()->prepare($stmt);
 
@@ -224,7 +231,7 @@ function getItems($checklistID) {
          LEFT JOIN Checklists
                 ON Items.checklist_id = Checklists.id
   WHERE  Items.checklist_id = :checklistID
-  ORDER  BY Items.rank ASC';
+  ORDER  BY Items.date_created DESC';
 
   $sql = dbConnect()->prepare($stmt);
   $checklistID = filter_var($checklistID, FILTER_SANITIZE_NUMBER_INT);
@@ -239,7 +246,8 @@ function updateItem($itemID, $content, $completed) {
   $stmt = '
   UPDATE Items
   SET    content = :content,
-         completed = :completed
+         completed = :completed,
+         date_modified = NOW(),
   WHERE  id = :itemID';
 
   $sql = dbConnect()->prepare($stmt);

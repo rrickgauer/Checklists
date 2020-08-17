@@ -16,21 +16,32 @@ body {
 
  .sidebar {
    // transition: all 0.2s;
-   min-width: 250px;
-   max-width: 250px;
-   min-height: 100vh;
-   max-height: 100vh;
-   margin-left: -250px;
+   min-width: 450px;
+   max-width: 450px;
+   min-height: 95vh;
+   max-height: 95vh;
+   margin-left: -450px;
    overflow-y: auto;
    overflow-x: hidden;
    
-   resize: horizontal;
+   // resize: horizontal;
 
    .list-group-item-checklist {
     text-align: left;
     text-overflow: ellipsis;
     display: flex;
     justify-content: space-between;
+    align-items: center;
+
+    .checklist-name {
+      overflow: hidden; 
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    .badge {
+      margin-left: 10px;
+    }
   }
 }
 
@@ -137,7 +148,8 @@ body {
   }
 }
 
-.hamburger:focus {
+.hamburger:focus,
+.list-group-item-checklist:focus {
   outline: none;
 }
 

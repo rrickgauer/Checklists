@@ -65,6 +65,11 @@ function addEventListeners() {
   $(".dropdown-sidebar .btn-sort-option").on('click', function() {
     sortSidebar(this);
   });
+
+  $("#checklists-open").on('change', ".show-completed-items", function() {
+    toggleCompletedItems(this);
+  });
+
 }
 
 function toggleSidebar() {
@@ -173,6 +178,30 @@ function getChecklistHeaderHtml(checklistID, checklistName) {
   html += '</div>';
   html += '<input type="text" class="form-control item-input-new">';
   html += '</div>';
+
+
+  /*********
+  * Toolbar
+  **********/
+  html += '<div class="toolbar d-flex justify-content-between">';
+
+  // show done
+  html += '<div class="form-check form-check-inline">';
+  html += '<input class="form-check-input show-completed-items" type="checkbox" checked>';
+  html += '<label class="form-check-label">Show done</label>';
+  html += '</div>';
+
+  // sorting
+  html += '<div class="d-flex align-items-center">';
+  html += '<span class="mr-2"><b>Sort:</b></span>';
+  html += '<select class="form-control form-control-sm">';
+  html += '<option value="original" selected>Original</option>';
+  html += '<option value="alphabetical">Alphabetical</option>';
+  html += '</select>';
+  html += '</div>';
+
+  html += '</div>'; // end toolbar
+
   html += '<div class="items">';
 
   return html;
@@ -442,7 +471,7 @@ function setChecklistName(id, name) {
 
 
 function sortSidebar(sortOption) {
-  
+
   switch ($(sortOption).attr('data-sort-value')) {
     case 'name-asc':
       sortChecklistsByNameAsc();
@@ -527,4 +556,13 @@ function sortChecklsitsByDateNewest() {
   $(".sidebar .list-group").html(checklists);
 }
 
+
+function toggleCompletedItems(checkbox) {
+  var items = $(checkbox).closest('.card-checklist').find('.item.item-completed');
+
+  if (checkbox.checked)
+    $(items).show();
+  else
+    $(items).hide();
+}
 

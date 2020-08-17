@@ -70,6 +70,10 @@ function addEventListeners() {
     toggleCompletedItems(this);
   });
 
+    $("#checklists-open").on('change', ".items-sort-select", function() {
+    sortItems(this);
+  });
+
 }
 
 function toggleSidebar() {
@@ -194,7 +198,7 @@ function getChecklistHeaderHtml(checklistID, checklistName) {
   // sorting
   html += '<div class="d-flex align-items-center">';
   html += '<span class="mr-2"><b>Sort:</b></span>';
-  html += '<select class="form-control form-control-sm">';
+  html += '<select class="form-control form-control-sm items-sort-select">';
   html += '<option value="original" selected>Original</option>';
   html += '<option value="alphabetical">Alphabetical</option>';
   html += '</select>';
@@ -566,3 +570,48 @@ function toggleCompletedItems(checkbox) {
     $(items).hide();
 }
 
+
+
+function sortItems(selector) {
+  var checklist = $(selector).closest('.card-checklist');
+  var items = $(checklist).find('.item');
+
+  var sortedItems = null;
+  if ($(selector).val() == 'alphabetical') {
+    sortedItems = getSortedItemsByNameAsc(items);
+  } else {
+    getSortedItemsByOriginal($(checklist).attr('data-checklist-id'));
+  }
+
+  $(checklist).find('.items').html(sortedItems);
+}
+
+function getSortedItemsByNameAsc(items) {
+  items.sort(function (a, b) {
+    var textA = $(a).find('.item-content').text();
+    var textB = $(b).find('.item-content').text();
+    return (textA < textB) ? -1 : 1;
+  });
+
+  return items;
+}
+
+
+function getSortedItemsByOriginal(checklistID) {
+  var data = {
+    function: 'get-checklist',
+    id: checklistID,
+  }
+
+  $.getJSON(API, data, function(items) {
+    var html = '';
+
+    for (var count = 0; count < items.length; count++) {
+      html += getChecklistItemHtml(items[count]);
+    }
+
+    var openChecklist = getOpenedChecklist(checklistID);
+
+    $(openChecklist).find('.items').html(html);
+  })
+}

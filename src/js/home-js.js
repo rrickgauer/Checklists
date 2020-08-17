@@ -61,6 +61,10 @@ function addEventListeners() {
   });
 
   $("#modal-edit-checklist .btn-save-checklist-name").on('click', updateChecklistName);
+
+  $(".dropdown-sidebar .btn-sort-option").on('click', function() {
+    sortSidebar(this);
+  });
 }
 
 function toggleSidebar() {
@@ -97,7 +101,11 @@ function displayChecklists(checklists) {
 // generates and returns the sidebar checklist html
 function getChecklistSidebarHtml(checklist) {
   var html = '';
-  html += '<button type="button" class="list-group-item list-group-item-checklist" data-checklist-id="' + checklist.id + '">';
+  // html += '<button type="button" class="list-group-item list-group-item-checklist"';
+  html += '<button type="button" class="list-group-item list-group-item-checklist" ';
+  html += 'data-checklist-id="' + checklist.id + '"';
+  html += 'data-checklist-date-created="' + checklist.date_created + '" ';
+  html += '>';
   html +=  '<span class="checklist-name">' + checklist.name + '</span>';
   html += '<span class="badge badge-secondary badge-pill">' + checklist.count_items + '</span>';
   html += '</button>';
@@ -430,3 +438,93 @@ function setChecklistName(id, name) {
   var openChecklist = getOpenedChecklist(id);
   $(openChecklist).find('.card-header h4').text(name);
 }
+
+
+
+function sortSidebar(sortOption) {
+  
+  switch ($(sortOption).attr('data-sort-value')) {
+    case 'name-asc':
+      sortChecklistsByNameAsc();
+      break;
+    case 'name-desc':
+      sortChecklistsByNameDesc();
+      break;
+    case 'item-count-largest':
+      sortChecklistsByItemCountLargest();
+      break;
+    case 'date-oldest':
+      sortChecklsitsByDateOldest();
+      break;
+    case 'date-newest':
+      sortChecklsitsByDateNewest();
+      break;
+    default:
+      getChecklists();
+      break;
+  }
+}
+
+function sortChecklistsByNameAsc() {
+  var checklists = $(".sidebar .list-group-item-checklist");
+
+  checklists.sort(function (a, b) {
+    var textA = $(a).find('.checklist-name').text().toUpperCase();
+    var textB = $(b).find('.checklist-name').text().toUpperCase();
+    return (textA < textB) ? -1 : 1;
+  });
+
+  $(".sidebar .list-group").html(checklists);
+}
+
+function sortChecklistsByNameDesc() {
+  var checklists = $(".sidebar .list-group-item-checklist");
+  
+  checklists.sort(function (a, b) {
+    var textA = $(a).find('.checklist-name').text().toUpperCase();
+    var textB = $(b).find('.checklist-name').text().toUpperCase();
+    return (textA > textB) ? -1 : 1;
+  });
+
+  $(".sidebar .list-group").html(checklists);
+}
+
+
+function sortChecklistsByItemCountLargest() {
+  var checklists = $(".sidebar .list-group-item-checklist");
+  
+  checklists.sort(function (a, b) {
+    var textA = parseInt($(a).find('.badge').text());
+    var textB = parseInt($(b).find('.badge').text());
+    return (textA > textB) ? -1 : 1;
+  });
+
+  $(".sidebar .list-group").html(checklists);
+}
+
+
+function sortChecklsitsByDateOldest() {
+  var checklists = $(".sidebar .list-group-item-checklist");
+  
+  checklists.sort(function (a, b) {
+    var textA = new Date($(a).attr('data-checklist-date-created'));
+    var textB = new Date($(b).attr('data-checklist-date-created'));
+    return (textA - textB);
+  });
+
+  $(".sidebar .list-group").html(checklists);
+}
+
+function sortChecklsitsByDateNewest() {
+  var checklists = $(".sidebar .list-group-item-checklist");
+  
+  checklists.sort(function (a, b) {
+    var textA = new Date($(a).attr('data-checklist-date-created'));
+    var textB = new Date($(b).attr('data-checklist-date-created'));
+    return (textB - textA);
+  });
+
+  $(".sidebar .list-group").html(checklists);
+}
+
+

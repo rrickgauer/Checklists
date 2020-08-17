@@ -29,10 +29,18 @@ $user = getUser($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);  // get user data
           Your checklists (<?php echo $user['count_checklists']; ?>)
         </h5>
 
-        <div class="dropleft">
+        <div class="dropleft dropdown-sidebar">
           <button class="btn btn-sm btn-xs btn-light mr-3" type="button" data-toggle="dropdown">Actions</button>
           <div class="dropdown-menu">
-            <button type="button" class="dropdown-item" data-toggle="modal" data-target="#modal-new-checklist">New</button>
+            <button type="button" class="dropdown-item" data-toggle="modal" data-target="#modal-new-checklist">New checklist</button>
+            <div class="dropdown-divider"></div>
+            <h6 class="dropdown-header">Sorting</h6>
+            <button type="button" class="dropdown-item btn-sort-option" data-sort-value="original">Original</button>
+            <button type="button" class="dropdown-item btn-sort-option" data-sort-value="name-asc">Name ascending</button>
+            <button type="button" class="dropdown-item btn-sort-option" data-sort-value="name-desc">Name descending</button>
+            <button type="button" class="dropdown-item btn-sort-option" data-sort-value="date-oldest">Oldest</button>
+            <button type="button" class="dropdown-item btn-sort-option" data-sort-value="date-newest">Newest</button>
+            <button type="button" class="dropdown-item btn-sort-option" data-sort-value="item-count-largest">Most items</button>
           </div>
         </div>        
       </div>

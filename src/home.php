@@ -24,7 +24,18 @@ $user = getUser($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);  // get user data
     <!-- checklist sidebar -->
     <div class="sidebar active">
 
-      <h5 class="ml-3 mt-3 mb-3 mr-2">Your checklists</h5>
+      <div class="split align-items-center">
+        <h5 class="ml-3 mt-3 mb-3 mr-2">
+          Your checklists (<?php echo $user['count_checklists']; ?>)
+        </h5>
+
+        <div class="dropleft">
+          <button class="btn btn-sm btn-xs btn-light mr-3" type="button" data-toggle="dropdown">Actions</button>
+          <div class="dropdown-menu">
+            <button type="button" class="dropdown-item" data-toggle="modal" data-target="#modal-new-checklist">New</button>
+          </div>
+        </div>        
+      </div>
 
       <!-- checklists go here -->
       <div class="list-group"></div>
@@ -44,13 +55,6 @@ $user = getUser($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);  // get user data
 
           <h1 class="text-center">Welcome <?php echo $user['name_first']; ?></h1>
           <?php displayChecklistCreated() ?>
-
-
-
-          <!-- new checklist modal trigger button -->
-          <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#modal-new-checklist">
-            New checklist
-          </button>
 
         </div>
 

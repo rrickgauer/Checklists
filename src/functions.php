@@ -111,6 +111,8 @@ function isValidEmailAndPassword($email, $password) {
  * date_created
  * date_created_display_time
  * date_created_display_date
+ * count_checklists
+ *
  ******************************************************************************/
 function getUser($id) {
   $stmt = '
@@ -120,7 +122,10 @@ function getUser($id) {
          name_last,
          date_created,
          DATE_FORMAT(date_created, "%l:%i %p") AS date_created_display_time,
-         DATE_FORMAT(date_created, "%c/%d/%Y") AS date_created_display_date
+         DATE_FORMAT(date_created, "%c/%d/%Y") AS date_created_display_date,
+         (SELECT COUNT(Checklists.id)
+          FROM   Checklists
+          WHERE  user_id = Users.id)           AS count_checklists
   FROM   Users
   WHERE  id = :id
   LIMIT  1';

@@ -181,5 +181,15 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #555; 
 }
-
 // end scrollbar
+
+.split {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btn-xs {
+  padding: 2px 4px;
+}
+

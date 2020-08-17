@@ -146,4 +146,14 @@ body {
   background: #555;
 }
 
+.split {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btn-xs {
+  padding: 2px 4px;
+}
+
 /*# sourceMappingURL=style.css.map */

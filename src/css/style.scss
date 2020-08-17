@@ -2,10 +2,6 @@ body {
   margin-bottm: 300px;
 }
 
-.hamburger:focus {
-  border: none;
-  border-color: inherit;
-}
 
 .wrapper {
  display: flex;
@@ -18,13 +14,16 @@ body {
    // transition: all 0.2s;
    min-width: 450px;
    max-width: 450px;
-   min-height: 95vh;
-   max-height: 95vh;
+   min-height: 100vh;
+   max-height: 100vh;
    margin-left: -450px;
-   overflow-y: auto;
-   overflow-x: hidden;
+   overflow: hidden;
    
-   // resize: horizontal;
+   .list-group {
+      overflow-y: auto;
+      min-height: 95vh;
+      max-height: 95vh;
+   }
 
    .list-group-item-checklist {
     text-align: left;
@@ -87,8 +86,8 @@ body {
     }
 
     .card-body {
-      resize: both;
-      overflow: auto;
+      // resize: both;
+      // overflow: auto;
     }
 
     .card-footer .btn {
@@ -110,6 +109,10 @@ body {
 
     .right {
       margin-left: 10px;
+
+      .bx:hover {
+        cursor: pointer;
+      }
     }
     
     .left {
@@ -120,6 +123,10 @@ body {
       .item-content {
         width: 100%;
       }
+    }
+
+    .item-content {
+      font-size: 1.1em;
     }
 
     .edit-content {
@@ -153,4 +160,26 @@ body {
   outline: none;
 }
 
+// scrollbar 
 
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+
+// end scrollbar

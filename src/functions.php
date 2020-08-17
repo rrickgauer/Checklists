@@ -247,7 +247,7 @@ function updateItem($itemID, $content, $completed) {
   UPDATE Items
   SET    content = :content,
          completed = :completed,
-         date_modified = NOW(),
+         date_modified = now()
   WHERE  id = :itemID';
 
   $sql = dbConnect()->prepare($stmt);

@@ -2,11 +2,6 @@ body {
   margin-bottm: 300px;
 }
 
-.hamburger:focus {
-  border: none;
-  border-color: inherit;
-}
-
 .wrapper {
   display: flex;
   align-items: stretch;
@@ -16,11 +11,15 @@ body {
 .sidebar {
   min-width: 450px;
   max-width: 450px;
+  min-height: 100vh;
+  max-height: 100vh;
+  margin-left: -450px;
+  overflow: hidden;
+}
+.sidebar .list-group {
+  overflow-y: auto;
   min-height: 95vh;
   max-height: 95vh;
-  margin-left: -450px;
-  overflow-y: auto;
-  overflow-x: hidden;
 }
 .sidebar .list-group-item-checklist {
   text-align: left;
@@ -74,10 +73,6 @@ body {
   justify-content: space-between;
   align-items: flex-start;
 }
-#checklists-open .card-checklist .card-body {
-  resize: both;
-  overflow: auto;
-}
 #checklists-open .card-checklist .card-footer .btn {
   margin: 0px 5px;
 }
@@ -92,6 +87,9 @@ body {
 #checklists-open .item .right {
   margin-left: 10px;
 }
+#checklists-open .item .right .bx:hover {
+  cursor: pointer;
+}
 #checklists-open .item .left {
   display: flex;
   align-items: baseline;
@@ -101,6 +99,9 @@ body {
 }
 #checklists-open .item .left .item-content {
   width: 100%;
+}
+#checklists-open .item .item-content {
+  font-size: 1.1em;
 }
 #checklists-open .item .edit-content {
   display: flex;
@@ -123,6 +124,26 @@ body {
 .hamburger:focus,
 .list-group-item-checklist:focus {
   outline: none;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
 
 /*# sourceMappingURL=style.css.map */

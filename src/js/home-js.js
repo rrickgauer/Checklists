@@ -90,7 +90,7 @@ function displayChecklists(checklists) {
 function getChecklistSidebarHtml(checklist) {
   var html = '';
   html += '<button type="button" class="list-group-item list-group-item-checklist" data-checklist-id="' + checklist.id + '">';
-  html += checklist.name;
+  html +=  '<span class="checklist-name">' + checklist.name + '</span>';
   html += '<span class="badge badge-secondary badge-pill">' + checklist.count_items + '</span>';
   html += '</button>';
   return html;
@@ -104,30 +104,30 @@ function openChecklist(selector) {
     return;
 
   var checklistID = $(selector).attr('data-checklist-id');
-  getChecklist(checklistID);
+  var checklistName = $(selector).find('.checklist-name').text();
+  getChecklist(checklistID, checklistName);
   $(selector).addClass('active');
 
 }
 
 
 // get a checklist data
-function getChecklist(checklistID) {
+function getChecklist(checklistID, checklistName) {
   var data = {
     function: 'get-checklist',
     id: checklistID,
   }
 
   $.get(API, data, function(response) {
-    displayChecklist(JSON.parse(response));
+    displayChecklist(checklistID, checklistName, JSON.parse(response));
   });
 }
 
-function displayChecklist(items) {
+function displayChecklist(checklistID, checklistName, items) {
   const size = items.length;
-  var checklistID = items[0].checklist_id;
 
   // header
-  var html = getChecklistHeaderHtml(checklistID, items[0].checklist_name);
+  var html = getChecklistHeaderHtml(checklistID, checklistName);
 
   // body
   for (var count = 0; count < size; count++) 

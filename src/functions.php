@@ -462,5 +462,28 @@ function updateUserInfo($userID, $email, $firstName, $lastName) {
   return $sql;
 }
 
+function updateUserPassword($userID, $newPassword) {
+  $stmt = '
+  UPDATE Users 
+  SET    password = :newPassword 
+  WHERE  id = :userID';
+
+  $sql = dbConnect()->prepare($stmt);
+
+  // id
+  $userID = filter_var($userID, FILTER_SANITIZE_NUMBER_INT);
+  $sql->bindParam(':userID', $userID, PDO::PARAM_INT);
+
+  // password
+  $newPassword = filter_var($newPassword, FILTER_SANITIZE_STRING);
+  $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+  $sql->bindParam(':newPassword', $hashedPassword, PDO::PARAM_STR);
+
+  $sql->execute();
+  return $sql;
+
+
+}
+
 
 ?>

@@ -197,7 +197,39 @@ else if (isset($_SESSION['userID'], $_POST['edit-email'], $_POST['edit-name-firs
 
   header('Location: settings.php');
   exit;
-
 }
+
+else if (isset($_SESSION['userID'], $_POST['edit-password-current'], $_POST['edit-password-1'])) {
+  $userID          = $_SESSION['userID'];
+  $currentPassword = $_POST['edit-password-current'];
+  $newPassword     = $_POST['edit-password-1'];
+
+  // check if user entered correct current password
+  $user = getUser($userID)->fetch(PDO::FETCH_ASSOC);
+  $email = $user['email'];
+
+  if (!isValidEmailAndPassword($email, $currentPassword)) {
+    $_SESSION['user-password-updated'] = false;
+    $_SESSION['reason'] = 'incorrect-current-password';
+    header('Location: settings.php');
+    exit;
+  }
+
+
+  $result = updateUserPassword($userID, $newPassword);
+
+  if ($result->rowCount() == 1) {
+    $_SESSION['user-password-updated'] = true;
+  } else {
+    $_SESSION['user-password-updated'] = false;
+    $_SESSION['reason'] = 'unknown';
+  }
+
+
+  header('Location: settings.php');
+  exit;
+}
+
+
 
 ?>

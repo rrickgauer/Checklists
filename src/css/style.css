@@ -157,4 +157,71 @@ body {
   padding: 2px 4px;
 }
 
+.card {
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.18);
+}
+.card .card-header {
+  background-color: #555b6e;
+  color: white;
+}
+.card .card-header .close {
+  color: white;
+}
+#navbar {
+  background-color: white;
+}
+
+.color-white {
+  color: #ebe9e9;
+}
+
+.color-yellow {
+  color: #f2f230;
+}
+
+.color-dark {
+  color: #555b6e;
+}
+
+.color-blue-light {
+  color: #6efafb;
+}
+
+.color-blue-dark {
+  color: #39a0ed;
+}
+
+.bg-white {
+  background-color: #ebe9e9 !important;
+}
+
+.bg-yellow {
+  background-color: #f2f230;
+}
+
+.bg-dark {
+  background-color: #555b6e !important;
+}
+
+.bg-blue-light {
+  background-color: #6efafb;
+}
+
+.bg-blue-dark {
+  background-color: #39a0ed;
+}
+
+.img-login {
+  width: 100%;
+  height: auto;
+}
+
+.mt-big {
+  margin-top: 150px;
+}
+
+.login-page {
+  background-color: #ebe9e9;
+}
+
 /*# sourceMappingURL=style.css.map */

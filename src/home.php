@@ -64,6 +64,13 @@ $user = getUser($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);  // get user data
           <h1 class="text-center">Welcome <?php echo $user['name_first']; ?></h1>
           <?php displayChecklistCreated() ?>
 
+
+          <button type="button" class="btn bg-white">White</button>
+          <button type="button" class="btn bg-yellow">Yellow</button>
+          <button type="button" class="btn bg-dark">Dark</button>
+          <button type="button" class="btn bg-blue-light">Light blue</button>
+          <button type="button" class="btn bg-blue-dark">dark blue</button>
+
         </div>
 
         <!-- open checklists -->

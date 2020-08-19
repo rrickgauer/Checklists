@@ -1,5 +1,14 @@
+$color-white: #ebe9e9;
+$color-yellow: #f2f230;
+$color-dark: #555b6e;
+$color-blue-dark: #39a0ed;
+$color-blue-light: #6efafb;
+
+
+
 body {
   margin-bottm: 300px;
+  // background-color: $color-white;
 }
 
 
@@ -194,3 +203,83 @@ body {
   padding: 2px 4px;
 }
 
+
+.card {
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.18);
+
+  .card-header {
+    background-color: $color-dark;
+    color: white;
+    .close {
+      color: white;
+    }
+  }
+
+  .card-body {
+    // background-color: $color-white;
+  }
+}
+
+#navbar {
+  background-color: white;
+}
+
+
+.color-white {
+  color: $color-white;
+}
+
+.color-yellow {
+  color: $color-yellow;
+}
+
+.color-dark {
+  color: $color-dark;
+}
+
+.color-blue-light {
+  color: $color-blue-light;
+}
+
+.color-blue-dark {
+  color: $color-blue-dark;
+}
+
+
+
+.bg-white {
+  background-color: $color-white !important;
+}
+
+.bg-yellow {
+  background-color: $color-yellow;
+}
+
+.bg-dark {
+  background-color: $color-dark !important;
+}
+
+.bg-blue-light {
+  background-color: $color-blue-light;
+}
+
+.bg-blue-dark {
+  background-color: $color-blue-dark;
+}
+
+
+.img-login {
+  width: 100%;
+  height: auto;
+
+  
+}
+
+
+.mt-big {
+  margin-top: 150px;
+}
+
+.login-page {
+  background-color: $color-white;
+}

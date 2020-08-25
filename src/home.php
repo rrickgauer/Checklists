@@ -30,7 +30,7 @@ $user = getUser($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);  // get user data
         </h5>
 
         <div class="dropleft dropdown-sidebar">
-          <button class="btn btn-sm btn-xs btn-light mr-3" type="button" data-toggle="dropdown">Actions</button>
+          <button class="btn btn-sm btn-xs btn-light mr-3" type="button" data-toggle="dropdown" data-display="static">Actions</button>
           <div class="dropdown-menu">
             <button type="button" class="dropdown-item" data-toggle="modal" data-target="#modal-new-checklist">New checklist</button>
             <div class="dropdown-divider"></div>
@@ -61,7 +61,6 @@ $user = getUser($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);  // get user data
             </span>
           </button>
 
-          <h1 class="text-center">Welcome <?php echo $user['name_first']; ?></h1>
           <?php displayChecklistCreated() ?>
 
         </div>

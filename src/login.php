@@ -18,16 +18,15 @@ include('functions.php');
     
     <div class="mt-big"></div>
 
-    <h1 class="text-center mb-5">Checklists</h1>
+    <h1 class="text-center mt-big">Checklists</h1>
 
     <div class="row">
 
-      <div class="col mr-5">
+      <div class="col-sm-12 col-md-6 mb-4">
         <img src="img/sign-in.svg" class="img-login">
       </div>
       
-      <div class="col">
-
+      <div class="col-sm-12 col-md-6">
         <ul class="nav nav-pills justify-content-center" id="project-pills-tab" role="tablist">
           <li class="nav-item">
             <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#sign-up" role="tab">Sign up</a>

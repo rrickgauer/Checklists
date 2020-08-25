@@ -1,11 +1,10 @@
 body {
   margin-bottm: 300px;
+  background-color: #ebe9e9;
 }
 
 .wrapper {
   display: flex;
-  align-items: stretch;
-  align-content: stretch;
 }
 
 .sidebar {
@@ -41,15 +40,6 @@ body {
   margin-left: 0px;
 }
 
-@media (max-width: 768px) {
-  .sidebar {
-    margin-left: 250px;
-  }
-
-  .sidebar.active {
-    margin-left: -250px;
-  }
-}
 .content {
   width: 100%;
 }
@@ -167,6 +157,7 @@ body {
 .card .card-header .close {
   color: white;
 }
+
 #navbar {
   background-color: white;
 }
@@ -222,6 +213,31 @@ body {
 
 .login-page {
   background-color: #ebe9e9;
+}
+
+@media screen and (max-width: 768px) {
+  .sidebar {
+    min-width: 250px;
+    max-width: 250px;
+    margin-left: -250px;
+  }
+
+  .sidebar.active {
+    margin-left: 0px;
+  }
+
+  .card-checklist {
+    margin-top: 20px !important;
+    width: 370px;
+  }
+
+  .mt-big {
+    margin-top: 30px;
+  }
+
+  .sidebar .split h5 {
+    font-size: 1em;
+  }
 }
 
 /*# sourceMappingURL=style.css.map */

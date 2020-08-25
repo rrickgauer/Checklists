@@ -277,6 +277,13 @@ body {
      min-width: 250px;
      max-width: 250px;
      margin-left: -250px;
+
+    min-height: 100vh;
+    max-height: 100vh;
+
+     .list-group-item-checklist {
+        // flex: 0 1 auto;
+     }
   }
 
   .sidebar.active {
@@ -286,8 +293,6 @@ body {
   .card-checklist {
     margin-top: 20px !important;
     width: 370px;
-
-
   }
 
   .mt-big {

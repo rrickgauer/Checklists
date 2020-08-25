@@ -42,7 +42,7 @@ $user = getUser($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);  // get user data
             <button type="button" class="dropdown-item btn-sort-option" data-sort-value="date-newest">Newest</button>
             <button type="button" class="dropdown-item btn-sort-option" data-sort-value="item-count-largest">Most items</button>
           </div>
-        </div>        
+        </div>  
       </div>
 
       <!-- checklists go here -->

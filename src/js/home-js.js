@@ -286,11 +286,9 @@ function closeChecklist(closeBtn) {
   var checklist = $(closeBtn).closest('.card-checklist');
   var checklistID = $(checklist).attr('data-checklist-id');
 
-  $(checklist).removeClass(ANIMATION_ENTRANCE).addClass(ANIMATION_EXIT);
+  // $(checklist).removeClass(ANIMATION_ENTRANCE).addClass(ANIMATION_EXIT);
 
-  setTimeout(function(){ $(checklist).remove(); }, 700);
-
-  // $(checklist).remove();
+  $(checklist).remove();
 
   var sideBarChecklist = $('.sidebar .list-group-item-checklist[data-checklist-id="' + checklistID + '"]').removeClass('active');
 }

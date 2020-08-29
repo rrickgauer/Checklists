@@ -491,6 +491,8 @@ function updateChecklistName() {
     if (response == 'success') {
       setChecklistName(checklistID, newName);
       $(modal).modal('hide');
+
+      displayAlert('Checklist name updated');
     }
   });
 

@@ -452,6 +452,8 @@ function deleteChecklist(btn) {
       $(checklist).remove();
       var sideBarChecklist = getSidebarChecklist(checklistID);
       $(sideBarChecklist).remove();
+
+      displayAlert('Checklist deleted');
     }
   });
 }

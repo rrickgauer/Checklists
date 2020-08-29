@@ -639,8 +639,7 @@ function getSortedItemsByOriginal(checklistID) {
 
 // decide whether to mark all items complete or incomplete
 function toggleCompleteItems(btn) {
-  var checklist   = $(btn).closest('.card-checklist');
-  var checklistID = $(checklist).attr('data-checklist-id');
+  var checklistID   = $(btn).closest('.card-checklist').attr('data-checklist-id');
 
   if ($(btn).attr('data-value') == 'complete')
     completeAllItems(checklistID);

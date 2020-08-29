@@ -665,6 +665,14 @@ function completeAllItems(checklistID) {
 
 // mark all items in a checklist as incomplete
 function incompleteAllItems(checklistID) {
+  var data = {
+    checklistID: checklistID,
+    function: 'incomplete-all-items',
+  };
 
+  $.post(API, data, function(response) {
+    var checklist = getOpenedChecklist(checklistID);
+    $(checklist).find('.item').removeClass('item-completed').find('.item-checkbox').prop('checked', false);
+  });
 
 }

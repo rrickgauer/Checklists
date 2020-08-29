@@ -235,8 +235,13 @@ else if (isset($_SESSION['userID'], $_POST['edit-password-current'], $_POST['edi
 else if (isset($_POST['function'], $_POST['checklistID']) && $_POST['function'] == 'complete-all-items') {
   $checklistID = $_POST['checklistID'];
   $result = updateAllItemsComplete($checklistID);
+  exit;
+}
 
-  echo $result->rowCount();
+// mark all items incomplete
+else if (isset($_POST['function'], $_POST['checklistID']) && $_POST['function'] == 'incomplete-all-items') {
+  $checklistID = $_POST['checklistID'];
+  $result = updateAllItemsComplete($checklistID, 'n');
   exit;
 }
 

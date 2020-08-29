@@ -52,7 +52,7 @@ $user = getUser($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);  // get user data
     <!-- open checklists -->
     <div class="content">
 
-        <div class="home-header mt-5 mb-5 mr-3 ml-3">
+        <div class="home-header mt-5 mr-3 ml-3">
           
           <!-- toggle sidebar -->
           <button class="hamburger hamburger--elastic is-active btn-toggle-sidebar" type="button">

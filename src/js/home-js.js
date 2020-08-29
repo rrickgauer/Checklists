@@ -732,6 +732,13 @@ function openCopyModal(btn) {
   const size = checklists.length;
   var html = '';
 
+  // sort the checklists
+  checklists.sort(function (a, b) {
+    var nameA = $(a).find('.checklist-name').text().toUpperCase();
+    var nameB = $(b).find('.checklist-name').text().toUpperCase();
+    return (nameA < nameB) ? -1 : 1;
+  });
+
   // generate the radio buttons html
   for (var count = 0; count < size; count++) {
     var checklistID = $(checklists[count]).attr('data-checklist-id');

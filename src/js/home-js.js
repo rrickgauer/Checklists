@@ -77,6 +77,10 @@ function addEventListeners() {
   $("#checklists-open").on('click', '.dropdown-complete-items .dropdown-item', function() {
     toggleCompleteItems(this);
   });
+
+  $("#checklists-open").on('click', '.btn-open-copy-modal', function() {
+    openCopyModal(this);
+  });
 }
 
 function displayAlert(text) {
@@ -717,4 +721,29 @@ function incrementSidebarChecklistItemCount(checklistID, amount) {
 
   // display the new amount
   $(checklist).find('.badge').text(itemCount);
+}
+
+
+
+function openCopyModal(btn) {
+
+  // get list of checklists and their ids
+  var checklists = $('.list-group-item-checklist');
+  const size = checklists.length;
+  var html = '';
+
+  // generate the radio buttons html
+  for (var count = 0; count < size; count++) {
+    var checklistID = $(checklists[count]).attr('data-checklist-id');
+    var checklistName = $(checklists[count].find('.checklist-name').text());
+    html += getCopyItemModalRadioHtml(checklistID, checklistName);
+  }
+
+  $('#modal-copy-items .available-checklists').html(html);
+  $('#modal-copy-items').modal('show');
+}
+
+
+function getCopyItemModalRadioHtml(checklistID, checklistName) {
+
 }

@@ -358,6 +358,7 @@ function addItem(addItemBtn) {
 function deleteItem(btn) {
   var item = $(btn).closest(".item");
   var itemID = $(item).attr('data-item-id');
+  var checklistID = $(item).closest('.card-checklist').attr('data-checklist-id');
 
   var data = {
     function: 'delete-item',
@@ -368,6 +369,8 @@ function deleteItem(btn) {
     if (response == 'success') {
       $(item).remove();
       displayAlert('Item was deleted');
+
+      incrementSidebarChecklistItemCount(checklistID, -1);  // subtract 1 from item count in sidebar
     }
   });
 }

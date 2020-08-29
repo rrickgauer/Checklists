@@ -81,6 +81,8 @@ function addEventListeners() {
   $("#checklists-open").on('click', '.btn-open-copy-modal', function() {
     openCopyModal(this);
   });
+
+  $("#modal-copy-items .btn-copy-items").on('click', copyItems);
 }
 
 function displayAlert(text) {
@@ -761,4 +763,23 @@ function getCopyItemModalRadioHtml(checklistID, checklistName) {
   html += '<label class="form-check-label">' + checklistName + '</label></div>';
   
   return html;
+}
+
+
+function copyItems() {
+  var destinationID = $('#modal-copy-items').attr('data-checklist-id');
+  var sourceID      = $('input[name="radio-available-checklists"]:checked').val();
+
+  var data = {
+    function: 'copy-items',
+    sourceID: sourceID,
+    destinationID: destinationID,
+  }
+
+  $.post(API, data, function(response) {
+    getSortedItemsByOriginal(destinationID);
+  });
+
+  $('#modal-copy-items').modal('hide');
+  displayAlert('Items copied over');
 }

@@ -82,7 +82,7 @@ function addEventListeners() {
 function displayAlert(text) {
   $.toast({
     text: text,
-    position: 'top-right',
+    position: 'bottom-center',
     loader: false,
     bgColor: '#3D3D3D',
     textColor: 'white'
@@ -365,6 +365,7 @@ function deleteItem(btn) {
   $.post(API, data, function(response) {
     if (response == 'success') {
       $(item).remove();
+      displayAlert('Item was deleted');
     }
   });
 }

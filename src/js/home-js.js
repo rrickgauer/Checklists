@@ -349,6 +349,8 @@ function addItem(addItemBtn) {
     var itemHtml = getChecklistItemHtml(JSON.parse(response));
     $(checklist).find('.items').prepend(itemHtml);
     $(checklist).find('.item-input-new').val('');
+
+    incrementSidebarChecklistItemCount(checklistID, 1); // add 1 to item count in the sidebar
   });
 }
 

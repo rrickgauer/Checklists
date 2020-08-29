@@ -77,8 +77,16 @@ function addEventListeners() {
   $("#checklists-open").on('click', '.dropdown-complete-items .dropdown-item', function() {
     toggleCompleteItems(this);
   });
+}
 
-
+function displayAlert(text) {
+  $.toast({
+    text: text,
+    position: 'top-right',
+    loader: false,
+    bgColor: '#3D3D3D',
+    textColor: 'white'
+  });
 }
 
 function toggleSidebar() {

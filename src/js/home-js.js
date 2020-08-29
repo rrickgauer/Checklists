@@ -77,8 +77,16 @@ function addEventListeners() {
   $("#checklists-open").on('click', '.dropdown-complete-items .dropdown-item', function() {
     toggleCompleteItems(this);
   });
+}
 
-
+function displayAlert(text) {
+  $.toast({
+    text: text,
+    position: 'bottom-center',
+    loader: false,
+    bgColor: '#3D3D3D',
+    textColor: 'white'
+  });
 }
 
 function toggleSidebar() {
@@ -357,6 +365,7 @@ function deleteItem(btn) {
   $.post(API, data, function(response) {
     if (response == 'success') {
       $(item).remove();
+      displayAlert('Item was deleted');
     }
   });
 }
@@ -402,6 +411,9 @@ function saveItemEdit(btn) {
 
       var newHtml = getChecklistItemHtml(updatedItem);
       $(item).replaceWith(newHtml);
+
+      // display alert
+      displayAlert('Item updated');
     }
   });
 }
@@ -440,6 +452,8 @@ function deleteChecklist(btn) {
       $(checklist).remove();
       var sideBarChecklist = getSidebarChecklist(checklistID);
       $(sideBarChecklist).remove();
+
+      displayAlert('Checklist deleted');
     }
   });
 }
@@ -477,6 +491,8 @@ function updateChecklistName() {
     if (response == 'success') {
       setChecklistName(checklistID, newName);
       $(modal).modal('hide');
+
+      displayAlert('Checklist name updated');
     }
   });
 

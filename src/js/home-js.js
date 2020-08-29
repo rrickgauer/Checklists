@@ -276,6 +276,17 @@ function toggleItemComplete(checkbox) {
   $.post(API, data, function(response) {
     if (response == 'success') {
       $(item).toggleClass('item-completed');
+
+      // item is now completed
+      if ($(item).hasClass('item-completed')) {
+        // check if show done checkbox is checked
+        var showDoneCheckbox = $(item).closest('.card-checklist').find('.show-completed-items');
+
+        // hide item if show done checkbox is unchecked
+        if ($(showDoneCheckbox).is(':checked') == false) {
+          $(item).hide();
+        }
+      }
     }
   });
 

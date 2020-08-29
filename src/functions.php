@@ -226,7 +226,7 @@ function getItems($checklistID) {
   $stmt = '
   SELECT Items.id,
          Items.checklist_id,
-         Checklists.NAME AS checklist_name,
+         Checklists.name AS checklist_name,
          Items.completed,
          Items.content,
          Items.date_created,

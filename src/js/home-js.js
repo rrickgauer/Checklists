@@ -48,6 +48,13 @@ function addEventListeners() {
     saveItemEdit(this);
   });
 
+  $("#checklists-open").on('keypress', ".edit-content-input", function(e) {
+    if (e.keyCode == 13) {
+      e.preventDefault();
+      saveItemEdit(this);
+    }
+  });
+
   $("#checklists-open").on('click', ".btn-edit-item-cancel", function() {
     cancelItemEdit(this);
   });

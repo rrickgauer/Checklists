@@ -132,7 +132,28 @@ $user = getUser($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);  // get user data
           </div>
         </div>
 
-    
+        <!-- copy over items -->
+        <div class="modal fade" id="modal-copy-items" tabindex="-1">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Copy over items</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <p>Select the checklist that has the items you want copied over</p>
+
+                <!-- list of radio options of available checklists -->
+                <div class="available-checklists"></div>
+
+                <button type="button" class="btn btn-primary btn-copy-items mt-3 float-right">Copy over items</button>
+                
+              </div>
+            </div>
+          </div>
+        </div>
     </div>
   </div>
 

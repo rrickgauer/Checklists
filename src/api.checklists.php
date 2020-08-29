@@ -246,5 +246,19 @@ else if (isset($_POST['function'], $_POST['checklistID']) && $_POST['function'] 
 }
 
 
+// copy over checklist items into another checklist
+else if (isset($_POST['function'], $_POST['sourceID'], $_POST['destinationID']) && $_POST['function'] == 'copy-items') {
+  $destinationID = $_POST['destinationID'];
+  $sourceID = $_POST['sourceID'];
+
+  $result = copyOverItems($sourceID, $destinationID);
+
+  if ($result->rowCount() >= 0)
+    echo 'success';
+  else
+    echo 'error';
+  exit;
+}
+
 
 ?>

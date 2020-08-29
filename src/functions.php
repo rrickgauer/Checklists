@@ -524,4 +524,43 @@ function updateAllItemsComplete($checklistID, $completed = 'y') {
   return $sql;
 }
 
+
+// copy the items from one checklist (source) into another checklist (destination)
+function copyOverItems($sourceID, $destinationID) {
+  $stmt = '
+  INSERT INTO Items
+  (
+    checklist_id,
+    content,
+    completed,
+    date_created,
+    date_modified
+  )
+  SELECT :destinationID,
+         content,
+         completed,
+         NOW(),
+         NOW()
+  FROM   Items
+  WHERE  checklist_id = :sourceID';
+
+  $sql = dbConnect()->prepare($stmt);
+
+  // filter and bind source id
+  $sourceID = filter_var($sourceID, FILTER_SANITIZE_NUMBER_INT);
+  $sql->bindParam(':sourceID', $sourceID, PDO::PARAM_INT);
+
+    // filter and bind destination id
+  $destinationID = filter_var($destinationID, FILTER_SANITIZE_NUMBER_INT);
+  $sql->bindParam(':destinationID', $destinationID, PDO::PARAM_INT);
+
+  $sql->execute();
+
+  return $sql;
+
+
+
+
+}
+
 ?>

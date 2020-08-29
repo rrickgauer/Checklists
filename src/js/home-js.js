@@ -77,6 +77,12 @@ function addEventListeners() {
   $("#checklists-open").on('click', '.dropdown-complete-items .dropdown-item', function() {
     toggleCompleteItems(this);
   });
+
+  $("#checklists-open").on('click', '.btn-open-copy-modal', function() {
+    openCopyModal(this);
+  });
+
+  $("#modal-copy-items .btn-copy-items").on('click', copyItems);
 }
 
 function displayAlert(text) {
@@ -238,6 +244,9 @@ function getChecklistFooterHtml() {
   html += '<button class="dropdown-item" type="button" data-value="incomplete">Incomplete</button>';
   html += '</div>';
   html += '</div>';
+
+  // display copy over items modal button
+  html += '<button type="button" class="btn btn-sm btn-secondary btn-open-copy-modal">Copy in items</button>';
 
   html += '<button type="button" class="btn btn-sm btn-danger btn-delete-checklist">Delete</button>';
   html += '</div>';
@@ -714,4 +723,63 @@ function incrementSidebarChecklistItemCount(checklistID, amount) {
 
   // display the new amount
   $(checklist).find('.badge').text(itemCount);
+}
+
+
+
+function openCopyModal(btn) {
+
+  // get list of checklists and their ids
+  var checklists = $('.list-group-item-checklist');
+  const size = checklists.length;
+  var html = '';
+
+  // set the modal id to the open checklist that will be the destination for the items
+  var checklistID = $(btn).closest('.card-checklist').attr('data-checklist-id');
+  $("#modal-copy-items").attr('data-checklist-id', checklistID);
+
+  // sort the checklists
+  checklists.sort(function (a, b) {
+    var nameA = $(a).find('.checklist-name').text().toUpperCase();
+    var nameB = $(b).find('.checklist-name').text().toUpperCase();
+    return (nameA < nameB) ? -1 : 1;
+  });
+
+  // generate the radio buttons html
+  for (var count = 0; count < size; count++) {
+    var checklistID = $(checklists[count]).attr('data-checklist-id');
+    var checklistName = $(checklists[count]).find('.checklist-name').text();
+    html += getCopyItemModalRadioHtml(checklistID, checklistName);
+  }
+
+  $('#modal-copy-items .available-checklists').html(html);
+  $('#modal-copy-items').modal('show');
+}
+
+
+function getCopyItemModalRadioHtml(checklistID, checklistName) {
+  var html = '<div class="form-check">';
+  html += '<input class="form-check-input" type="radio" name="radio-available-checklists" value="' + checklistID + '">';
+  html += '<label class="form-check-label">' + checklistName + '</label></div>';
+  
+  return html;
+}
+
+
+function copyItems() {
+  var destinationID = $('#modal-copy-items').attr('data-checklist-id');
+  var sourceID      = $('input[name="radio-available-checklists"]:checked').val();
+
+  var data = {
+    function: 'copy-items',
+    sourceID: sourceID,
+    destinationID: destinationID,
+  }
+
+  $.post(API, data, function(response) {
+    getSortedItemsByOriginal(destinationID);
+  });
+
+  $('#modal-copy-items').modal('hide');
+  displayAlert('Items copied over');
 }

@@ -70,9 +70,14 @@ function addEventListeners() {
     toggleCompletedItems(this);
   });
 
-    $("#checklists-open").on('change', ".items-sort-select", function() {
+  $("#checklists-open").on('change', ".items-sort-select", function() {
     sortItems(this);
   });
+
+  $("#checklists-open").on('click', '.dropdown-complete-items .dropdown-item', function() {
+    toggleCompleteItems(this);
+  });
+
 
 }
 
@@ -630,4 +635,10 @@ function getSortedItemsByOriginal(checklistID) {
 
     $(openChecklist).find('.items').html(html);
   })
+}
+
+// decide whether to mark all items complete or incomplete
+function toggleCompleteItems(btn) {
+
+
 }

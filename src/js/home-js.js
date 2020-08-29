@@ -411,6 +411,9 @@ function saveItemEdit(btn) {
 
       var newHtml = getChecklistItemHtml(updatedItem);
       $(item).replaceWith(newHtml);
+
+      // display alert
+      displayAlert('Item updated');
     }
   });
 }

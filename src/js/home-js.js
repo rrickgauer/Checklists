@@ -369,7 +369,6 @@ function deleteItem(btn) {
     if (response == 'success') {
       $(item).remove();
       displayAlert('Item was deleted');
-
       incrementSidebarChecklistItemCount(checklistID, -1);  // subtract 1 from item count in sidebar
     }
   });
@@ -705,7 +704,7 @@ function setItemsCompleted(checklistID, response) {
     $(checklist).find('.item').removeClass('item-completed').find('.item-checkbox').prop('checked', false);
 }
 
-
+// increment the item count for the sidebar checklist
 function incrementSidebarChecklistItemCount(checklistID, amount) {
   var checklist = getSidebarChecklist(checklistID);
   var itemCount = parseInt($(checklist).find('.badge').text());

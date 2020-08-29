@@ -70,9 +70,14 @@ function addEventListeners() {
     toggleCompletedItems(this);
   });
 
-    $("#checklists-open").on('change', ".items-sort-select", function() {
+  $("#checklists-open").on('change', ".items-sort-select", function() {
     sortItems(this);
   });
+
+  $("#checklists-open").on('click', '.dropdown-complete-items .dropdown-item', function() {
+    toggleCompleteItems(this);
+  });
+
 
 }
 
@@ -214,8 +219,18 @@ function getChecklistHeaderHtml(checklistID, checklistName) {
 function getChecklistFooterHtml() {
   var html = '</div>'; // end items
   html += '</div>';
-  html += '<div class="card-footer">';
+  html += '<div class="card-footer d-flex">';
   html += '<button type="button" class="btn btn-sm btn-secondary btn-edit-checklist-name">Edit name</button>';
+
+  // mark items complete/incomplete dropdown
+  html += '<div class="dropup dropdown-complete-items">';
+  html += '<button class="btn btn-sm btn-secondary" type="button" data-toggle="dropdown">Mark items</button>';
+  html += '<div class="dropdown-menu">';
+  html += '<button class="dropdown-item" type="button" data-value="complete">Complete</button>';
+  html += '<button class="dropdown-item" type="button" data-value="incomplete">Incomplete</button>';
+  html += '</div>';
+  html += '</div>';
+
   html += '<button type="button" class="btn btn-sm btn-danger btn-delete-checklist">Delete</button>';
   html += '</div>';
   html += '</div>';
@@ -620,4 +635,51 @@ function getSortedItemsByOriginal(checklistID) {
 
     $(openChecklist).find('.items').html(html);
   })
+}
+
+// decide whether to mark all items complete or incomplete
+function toggleCompleteItems(btn) {
+  var checklistID   = $(btn).closest('.card-checklist').attr('data-checklist-id');
+
+  if ($(btn).attr('data-value') == 'complete')
+    completeAllItems(checklistID);
+  else
+    incompleteAllItems(checklistID);
+}
+
+// mark all items in a checklist as complete
+function completeAllItems(checklistID) {
+  var data = {
+    checklistID: checklistID,
+    function: 'complete-all-items',
+  };
+
+  $.post(API, data);
+  setItemsCompleted(checklistID, true);
+}
+
+
+// mark all items in a checklist as incomplete
+function incompleteAllItems(checklistID) {
+  var data = {
+    checklistID: checklistID,
+    function: 'incomplete-all-items',
+  };
+
+  $.post(API, data);
+  setItemsCompleted(checklistID, false);
+}
+
+
+// display all items as completed or incomplete
+function setItemsCompleted(checklistID, response) {
+  var checklist = getOpenedChecklist(checklistID);
+
+  // check the item checkboxes and add class item-completed
+  if (response == true) 
+    $(checklist).find('.item').addClass('item-completed').find('.item-checkbox').prop('checked', true);
+  
+  // uncheck all checkboxes and remove class item-completed
+  else
+    $(checklist).find('.item').removeClass('item-completed').find('.item-checkbox').prop('checked', false);
 }

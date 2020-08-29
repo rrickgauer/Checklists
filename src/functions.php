@@ -494,9 +494,34 @@ function updateUserPassword($userID, $newPassword) {
 
   $sql->execute();
   return $sql;
-
-
 }
 
+
+
+// mark all items in a checklist as either complete or incomplete
+function updateAllItemsComplete($checklistID, $completed = 'y') {
+  $stmt = '
+  UPDATE Items
+  SET    completed = :completed
+  WHERE  checklist_id = :checklistID';
+
+  $sql = dbConnect()->prepare($stmt);
+
+  // if completed is not y then set it to n
+  if ($completed != 'y')
+    $completed = 'n';
+
+  // filter and bind completed
+  $completed = filter_var($completed, FILTER_SANITIZE_STRING);
+  $sql->bindParam(':completed', $completed, PDO::PARAM_STR);
+
+  // filter and bind checklistID
+  $checklistID = filter_var($checklistID, FILTER_SANITIZE_NUMBER_INT);
+  $sql->bindParam(':checklistID', $checklistID, PDO::PARAM_INT);
+
+  $sql->execute();
+
+  return $sql;
+}
 
 ?>

@@ -239,6 +239,9 @@ function getChecklistFooterHtml() {
   html += '</div>';
   html += '</div>';
 
+  // display copy over items modal button
+  html += '<button type="button" class="btn btn-sm btn-secondary btn-open-copy-modal">Copy in items</button>';
+
   html += '<button type="button" class="btn btn-sm btn-danger btn-delete-checklist">Delete</button>';
   html += '</div>';
   html += '</div>';

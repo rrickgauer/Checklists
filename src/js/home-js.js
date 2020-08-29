@@ -735,7 +735,7 @@ function openCopyModal(btn) {
   // generate the radio buttons html
   for (var count = 0; count < size; count++) {
     var checklistID = $(checklists[count]).attr('data-checklist-id');
-    var checklistName = $(checklists[count].find('.checklist-name').text());
+    var checklistName = $(checklists[count]).find('.checklist-name').text();
     html += getCopyItemModalRadioHtml(checklistID, checklistName);
   }
 
@@ -745,5 +745,9 @@ function openCopyModal(btn) {
 
 
 function getCopyItemModalRadioHtml(checklistID, checklistName) {
-
+  var html = '<div class="form-check">';
+  html += '<input class="form-check-input" type="radio" name="radio-available-checklists" value="' + checklistID + '">';
+  html += '<label class="form-check-label">' + checklistName + '</label></div>';
+  
+  return html;
 }

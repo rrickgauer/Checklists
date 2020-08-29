@@ -654,13 +654,9 @@ function completeAllItems(checklistID) {
     function: 'complete-all-items',
   };
 
-  $.post(API, data, function(response) {
-    var checklist = getOpenedChecklist(checklistID);
-    $(checklist).find('.item').addClass('item-completed').find('.item-checkbox').prop('checked', true);
-  });
+  $.post(API, data);
+  setItemsCompleted(checklistID, true);
 }
-
-
 
 
 // mark all items in a checklist as incomplete
@@ -670,9 +666,20 @@ function incompleteAllItems(checklistID) {
     function: 'incomplete-all-items',
   };
 
-  $.post(API, data, function(response) {
-    var checklist = getOpenedChecklist(checklistID);
-    $(checklist).find('.item').removeClass('item-completed').find('.item-checkbox').prop('checked', false);
-  });
+  $.post(API, data);
+  setItemsCompleted(checklistID, false);
+}
 
+
+// display all items as completed or incomplete
+function setItemsCompleted(checklistID, response) {
+  var checklist = getOpenedChecklist(checklistID);
+
+  // check the item checkboxes and add class item-completed
+  if (response == true) 
+    $(checklist).find('.item').addClass('item-completed').find('.item-checkbox').prop('checked', true);
+  
+  // uncheck all checkboxes and remove class item-completed
+  else
+    $(checklist).find('.item').removeClass('item-completed').find('.item-checkbox').prop('checked', false);
 }

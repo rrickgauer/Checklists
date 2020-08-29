@@ -296,9 +296,6 @@ function toggleItemComplete(checkbox) {
 function closeChecklist(closeBtn) {
   var checklist = $(closeBtn).closest('.card-checklist');
   var checklistID = $(checklist).attr('data-checklist-id');
-
-  // $(checklist).removeClass(ANIMATION_ENTRANCE).addClass(ANIMATION_EXIT);
-
   $(checklist).remove();
 
   var sideBarChecklist = $('.sidebar .list-group-item-checklist[data-checklist-id="' + checklistID + '"]').removeClass('active');

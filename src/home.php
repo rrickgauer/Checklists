@@ -148,7 +148,7 @@ $user = getUser($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);  // get user data
                 <!-- list of radio options of available checklists -->
                 <div class="available-checklists"></div>
 
-                <button type="button" class="btn btn-primary btn-copy-items">Copy over items</button>
+                <button type="button" class="btn btn-primary btn-copy-items mt-3 float-right">Copy over items</button>
                 
               </div>
             </div>

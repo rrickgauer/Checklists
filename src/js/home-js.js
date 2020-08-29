@@ -732,6 +732,10 @@ function openCopyModal(btn) {
   const size = checklists.length;
   var html = '';
 
+  // set the modal id to the open checklist that will be the destination for the items
+  var checklistID = $(btn).closest('.card-checklist').attr('data-checklist-id');
+  $("#modal-copy-items").attr('data-checklist-id', checklistID);
+
   // sort the checklists
   checklists.sort(function (a, b) {
     var nameA = $(a).find('.checklist-name').text().toUpperCase();

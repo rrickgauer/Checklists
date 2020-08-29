@@ -699,3 +699,15 @@ function setItemsCompleted(checklistID, response) {
   else
     $(checklist).find('.item').removeClass('item-completed').find('.item-checkbox').prop('checked', false);
 }
+
+
+function incrementSidebarChecklistItemCount(checklistID, amount) {
+  var checklist = getSidebarChecklist(checklistID);
+  var itemCount = parseInt($(checklist).find('.badge').text());
+
+  // add the amount to the count
+  itemCount += amount; 
+
+  // display the new amount
+  $(checklist).find('.badge').text(itemCount);
+}

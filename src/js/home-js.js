@@ -214,8 +214,18 @@ function getChecklistHeaderHtml(checklistID, checklistName) {
 function getChecklistFooterHtml() {
   var html = '</div>'; // end items
   html += '</div>';
-  html += '<div class="card-footer">';
+  html += '<div class="card-footer d-flex">';
   html += '<button type="button" class="btn btn-sm btn-secondary btn-edit-checklist-name">Edit name</button>';
+
+  // mark items complete/incomplete dropdown
+  html += '<div class="dropup dropdown-complete-items">';
+  html += '<button class="btn btn-sm btn-secondary" type="button" data-toggle="dropdown">Mark items</button>';
+  html += '<div class="dropdown-menu">';
+  html += '<button class="dropdown-item" type="button" data-value="complete">Complete</button>';
+  html += '<button class="dropdown-item" type="button" data-value="incomplete">Incomplete</button>';
+  html += '</div>';
+  html += '</div>';
+
   html += '<button type="button" class="btn btn-sm btn-danger btn-delete-checklist">Delete</button>';
   html += '</div>';
   html += '</div>';

@@ -89,17 +89,14 @@ body {
       align-items: flex-start;
     }
 
-    .card-body {
-      // resize: both;
-      // overflow: auto;
-    }
+    .card-footer {
+      align-items: flex-start;
 
-    .card-footer .btn {
-      margin: 0px 5px;
+      .btn {
+        margin-right: 5px;
+      }
     }
   }
-
-
 
   .input-group-new-item {
     margin-bottom: 20px;
@@ -211,8 +208,6 @@ body {
 }
 
 
-
-
 .color-white {
   color: $color-white;
 }
@@ -232,8 +227,6 @@ body {
 .color-blue-dark {
   color: $color-blue-dark;
 }
-
-
 
 .bg-white {
   background-color: $color-white !important;
@@ -270,20 +263,17 @@ body {
   background-color: $color-white;
 }
 
+
+// mobile view
 @media screen and (max-width: 768px) {
 
    .sidebar {
-     // transition: all 0.2s;
-     min-width: 250px;
-     max-width: 250px;
-     margin-left: -250px;
-
-    min-height: 100vh;
-    max-height: 100vh;
-
-     .list-group-item-checklist {
-        // flex: 0 1 auto;
-     }
+      // transition: all 0.2s;
+      min-width: 250px;
+      max-width: 250px;
+      margin-left: -250px;
+      min-height: 100vh;
+      max-height: 100vh;
   }
 
   .sidebar.active {
@@ -293,6 +283,12 @@ body {
   .card-checklist {
     margin-top: 20px !important;
     width: 370px;
+
+    .card-footer {
+      flex-wrap: wrap;
+
+      .btn {margin-top: 3px;}
+    }
   }
 
   .mt-big {
@@ -303,5 +299,4 @@ body {
   .item-content {
     font-size: 1.0em !important;
   }
-
 }

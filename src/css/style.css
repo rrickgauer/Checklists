@@ -68,8 +68,11 @@ body {
   justify-content: space-between;
   align-items: flex-start;
 }
+#checklists-open .card-checklist .card-footer {
+  align-items: flex-start;
+}
 #checklists-open .card-checklist .card-footer .btn {
-  margin: 0px 5px;
+  margin-right: 5px;
 }
 #checklists-open .input-group-new-item {
   margin-bottom: 20px;
@@ -223,6 +226,7 @@ body {
     min-height: 100vh;
     max-height: 100vh;
   }
+
   .sidebar.active {
     margin-left: 0px;
   }
@@ -230,6 +234,12 @@ body {
   .card-checklist {
     margin-top: 20px !important;
     width: 370px;
+  }
+  .card-checklist .card-footer {
+    flex-wrap: wrap;
+  }
+  .card-checklist .card-footer .btn {
+    margin-top: 3px;
   }
 
   .mt-big {

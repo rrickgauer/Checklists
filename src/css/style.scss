@@ -14,30 +14,25 @@ body {
   background-color: white;
 }
 
-
 .wrapper {
- display: flex;
-   // width: 100%;
-   // align-items: stretch;
-   // align-content: stretch;
- }
+  display: flex;
+}
 
- .sidebar {
-   // transition: all 0.2s;
-   min-width: 450px;
-   max-width: 450px;
-   min-height: 100vh;
-   max-height: 100vh;
-   margin-left: -450px;
-   overflow: hidden;
-   
-   .list-group {
-      overflow-y: auto;
-      min-height: 95vh;
-      max-height: 95vh;
-   }
+.sidebar {
+  min-width: 450px;
+  max-width: 450px;
+  min-height: 100vh;
+  max-height: 100vh;
+  margin-left: -450px;
+  overflow: hidden;
 
-   .list-group-item-checklist {
+  .list-group {
+    overflow-y: auto;
+    min-height: 95vh;
+    max-height: 95vh;
+  }
+
+  .list-group-item-checklist {
     text-align: left;
     text-overflow: ellipsis;
     display: flex;
@@ -45,7 +40,7 @@ body {
     align-items: center;
 
     .checklist-name {
-      overflow: hidden; 
+      overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
     }
@@ -57,7 +52,7 @@ body {
 }
 
 .sidebar.active {
- margin-left: 0px;
+  margin-left: 0px;
 }
 
 
@@ -115,11 +110,14 @@ body {
         cursor: pointer;
       }
     }
-    
+
     .left {
       display: flex;
       align-items: baseline;
-      * {margin: 0px 5px;}
+
+      * {
+        margin: 0px 5px;
+      }
 
       .item-content {
         width: 100%;
@@ -128,6 +126,7 @@ body {
 
     .item-content {
       font-size: 1.1em;
+      overflow-wrap: anywhere;
     }
 
     .edit-content {
@@ -170,18 +169,19 @@ body {
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #f1f1f1; 
+  background: #f1f1f1;
 }
- 
+
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #888; 
+  background: #888;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #555; 
+  background: #555;
 }
+
 // end scrollbar
 
 .split {
@@ -201,6 +201,7 @@ body {
   .card-header {
     background-color: $color-dark;
     color: white;
+
     .close {
       color: white;
     }
@@ -267,17 +268,17 @@ body {
 // mobile view
 @media screen and (max-width: 768px) {
 
-   .sidebar {
-      // transition: all 0.2s;
-      min-width: 250px;
-      max-width: 250px;
-      margin-left: -250px;
-      min-height: 100vh;
-      max-height: 100vh;
+  .sidebar {
+    // transition: all 0.2s;
+    min-width: 250px;
+    max-width: 250px;
+    margin-left: -250px;
+    min-height: 100vh;
+    max-height: 100vh;
   }
 
   .sidebar.active {
-   margin-left: 0px;
+    margin-left: 0px;
   }
 
   .card-checklist {
@@ -287,7 +288,9 @@ body {
     .card-footer {
       flex-wrap: wrap;
 
-      .btn {margin-top: 3px;}
+      .btn {
+        margin-top: 3px;
+      }
     }
   }
 

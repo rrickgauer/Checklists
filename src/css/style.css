@@ -100,6 +100,7 @@ body {
 }
 #checklists-open .item .item-content {
   font-size: 1.1em;
+  overflow-wrap: anywhere;
 }
 #checklists-open .item .edit-content {
   display: flex;

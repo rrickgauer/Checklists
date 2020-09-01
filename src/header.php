@@ -21,5 +21,8 @@
 <!-- jquery toast -->
 <link rel="stylesheet" type="text/css" href="css/jquery.toast.min.css" />
 
+<!-- checkbox - https://github.com/jaywcjlove/magic-input -->
+<link rel="stylesheet" type="text/css" href="https://unpkg.com/magic-input/dist/magic-input.min.css">
+
 <!-- personal css -->
 <link rel="stylesheet" type="text/css" href="css/style.css" />

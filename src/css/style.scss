@@ -77,6 +77,10 @@ body {
     min-width: 100px;
     flex-shrink: 0;
 
+    .card-body .toolbar {
+      padding-bottom: 10px;
+    }
+
     .card-header {
       display: flex;
       justify-content: space-between;
@@ -85,15 +89,17 @@ body {
 
     .card-footer {
       align-items: flex-start;
-
-      .btn {
-        margin-right: 5px;
-      }
+      .btn {margin-right: 5px;}
     }
   }
 
   .input-group-new-item {
     margin-bottom: 20px;
+  }
+
+
+  .items {
+    border-top: 4px solid lightgrey;
   }
 
 

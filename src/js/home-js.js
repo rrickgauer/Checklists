@@ -274,9 +274,9 @@ function getChecklistItemHtml(item) {
   html += item.id + '">';
 
   if (item.completed == 'n')
-    html += '<div class="left"><input class="item-checkbox mgc mgc-success" type="checkbox">';
+    html += '<div class="left"><input class="item-checkbox" type="checkbox">';
   else
-    html += '<div class="left"><input class="item-checkbox mgc mgc-success" type="checkbox" checked>';
+    html += '<div class="left"><input class="item-checkbox" type="checkbox" checked>';
   
   html += '<span class="item-content">' + item.content + '</span></div>';
   html += '<div class="right">';

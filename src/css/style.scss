@@ -140,10 +140,15 @@ body {
         margin-right: 10px;
       }
 
-      .buttons .btn {
-        margin: 0px 5px;
-        padding: 2px 4px;
+      .buttons {
+        display: flex;
+
+        .btn {
+          margin: 0px 5px;
+          padding: 2px 4px;
+        }
       }
+      
     }
 
   }

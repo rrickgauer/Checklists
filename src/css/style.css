@@ -112,6 +112,9 @@ body {
   flex-grow: 2;
   margin-right: 10px;
 }
+#checklists-open .item .edit-content .buttons {
+  display: flex;
+}
 #checklists-open .item .edit-content .buttons .btn {
   margin: 0px 5px;
   padding: 2px 4px;

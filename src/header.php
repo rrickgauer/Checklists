@@ -21,5 +21,8 @@
 <!-- jquery toast -->
 <link rel="stylesheet" type="text/css" href="css/jquery.toast.min.css" />
 
+<!-- checkbox - https://github.com/flatlogic/awesome-bootstrap-checkbox -->
+<link rel="stylesheet" type="text/css" href="css/checkbox.css" />
+
 <!-- personal css -->
 <link rel="stylesheet" type="text/css" href="css/style.css" />

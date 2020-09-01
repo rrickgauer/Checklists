@@ -59,13 +59,17 @@ body {
   width: 100%;
 }
 
+.card-settings {
+  margin-bottom: 70px;
+  width: 700px;
+}
 
 #checklists-open {
   display: flex;
   overflow-x: auto;
   flex-wrap: nowrap;
   align-items: flex-start;
-
+  margin-right: 20px;
 
   .checklists-wrapper {
     position: absolute;
@@ -77,6 +81,10 @@ body {
     min-width: 100px;
     flex-shrink: 0;
 
+    .card-body .toolbar {
+      padding-bottom: 10px;
+    }
+
     .card-header {
       display: flex;
       justify-content: space-between;
@@ -85,15 +93,17 @@ body {
 
     .card-footer {
       align-items: flex-start;
-
-      .btn {
-        margin-right: 5px;
-      }
+      .btn {margin-right: 5px;}
     }
   }
 
   .input-group-new-item {
     margin-bottom: 20px;
+  }
+
+
+  .items {
+    border-top: 4px solid lightgrey;
   }
 
 

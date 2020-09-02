@@ -173,7 +173,7 @@ else if (isset($_POST['function'], $_POST['checklistID']) && $_POST['function'] 
 
 
 // update checklist name
-else if (isset($_POST['function'], $_POST['checklistID'], $_POST['name']) && $_POST['function'] == 'update-checklist-name') {
+else if (isset($_POST['function'], $_POST['checklistID'], $_POST['name']) && $_POST['function'] == 'update-checklist') {
   $checklistID = $_POST['checklistID'];
   $name = $_POST['name'];
 

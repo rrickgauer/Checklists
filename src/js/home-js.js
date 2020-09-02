@@ -519,7 +519,7 @@ function updateChecklistName() {
   var newName     = $(modal).find('input[name="edit-checklist-name"]').val();
 
   var data = {
-    function: "update-checklist-name",
+    function: "update-checklist",
     checklistID: checklistID,
     name: newName,
   }

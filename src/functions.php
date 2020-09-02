@@ -456,11 +456,12 @@ function deleteChecklist($checklistID) {
 }
 
 
-function updateChecklist($checklistID, $name) {
+function updateChecklist($checklistID, $name, $description = null) {
   $stmt = '
   UPDATE Checklists
-  SET    name = :name
-  WHERE  id = :checklistID';
+  SET    name = :name,
+         description = :description
+  WHERE  id = :checklistID ';
 
   $sql = dbConnect()->prepare($stmt);
 
@@ -471,6 +472,12 @@ function updateChecklist($checklistID, $name) {
   // filter and bind name
   $name = filter_var($name, FILTER_SANITIZE_STRING);
   $sql->bindParam(':name', $name, PDO::PARAM_STR);
+
+  // filter and bind description
+  $description = filter_var($description, FILTER_SANITIZE_STRING);
+  if ($description == '') // set description to null if it is blank
+    $description = null;
+  $sql->bindParam(':description', $description, PDO::PARAM_STR);
 
   $sql->execute();
 

@@ -15,6 +15,7 @@ CREATE TABLE Checklists (
     id            INT UNSIGNED NOT NULL UNIQUE auto_increment,
     user_id       INT UNSIGNED NOT NULL,
     name          CHAR(100) NOT NULL,
+    description   VARCHAR(250),
     date_created  DATETIME NOT NULL,
     date_modified DATETIME,
     PRIMARY KEY (id),

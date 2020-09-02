@@ -6,6 +6,7 @@ const ANIMATION_EXIT = 'animate__flipOutX';
 $(document).ready(function() {
   addEventListeners();
   getChecklists();
+  enableAutosizeScript();
 });
 
 function addEventListeners() {
@@ -90,6 +91,11 @@ function addEventListeners() {
   });
 
   $("#modal-copy-items .btn-copy-items").on('click', copyItems);
+}
+
+// implements the autosize script for the textareas
+function enableAutosizeScript() {
+  autosize($('textarea.autosize'));
 }
 
 function displayAlert(text) {
@@ -534,7 +540,6 @@ function updateChecklistName() {
       displayAlert('Checklist updated');
     }
   });
-
 }
 
 

@@ -102,7 +102,7 @@ $user = getUser($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);  // get user data
                       <div class="input-group-prepend">
                         <span class="input-group-text"><i class='bx bx-detail'></i></span>
                       </div>
-                      <textarea class="form-control" name="new-checklist-description" rows="1"></textarea>
+                      <textarea class="form-control autosize" name="new-checklist-description" rows="1"></textarea>
                     </div>
                   </div>
 
@@ -138,7 +138,7 @@ $user = getUser($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);  // get user data
                       <input type="text" class="form-control" name="edit-checklist-name" required>
                     </div>
                   </div>
-                  
+
                   <!-- description -->
                   <div class="form-group">
                     <label>Description</label>
@@ -146,7 +146,7 @@ $user = getUser($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);  // get user data
                       <div class="input-group-prepend">
                         <span class="input-group-text"><i class='bx bx-detail'></i></span>
                       </div>
-                      <textarea class="form-control" name="edit-checklist-description" rows="1"></textarea>
+                      <textarea class="form-control autosize" name="edit-checklist-description" rows="1"></textarea>
                     </div>
                   </div>
 

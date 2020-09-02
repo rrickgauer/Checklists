@@ -214,6 +214,33 @@ function getChecklists($userID) {
   return $sql;
 }
 
+/*************************************************************************
+ * Return data about the checklist
+ * 
+ * id
+ * name
+ * description
+ * date_created
+**************************************************************************/ 
+function getChecklist($checklistID) {
+  $stmt = '
+  SELECT Checklists.id,
+         Checklists.name,
+         Checklists.description,
+         Checklists.date_created
+  FROM   Checklists
+  WHERE  id = :checklistID
+  LIMIT  1';
+
+  $sql = dbConnect()->prepare($stmt);
+
+  // filter and bind checklist id
+  $checklistID = filter_var($checklistID, FILTER_SANITIZE_NUMBER_INT);
+  $sql->bindParam(':checklistID', $checklistID, PDO::PARAM_INT);
+
+  $sql->execute();
+  return $sql;
+}
 
 /**********************************************************************
  * Return a checklist's items

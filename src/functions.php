@@ -141,20 +141,26 @@ function getUser($id) {
 }
 
 // insert new checklist
-function insertChecklist($userID, $name) {
+function insertChecklist($userID, $name, $description = null) {
   $stmt = '
-  INSERT INTO Checklists (user_id, name, date_created, date_modified) VALUES 
-    (:userID, :name, NOW(), NOW())';
+  INSERT INTO Checklists (user_id, name, description, date_created, date_modified) VALUES 
+    (:userID, :name, :description, NOW(), NOW())';
 
   $sql = dbConnect()->prepare($stmt);
 
-  // id
+  // filter and bind id
   $userID = filter_var($userID, FILTER_SANITIZE_NUMBER_INT);
   $sql->bindParam(':userID', $userID, PDO::PARAM_INT);
 
-  // name
+  // filter and bind name
   $name = filter_var($name, FILTER_SANITIZE_STRING);
   $sql->bindParam(':name', $name, PDO::PARAM_STR);
+
+  // filter and bind description
+  $description = filter_var($description, FILTER_SANITIZE_STRING);
+  if ($description == '') // set description to null if it is blank
+    $description = null;
+  $sql->bindParam(':description', $description, PDO::PARAM_STR);
 
   $sql->execute();
   return $sql;

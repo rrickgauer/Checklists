@@ -82,6 +82,14 @@ else if (isset($_GET['function'], $_SESSION['userID']) && $_GET['function'] == '
   exit;
 }
 
+// get the data of a checklist
+else if (isset($_GET['function'], $_GET['checklistID']) && $_GET['function'] == 'get-checklist') {
+  $checklistID = $_GET['checklistID'];
+  $checklist = getChecklist($checklistID)->fetch(PDO::FETCH_ASSOC);
+  echo json_encode($checklist);
+  exit;
+}
+
 // retrive the items in a checklist
 else if (isset($_GET['function'], $_GET['id']) && $_GET['function'] == 'get-checklist-items') {
   $checklistID = $_GET['id'];

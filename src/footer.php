@@ -9,3 +9,6 @@
 
 <!-- jquery toast -->
 <script src="js/jquery.toast.min.js"></script>
+
+<!-- autosize: https://github.com/jackmoore/autosize -->
+<script src="js/autosize.min.js"></script>

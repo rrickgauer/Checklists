@@ -6,6 +6,7 @@ const ANIMATION_EXIT = 'animate__flipOutX';
 $(document).ready(function() {
   addEventListeners();
   getChecklists();
+  enableAutosizeScript();
 });
 
 function addEventListeners() {
@@ -90,6 +91,16 @@ function addEventListeners() {
   });
 
   $("#modal-copy-items .btn-copy-items").on('click', copyItems);
+
+  // resize the description textare size when the modal is opened
+  $('#modal-edit-checklist, #modal-new-checklist').on('shown.bs.modal', function (e) {
+    autosize.update($('textarea.autosize'));
+  })
+}
+
+// implements the autosize script for the textareas
+function enableAutosizeScript() {
+  autosize($('textarea.autosize'));
 }
 
 function displayAlert(text) {
@@ -165,7 +176,7 @@ function openChecklist(selector) {
 // get a checklist data
 function getChecklist(checklistID, checklistName) {
   var data = {
-    function: 'get-checklist',
+    function: 'get-checklist-items',
     id: checklistID,
   }
 
@@ -487,29 +498,43 @@ function deleteChecklist(btn) {
 function openEditChecklistModal(btn) {
   var checklist          = $(btn).closest('.card-checklist');
   var checklistID        = $(checklist).attr('data-checklist-id');
-  var oldChecklistName   = $(checklist).find('.card-header h4').text();
   var editChecklistModal = $("#modal-edit-checklist");
+  var oldChecklistName   = $(checklist).find('.card-header h4').text();
 
-  // load the original name into the edit checklist modal name input
-  $(editChecklistModal).find("input[name='edit-checklist-name']").val(oldChecklistName);
+  var data = {
+    function: "get-checklist",
+    checklistID: checklistID,
+  };
 
-  // set the id of the modal
-  $(editChecklistModal).attr('data-checklist-id', checklistID);
+  $.get(API, data, function(response) {
+    var checklist = JSON.parse(response);
 
-  // show the modal
-  $('#modal-edit-checklist').modal('show');
+    // load the original name into the edit checklist modal name input
+    $(editChecklistModal).find("input[name='edit-checklist-name']").val(checklist.name);
+
+    // load the description
+    $(editChecklistModal).find("textarea[name='edit-checklist-description']").val(checklist.description);
+
+    // set the id of the modal
+    $(editChecklistModal).attr('data-checklist-id', checklist.id);
+
+    // show the modal
+    $('#modal-edit-checklist').modal('show');
+  });
 }
 
 
 function updateChecklistName() {
-  var modal       = $("#modal-edit-checklist");
-  var checklistID = $(modal).attr('data-checklist-id');
-  var newName     = $(modal).find('input[name="edit-checklist-name"]').val();
+  var modal          = $("#modal-edit-checklist");
+  var checklistID    = $(modal).attr('data-checklist-id');
+  var newName        = $(modal).find('input[name="edit-checklist-name"]').val();
+  var newDescription = $(modal).find('textarea[name="edit-checklist-description"]').val();
 
   var data = {
-    function: "update-checklist-name",
+    function: "update-checklist",
     checklistID: checklistID,
     name: newName,
+    description: newDescription,
   }
 
   $.post(API, data, function(response) {
@@ -517,10 +542,9 @@ function updateChecklistName() {
       setChecklistName(checklistID, newName);
       $(modal).modal('hide');
 
-      displayAlert('Checklist name updated');
+      displayAlert('Checklist updated');
     }
   });
-
 }
 
 

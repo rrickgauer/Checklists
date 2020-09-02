@@ -61,8 +61,9 @@ else if (isset($_POST['login-email'], $_POST['login-password'])) {
 
 // create new checklist
 else if (isset($_POST['new-checklist-name'])) {
-  $name = $_POST['new-checklist-name'];
-  $result = insertChecklist($_SESSION['userID'], $name);
+  $name        = $_POST['new-checklist-name'];
+  $description = $_POST['new-checklist-description'];
+  $result      = insertChecklist($_SESSION['userID'], $name, $description);
 
   if ($result->rowCount() == 1) 
     $_SESSION['checklist-created'] = true;
@@ -81,8 +82,16 @@ else if (isset($_GET['function'], $_SESSION['userID']) && $_GET['function'] == '
   exit;
 }
 
-// retrive a checklist data
-else if (isset($_GET['function'], $_GET['id']) && $_GET['function'] == 'get-checklist') {
+// get the data of a checklist
+else if (isset($_GET['function'], $_GET['checklistID']) && $_GET['function'] == 'get-checklist') {
+  $checklistID = $_GET['checklistID'];
+  $checklist = getChecklist($checklistID)->fetch(PDO::FETCH_ASSOC);
+  echo json_encode($checklist);
+  exit;
+}
+
+// retrive the items in a checklist
+else if (isset($_GET['function'], $_GET['id']) && $_GET['function'] == 'get-checklist-items') {
   $checklistID = $_GET['id'];
   $items = getItems($checklistID)->fetchAll(PDO::FETCH_ASSOC);
   echo json_encode($items);
@@ -162,13 +171,13 @@ else if (isset($_POST['function'], $_POST['checklistID']) && $_POST['function'] 
   exit;
 }
 
-
-// update checklist name
-else if (isset($_POST['function'], $_POST['checklistID'], $_POST['name']) && $_POST['function'] == 'update-checklist-name') {
+// update checklist data
+else if (isset($_POST['function'], $_POST['checklistID'], $_POST['name']) && $_POST['function'] == 'update-checklist') {
   $checklistID = $_POST['checklistID'];
-  $name = $_POST['name'];
+  $name        = $_POST['name'];
+  $description = $_POST['description'];
 
-  $result = updateChecklistName($checklistID, $name);
+  $result = updateChecklist($checklistID, $name, $description);
 
   if ($result->rowCount() == 1)
     echo 'success';

@@ -141,20 +141,26 @@ function getUser($id) {
 }
 
 // insert new checklist
-function insertChecklist($userID, $name) {
+function insertChecklist($userID, $name, $description = null) {
   $stmt = '
-  INSERT INTO Checklists (user_id, name, date_created, date_modified) VALUES 
-    (:userID, :name, NOW(), NOW())';
+  INSERT INTO Checklists (user_id, name, description, date_created, date_modified) VALUES 
+    (:userID, :name, :description, NOW(), NOW())';
 
   $sql = dbConnect()->prepare($stmt);
 
-  // id
+  // filter and bind id
   $userID = filter_var($userID, FILTER_SANITIZE_NUMBER_INT);
   $sql->bindParam(':userID', $userID, PDO::PARAM_INT);
 
-  // name
+  // filter and bind name
   $name = filter_var($name, FILTER_SANITIZE_STRING);
   $sql->bindParam(':name', $name, PDO::PARAM_STR);
+
+  // filter and bind description
+  $description = filter_var($description, FILTER_SANITIZE_STRING);
+  if ($description == '') // set description to null if it is blank
+    $description = null;
+  $sql->bindParam(':description', $description, PDO::PARAM_STR);
 
   $sql->execute();
   return $sql;
@@ -208,6 +214,33 @@ function getChecklists($userID) {
   return $sql;
 }
 
+/*************************************************************************
+ * Return data about the checklist
+ * 
+ * id
+ * name
+ * description
+ * date_created
+**************************************************************************/ 
+function getChecklist($checklistID) {
+  $stmt = '
+  SELECT Checklists.id,
+         Checklists.name,
+         Checklists.description,
+         Checklists.date_created
+  FROM   Checklists
+  WHERE  id = :checklistID
+  LIMIT  1';
+
+  $sql = dbConnect()->prepare($stmt);
+
+  // filter and bind checklist id
+  $checklistID = filter_var($checklistID, FILTER_SANITIZE_NUMBER_INT);
+  $sql->bindParam(':checklistID', $checklistID, PDO::PARAM_INT);
+
+  $sql->execute();
+  return $sql;
+}
 
 /**********************************************************************
  * Return a checklist's items
@@ -423,11 +456,12 @@ function deleteChecklist($checklistID) {
 }
 
 
-function updateChecklistName($checklistID, $name) {
+function updateChecklist($checklistID, $name, $description = null) {
   $stmt = '
   UPDATE Checklists
-  SET    name = :name
-  WHERE  id = :checklistID';
+  SET    name = :name,
+         description = :description
+  WHERE  id = :checklistID ';
 
   $sql = dbConnect()->prepare($stmt);
 
@@ -438,6 +472,12 @@ function updateChecklistName($checklistID, $name) {
   // filter and bind name
   $name = filter_var($name, FILTER_SANITIZE_STRING);
   $sql->bindParam(':name', $name, PDO::PARAM_STR);
+
+  // filter and bind description
+  $description = filter_var($description, FILTER_SANITIZE_STRING);
+  if ($description == '') // set description to null if it is blank
+    $description = null;
+  $sql->bindParam(':description', $description, PDO::PARAM_STR);
 
   $sql->execute();
 

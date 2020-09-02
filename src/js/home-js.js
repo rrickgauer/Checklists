@@ -514,14 +514,16 @@ function openEditChecklistModal(btn) {
 
 
 function updateChecklistName() {
-  var modal       = $("#modal-edit-checklist");
-  var checklistID = $(modal).attr('data-checklist-id');
-  var newName     = $(modal).find('input[name="edit-checklist-name"]').val();
+  var modal          = $("#modal-edit-checklist");
+  var checklistID    = $(modal).attr('data-checklist-id');
+  var newName        = $(modal).find('input[name="edit-checklist-name"]').val();
+  var newDescription = $(modal).find('textarea[name="edit-checklist-description"]').val();
 
   var data = {
     function: "update-checklist",
     checklistID: checklistID,
     name: newName,
+    description: newDescription,
   }
 
   $.post(API, data, function(response) {
@@ -529,7 +531,7 @@ function updateChecklistName() {
       setChecklistName(checklistID, newName);
       $(modal).modal('hide');
 
-      displayAlert('Checklist name updated');
+      displayAlert('Checklist updated');
     }
   });
 

@@ -61,8 +61,9 @@ else if (isset($_POST['login-email'], $_POST['login-password'])) {
 
 // create new checklist
 else if (isset($_POST['new-checklist-name'])) {
-  $name = $_POST['new-checklist-name'];
-  $result = insertChecklist($_SESSION['userID'], $name);
+  $name        = $_POST['new-checklist-name'];
+  $description = $_POST['new-checklist-description'];
+  $result      = insertChecklist($_SESSION['userID'], $name, $description);
 
   if ($result->rowCount() == 1) 
     $_SESSION['checklist-created'] = true;

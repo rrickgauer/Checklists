@@ -487,17 +487,29 @@ function deleteChecklist(btn) {
 function openEditChecklistModal(btn) {
   var checklist          = $(btn).closest('.card-checklist');
   var checklistID        = $(checklist).attr('data-checklist-id');
-  var oldChecklistName   = $(checklist).find('.card-header h4').text();
   var editChecklistModal = $("#modal-edit-checklist");
+  var oldChecklistName   = $(checklist).find('.card-header h4').text();
 
-  // load the original name into the edit checklist modal name input
-  $(editChecklistModal).find("input[name='edit-checklist-name']").val(oldChecklistName);
+  var data = {
+    function: "get-checklist",
+    checklistID: checklistID,
+  };
 
-  // set the id of the modal
-  $(editChecklistModal).attr('data-checklist-id', checklistID);
+  $.get(API, data, function(response) {
+    var checklist = JSON.parse(response);
 
-  // show the modal
-  $('#modal-edit-checklist').modal('show');
+    // load the original name into the edit checklist modal name input
+    $(editChecklistModal).find("input[name='edit-checklist-name']").val(checklist.name);
+
+    // load the description
+    $(editChecklistModal).find("textarea[name='edit-checklist-description']").val(checklist.description);
+
+    // set the id of the modal
+    $(editChecklistModal).attr('data-checklist-id', checklist.id);
+
+    // show the modal
+    $('#modal-edit-checklist').modal('show');
+  });
 }
 
 

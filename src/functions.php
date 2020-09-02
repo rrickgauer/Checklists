@@ -456,7 +456,7 @@ function deleteChecklist($checklistID) {
 }
 
 
-function updateChecklistName($checklistID, $name) {
+function updateChecklist($checklistID, $name) {
   $stmt = '
   UPDATE Checklists
   SET    name = :name

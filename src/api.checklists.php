@@ -177,7 +177,7 @@ else if (isset($_POST['function'], $_POST['checklistID'], $_POST['name']) && $_P
   $checklistID = $_POST['checklistID'];
   $name = $_POST['name'];
 
-  $result = updateChecklistName($checklistID, $name);
+  $result = updateChecklist($checklistID, $name);
 
   if ($result->rowCount() == 1)
     echo 'success';

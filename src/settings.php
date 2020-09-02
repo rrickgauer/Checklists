@@ -1,7 +1,5 @@
 <?php
 
-
-
 session_start();
 // goto login.php if session is not set
 if (!isset($_SESSION['userID'])) {

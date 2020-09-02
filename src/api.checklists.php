@@ -171,13 +171,13 @@ else if (isset($_POST['function'], $_POST['checklistID']) && $_POST['function'] 
   exit;
 }
 
-
-// update checklist name
+// update checklist data
 else if (isset($_POST['function'], $_POST['checklistID'], $_POST['name']) && $_POST['function'] == 'update-checklist') {
   $checklistID = $_POST['checklistID'];
-  $name = $_POST['name'];
+  $name        = $_POST['name'];
+  $description = $_POST['description'];
 
-  $result = updateChecklist($checklistID, $name);
+  $result = updateChecklist($checklistID, $name, $description);
 
   if ($result->rowCount() == 1)
     echo 'success';

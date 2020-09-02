@@ -91,6 +91,11 @@ function addEventListeners() {
   });
 
   $("#modal-copy-items .btn-copy-items").on('click', copyItems);
+
+  // resize the description textare size when the modal is opened
+  $('#modal-edit-checklist, #modal-new-checklist').on('shown.bs.modal', function (e) {
+    autosize.update($('textarea.autosize'));
+  })
 }
 
 // implements the autosize script for the textareas

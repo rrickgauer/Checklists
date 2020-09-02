@@ -165,7 +165,7 @@ function openChecklist(selector) {
 // get a checklist data
 function getChecklist(checklistID, checklistName) {
   var data = {
-    function: 'get-checklist',
+    function: 'get-checklist-items',
     id: checklistID,
   }
 

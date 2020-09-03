@@ -95,7 +95,11 @@ function addEventListeners() {
   // resize the description textare size when the modal is opened
   $('#modal-edit-checklist, #modal-new-checklist').on('shown.bs.modal', function (e) {
     autosize.update($('textarea.autosize'));
-  })
+  });
+
+  $("#checklists-open").on('click', '.btn-toggle-description', function() {
+    toggleChecklistDescription(this);
+  });
 }
 
 // implements the autosize script for the textareas
@@ -219,7 +223,11 @@ function getChecklistHeaderHtml(checklist) {
   html += '</div>';
 
   // description
-  html += '<p class="card-header-description" hidden>' + checklist.desciption + '</p>';
+
+  if (checklist.description == null)
+    html += '<div class="card-header-description d-none"></div>';
+  else
+    html += '<div class="card-header-description d-none">' + checklist.description + '</div>';
 
   // dates
   html += '<div class="card-header-dates">';
@@ -847,4 +855,9 @@ function copyItems() {
 
   $('#modal-copy-items').modal('hide');
   displayAlert('Items copied over');
+}
+
+// toggle the display of a checklist's description
+function toggleChecklistDescription(btn) {
+  $(btn).closest('.card-checklist').find('.card-header-description').toggleClass('d-none');
 }

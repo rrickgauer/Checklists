@@ -205,12 +205,41 @@ function displayChecklist(checklist, items) {
 function getChecklistHeaderHtml(checklist) {
   var html = '<div class="card card-checklist animate__animated animate__faster  ' + ANIMATION_ENTRANCE + '" data-checklist-id="';
   html += checklist.id + '">';
-  html += '<div class="card-header"><h4>' + checklist.name + '</h4>';
+  html += '<div class="card-header">';
 
-  // close button
-  html += '<button type="button" class="close close-checklist"><span aria-hidden="true">&times;</span></button>';
+  // name
+  html += '<div class="card-header-name">';
+  html += '<div class="d-flex">';
+  html += '<h4>' + checklist.name + '</h4>';
+  html += '<button class="btn btn-sm btn-xs btn-toggle-description" type="button"><i class="bx bx-detail"></i></button>';
+  html += '</div>';
+  html += '<div>';
+  html += '<button type="button" class="close close-checklist float-right"><span aria-hidden="true">×</span></button>';
+  html += '</div>';
+  html += '</div>';
 
-  html += '</div><div class="card-body">';
+  // description
+  html += '<p class="card-header-description" hidden>' + checklist.desciption + '</p>';
+
+  // dates
+  html += '<div class="card-header-dates">';
+  html += '<span class="date-created">' + checklist.date_created_display + '</span>';                                                         // date created
+  html += '<span>&nbsp;&bull;&nbsp;</span>';
+  html += '<span class="date-modified">Modified <span class="date-modified-time">' + checklist.date_modified_minutes + ' minutes ago</span></span>'; // date modified
+  html += '</div>';
+
+  // item counts
+  html += '<div class="card-header-counts">';   
+  html += '<span class="item-count">' + checklist.count_items + ' items &bull; </span>';               // total
+  html += '<span class="item-count-complete">' + checklist.count_items_complete + ' completed &bull; </span>';  // complete
+  html += '<span class="item-count-incomplete">' + checklist.count_items_incomplete + ' incomplete</span>';       // incomplete
+  html += '</div>';
+
+  // end card header
+  html += '</div>';
+
+  // card-body
+  html += '<div class="card-body">';
   html += '<div class="input-group input-group-new-item">';
   html += '<div class="input-group-prepend">';
   html += '<button class="btn btn-outline-secondary btn-add-item" type="button">';

@@ -86,9 +86,10 @@ body {
     }
 
     .card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
+      .card-header-name {
+        display: flex;
+        justify-content: space-between;
+      }
     }
 
     .card-footer {

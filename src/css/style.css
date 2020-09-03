@@ -72,10 +72,9 @@ body {
 #checklists-open .card-checklist .card-body .toolbar {
   padding-bottom: 10px;
 }
-#checklists-open .card-checklist .card-header {
+#checklists-open .card-checklist .card-header .card-header-name {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
 }
 #checklists-open .card-checklist .card-footer {
   align-items: flex-start;

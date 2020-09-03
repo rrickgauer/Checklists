@@ -72,10 +72,23 @@ body {
 #checklists-open .card-checklist .card-body .toolbar {
   padding-bottom: 10px;
 }
-#checklists-open .card-checklist .card-header {
+#checklists-open .card-checklist .card-header .card-header-dates,
+#checklists-open .card-checklist .card-header .card-header-counts,
+#checklists-open .card-checklist .card-header .card-header-description {
+  font-size: 0.8em;
+  color: #fffaeb;
+}
+#checklists-open .card-checklist .card-header .card-header-description {
+  margin-bottom: 10px;
+}
+#checklists-open .card-checklist .card-header .btn-toggle-description i {
+  color: white;
+  font-size: 1.2em;
+  font-weight: 100;
+}
+#checklists-open .card-checklist .card-header .card-header-name {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
 }
 #checklists-open .card-checklist .card-footer {
   align-items: flex-start;

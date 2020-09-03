@@ -221,13 +221,47 @@ function getChecklists($userID) {
  * name
  * description
  * date_created
+ * date_created_display
+ * date_modified_minutes
+ * date_modified_hours
+ * date_modified_days
+ * count_items
+ * count_items_complete
+ * count_items_incomplete
 **************************************************************************/ 
 function getChecklist($checklistID) {
   $stmt = '
   SELECT Checklists.id,
          Checklists.name,
          Checklists.description,
-         Checklists.date_created
+         Checklists.date_created,
+         DATE_FORMAT(Checklists.date_created, "%c/%d/%Y") AS date_created_display,
+         (SELECT ABS(TIMESTAMPDIFF(minute, NOW(), Items.date_modified))
+          FROM   Items
+          WHERE  Items.checklist_id = Checklists.id
+          ORDER  BY Items.date_modified DESC
+          LIMIT  1)                                       AS date_modified_minutes,
+         (SELECT ABS(TIMESTAMPDIFF(hour, NOW(), Items.date_modified))
+          FROM   Items
+          WHERE  Items.checklist_id = Checklists.id
+          ORDER  BY Items.date_modified DESC
+          LIMIT  1)                                       AS date_modified_hours,
+         (SELECT ABS(TIMESTAMPDIFF(day, NOW(), Items.date_modified))
+          FROM   Items
+          WHERE  Items.checklist_id = Checklists.id
+          ORDER  BY Items.date_modified DESC
+          LIMIT  1)                                       AS date_modified_days,
+         (SELECT COUNT(Items.id)
+          FROM   Items
+          WHERE  Items.checklist_id = Checklists.id)      AS count_items,
+         (SELECT COUNT(Items.id)
+          FROM   Items
+          WHERE  Items.checklist_id = Checklists.id AND
+                 Items.completed = "y")                   AS count_items_complete,
+         (SELECT COUNT(Items.id)
+          FROM   Items
+          WHERE  Items.checklist_id = Checklists.id AND
+                 Items.completed = "n")                   AS count_items_incomplete
   FROM   Checklists
   WHERE  id = :checklistID
   LIMIT  1';

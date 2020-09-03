@@ -95,7 +95,11 @@ function addEventListeners() {
   // resize the description textare size when the modal is opened
   $('#modal-edit-checklist, #modal-new-checklist').on('shown.bs.modal', function (e) {
     autosize.update($('textarea.autosize'));
-  })
+  });
+
+  $("#checklists-open").on('click', '.btn-toggle-description', function() {
+    toggleChecklistDescription(this);
+  });
 }
 
 // implements the autosize script for the textareas
@@ -161,35 +165,35 @@ function getChecklistSidebarHtml(checklist) {
 
 // open a checklist
 function openChecklist(selector) {
-
+  // if checklsit is already open don't do anything
   if ($(selector).hasClass('active'))
     return;
 
   var checklistID = $(selector).attr('data-checklist-id');
-  var checklistName = $(selector).find('.checklist-name').text();
-  getChecklist(checklistID, checklistName);
+  getChecklist(checklistID);
   $(selector).addClass('active');
-
 }
 
 
 // get a checklist data
-function getChecklist(checklistID, checklistName) {
+function getChecklist(checklistID) {
   var data = {
-    function: 'get-checklist-items',
-    id: checklistID,
-  }
+    function: "get-checklist-and-items",
+    checklistID: checklistID,
+  };
 
   $.get(API, data, function(response) {
-    displayChecklist(checklistID, checklistName, JSON.parse(response));
+    var data = JSON.parse(response);
+    displayChecklist(data.checklist, data.items);
   });
+
 }
 
-function displayChecklist(checklistID, checklistName, items) {
+function displayChecklist(checklist, items) {
   const size = items.length;
 
   // header
-  var html = getChecklistHeaderHtml(checklistID, checklistName);
+  var html = getChecklistHeaderHtml(checklist);
 
   // body
   for (var count = 0; count < size; count++) 
@@ -202,15 +206,60 @@ function displayChecklist(checklistID, checklistName, items) {
   $("#checklists-open").append(html);
 }
 
-function getChecklistHeaderHtml(checklistID, checklistName) {
+function getChecklistHeaderHtml(checklist) {
   var html = '<div class="card card-checklist animate__animated animate__faster  ' + ANIMATION_ENTRANCE + '" data-checklist-id="';
-  html += checklistID + '">';
-  html += '<div class="card-header"><h4>' + checklistName + '</h4>';
+  html += checklist.id + '">';
+  html += '<div class="card-header">';
 
-  // close button
-  html += '<button type="button" class="close close-checklist"><span aria-hidden="true">&times;</span></button>';
+  // name
+  html += '<div class="card-header-name">';
+  html += '<div class="d-flex">';
+  html += '<h4>' + checklist.name + '</h4>';
+  html += '<button class="btn btn-sm btn-xs btn-toggle-description" type="button"><i class="bx bx-detail"></i></button>';
+  html += '</div>';
+  html += '<div>';
+  html += '<button type="button" class="close close-checklist float-right"><span aria-hidden="true">×</span></button>';
+  html += '</div>';
+  html += '</div>';
 
-  html += '</div><div class="card-body">';
+  // description
+
+  if (checklist.description == null)
+    html += '<div class="card-header-description d-none"></div>';
+  else
+    html += '<div class="card-header-description d-none">' + checklist.description + '</div>';
+
+  // dates
+  html += '<div class="card-header-dates">';
+  html += '<span class="date-created">' + checklist.date_created_display + '</span>';                                                         // date created
+  html += '<span>&nbsp;&bull;&nbsp;</span>';
+
+  // date modified
+  html += '<span class="date-modified">Updated <span class="date-modified-time">';
+  if (checklist.date_modified_minutes < 60)
+    html += checklist.date_modified_minutes + ' minutes ago';
+  else if (checklist.date_modified_hours < 24)
+    html += checklist.date_modified_hours + ' hours ago';
+  else
+    html += checklist.date_modified_days + ' days ago';
+   html += '</span></span>'; // date modified
+  
+  html += '</div>'; // end dates
+
+
+
+  // item counts
+  html += '<div class="card-header-counts">';   
+  html += '<span class="item-count">' + checklist.count_items + ' items &bull; </span>';               // total
+  html += '<span class="item-count-complete">' + checklist.count_items_complete + ' completed &bull; </span>';  // complete
+  html += '<span class="item-count-incomplete">' + checklist.count_items_incomplete + ' incomplete</span>';       // incomplete
+  html += '</div>';
+
+  // end card header
+  html += '</div>';
+
+  // card-body
+  html += '<div class="card-body">';
   html += '<div class="input-group input-group-new-item">';
   html += '<div class="input-group-prepend">';
   html += '<button class="btn btn-outline-secondary btn-add-item" type="button">';
@@ -818,4 +867,9 @@ function copyItems() {
 
   $('#modal-copy-items').modal('hide');
   displayAlert('Items copied over');
+}
+
+// toggle the display of a checklist's description
+function toggleChecklistDescription(btn) {
+  $(btn).closest('.card-checklist').find('.card-header-description').toggleClass('d-none');
 }

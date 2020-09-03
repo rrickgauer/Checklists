@@ -86,9 +86,28 @@ body {
     }
 
     .card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
+
+      .card-header-dates,
+      .card-header-counts,
+      .card-header-description {
+        font-size: 0.8em;
+        color: rgb(255, 250, 235)
+      }
+
+      .card-header-description {
+        margin-bottom: 10px;
+      }
+
+      .btn-toggle-description i {
+        color: white;
+        font-size: 1.2em;
+        font-weight: 100;
+      }
+
+      .card-header-name {
+        display: flex;
+        justify-content: space-between;
+      }
     }
 
     .card-footer {

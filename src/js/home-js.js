@@ -161,35 +161,35 @@ function getChecklistSidebarHtml(checklist) {
 
 // open a checklist
 function openChecklist(selector) {
-
+  // if checklsit is already open don't do anything
   if ($(selector).hasClass('active'))
     return;
 
   var checklistID = $(selector).attr('data-checklist-id');
-  var checklistName = $(selector).find('.checklist-name').text();
-  getChecklist(checklistID, checklistName);
+  getChecklist(checklistID);
   $(selector).addClass('active');
-
 }
 
 
 // get a checklist data
-function getChecklist(checklistID, checklistName) {
+function getChecklist(checklistID) {
   var data = {
-    function: 'get-checklist-items',
-    id: checklistID,
-  }
+    function: "get-checklist-and-items",
+    checklistID: checklistID,
+  };
 
   $.get(API, data, function(response) {
-    displayChecklist(checklistID, checklistName, JSON.parse(response));
+    var data = JSON.parse(response);
+    displayChecklist(data.checklist, data.items);
   });
+
 }
 
-function displayChecklist(checklistID, checklistName, items) {
+function displayChecklist(checklist, items) {
   const size = items.length;
 
   // header
-  var html = getChecklistHeaderHtml(checklistID, checklistName);
+  var html = getChecklistHeaderHtml(checklist);
 
   // body
   for (var count = 0; count < size; count++) 
@@ -202,10 +202,10 @@ function displayChecklist(checklistID, checklistName, items) {
   $("#checklists-open").append(html);
 }
 
-function getChecklistHeaderHtml(checklistID, checklistName) {
+function getChecklistHeaderHtml(checklist) {
   var html = '<div class="card card-checklist animate__animated animate__faster  ' + ANIMATION_ENTRANCE + '" data-checklist-id="';
-  html += checklistID + '">';
-  html += '<div class="card-header"><h4>' + checklistName + '</h4>';
+  html += checklist.id + '">';
+  html += '<div class="card-header"><h4>' + checklist.name + '</h4>';
 
   // close button
   html += '<button type="button" class="close close-checklist"><span aria-hidden="true">&times;</span></button>';

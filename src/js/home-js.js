@@ -233,8 +233,20 @@ function getChecklistHeaderHtml(checklist) {
   html += '<div class="card-header-dates">';
   html += '<span class="date-created">' + checklist.date_created_display + '</span>';                                                         // date created
   html += '<span>&nbsp;&bull;&nbsp;</span>';
-  html += '<span class="date-modified">Modified <span class="date-modified-time">' + checklist.date_modified_minutes + ' minutes ago</span></span>'; // date modified
-  html += '</div>';
+
+  // date modified
+  html += '<span class="date-modified">Modified <span class="date-modified-time">';
+  if (checklist.date_modified_minutes < 60)
+    html += checklist.date_modified_minutes + ' minutes ago';
+  else if (checklist.date_modified_hours < 24)
+    html += checklist.date_modified_hours + ' hours ago';
+  else
+    html += checklist.date_modified_days + ' days ago';
+   html += '</span></span>'; // date modified
+  
+  html += '</div>'; // end dates
+
+
 
   // item counts
   html += '<div class="card-header-counts">';   

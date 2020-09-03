@@ -235,7 +235,7 @@ function getChecklistHeaderHtml(checklist) {
   html += '<span>&nbsp;&bull;&nbsp;</span>';
 
   // date modified
-  html += '<span class="date-modified">Modified <span class="date-modified-time">';
+  html += '<span class="date-modified">Updated <span class="date-modified-time">';
   if (checklist.date_modified_minutes < 60)
     html += checklist.date_modified_minutes + ' minutes ago';
   else if (checklist.date_modified_hours < 24)

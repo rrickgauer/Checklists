@@ -140,6 +140,23 @@ function getUser($id) {
   return $sql;
 }
 
+// delete the user from the database
+function deleteUser($userID) {
+  $stmt = '
+  DELETE FROM Users
+  WHERE  id = :userID';
+
+  $sql = dbConnect()->prepare($stmt);
+
+  // filter and bind id
+  $userID = filter_var($userID, FILTER_SANITIZE_NUMBER_INT);
+  $sql->bindParam(':userID', $userID, PDO::PARAM_INT);
+
+  $sql->execute();
+
+  return $sql;
+}
+
 // insert new checklist
 function insertChecklist($userID, $name, $description = null) {
   $stmt = '

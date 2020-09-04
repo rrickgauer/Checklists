@@ -1,6 +1,6 @@
-const API = 'api.checklists.php';
+const API                = 'api.checklists.php';
 const ANIMATION_ENTRANCE = 'animate__flipInX';
-const ANIMATION_EXIT = 'animate__flipOutX';
+const ANIMATION_EXIT     = 'animate__flipOutX';
 
 // main function
 $(document).ready(function() {
@@ -9,13 +9,13 @@ $(document).ready(function() {
   enableAutosizeScript();
 });
 
+// adds the event listeners to the elements
 function addEventListeners() {
   $(".btn-toggle-sidebar").on('click', toggleSidebar);
 
   $(".sidebar").on('click', '.list-group-item-checklist', function() {
     openChecklist(this);
   }); 
-
 
   $("#checklists-open").on('click', ".item-checkbox", function() {
     toggleItemComplete(this);
@@ -107,6 +107,7 @@ function enableAutosizeScript() {
   autosize($('textarea.autosize'));
 }
 
+// displays an alert on the screen
 function displayAlert(text) {
   $.toast({
     text: text,
@@ -117,11 +118,11 @@ function displayAlert(text) {
   });
 }
 
+// shows/hides the sidebar
 function toggleSidebar() {
   $('.sidebar').toggleClass('active');
   $(".btn-toggle-sidebar").toggleClass('is-active');
 }
-
 
 // get the checklists from the server
 function getChecklists() {
@@ -129,6 +130,7 @@ function getChecklists() {
     function: 'get-checklists',
   }
 
+  // send request to the api
   $.get(API, data, function(response) {
     displayChecklists(JSON.parse(response));
   });
@@ -143,7 +145,6 @@ function displayChecklists(checklists) {
   for (var count = 0; count < size; count++) 
     html += getChecklistSidebarHtml(checklists[count]);
   
-
   // display html
   $(".sidebar .list-group").html(html);
 }
@@ -171,7 +172,7 @@ function openChecklist(selector) {
 
   $("#no-open-checklists-img").hide();  // hide the initial image in the open checklists section
 
-  var checklistID = $(selector).attr('data-checklist-id');
+  var checklistID = $(selector).attr('data-checklist-id');  // get the checklist id
   getChecklist(checklistID);
   $(selector).addClass('active');
 }

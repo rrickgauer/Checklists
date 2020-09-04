@@ -169,6 +169,8 @@ function openChecklist(selector) {
   if ($(selector).hasClass('active'))
     return;
 
+  $("#no-open-checklists-img").hide();  // hide the initial image in the open checklists section
+
   var checklistID = $(selector).attr('data-checklist-id');
   getChecklist(checklistID);
   $(selector).addClass('active');
@@ -403,6 +405,10 @@ function closeChecklist(closeBtn) {
   $(checklist).remove();
 
   var sideBarChecklist = $('.sidebar .list-group-item-checklist[data-checklist-id="' + checklistID + '"]').removeClass('active');
+
+  if (!isAChecklistOpen())
+    $("#no-open-checklists-img").show();
+
 }
 
 function getSidebarChecklist(checklistID) {
@@ -413,6 +419,13 @@ function getOpenedChecklist(checklistID) {
   return checklist = $('.card-checklist[data-checklist-id="' + checklistID + '"]');
 }
 
+// bool that says if there are any open checklists
+function isAChecklistOpen() {
+  if ($('.list-group-item-checklist.active').length == 0)
+    return false;
+  else
+    return true;
+}
 
 // add an item to a checklist
 function addItem(addItemBtn) {

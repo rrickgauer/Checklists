@@ -40,6 +40,10 @@ body {
   margin-left: 10px;
 }
 
+a.btn-danger {
+  color: white;
+}
+
 .sidebar.active {
   margin-left: 0px;
 }

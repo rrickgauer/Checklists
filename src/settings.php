@@ -152,6 +152,15 @@ $user = getUser($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);
       </div>
     </div>
 
+    <!-- delete account -->
+    <div class="d-flex justify-content-center">
+      <div class="card-settings">
+        <h3>Delete account</h3>
+        <p>Once you delete your account, there is no going back. Please be certain.</p>
+        <a class="btn btn-sm btn-danger" href="delete-account.php">Delete your account</a>
+      </div>
+    </div>
+
   </div>
 
 

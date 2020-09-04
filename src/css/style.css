@@ -198,6 +198,14 @@ a.btn-danger {
   color: white;
 }
 
+.modal-header {
+  background-color: #555b6e;
+  color: white;
+}
+.modal-header .close {
+  color: white;
+}
+
 .color-white {
   color: #ebe9e9;
 }

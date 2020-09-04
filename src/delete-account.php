@@ -9,6 +9,20 @@ if (!isset($_SESSION['userID'])) {
 
 include('functions.php');
 
+if (isset($_POST['password'])) {
+  $deleteUser = true;
+
+  $user     = getUser($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);
+  $email    = $user['email'];
+  $password = $_POST['password'];
+
+  if (isValidEmailAndPassword($email, $password)) {
+    $result = deleteUser($_SESSION['userID']);
+    header('Location: login.php');
+  } else {
+    $deleteUser = false;
+  }
+}
 
 ?>
 
@@ -23,12 +37,20 @@ include('functions.php');
   <?php include('navbar.php'); ?>
 
   <div class="container">
-    
     <h1 class="mt-5 mb-5 text-center">Delete account</h1>
 
     <div class="d-flex justify-content-center">
       <div class="card card-settings">
         <div class="card-body">
+
+          <?php
+          // display alert if user entered incorrect password
+          if (isset($deleteUser)) {
+            if ($deleteUser == false) {
+              echo getAlert('Incorrect password. Your account was not deleted.', 'danger');
+            }
+          }
+          ?>
 
           <form method="post">
 

@@ -245,6 +245,15 @@ a.btn-danger {
   }
 }
 
+.modal-header {
+  background-color: $color-dark;
+  color: white;
+
+  .close {
+    color: white;
+  }
+}
+
 
 .color-white {
   color: $color-white;

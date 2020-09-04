@@ -67,7 +67,9 @@ $user = getUser($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);  // get user data
 
         <!-- open checklists -->
         <div class="checklists-wrapper">
-          <div id="checklists-open"></div>
+          <div id="checklists-open">
+            <img src="img/no-open-checklists.svg" id="no-open-checklists-img">
+          </div>
         </div>
 
         <!-- new checklist modal -->

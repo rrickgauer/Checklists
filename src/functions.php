@@ -671,4 +671,38 @@ function copyOverItems($sourceID, $destinationID) {
   return $sql;
 }
 
+// insert a list of items into a checklist
+function insertItemList($checklistID, $items) {
+  $stmt = 'INSERT INTO Items (checklist_id, content, date_created, date_modified) VALUES ';
+  $stmt  = $stmt . getInsertItemListSqlStatement($checklistID, $items);
+
+  $sql = dbConnect()->prepare($stmt);
+  $sql->execute();
+
+  return $sql;
+}
+
+// generate the insert statement for insertItemList()
+function getInsertItemListSqlStatement($checklistID, $items) {
+  $stmt     = '';
+  $numItems = count($items);
+  $count    = 0;
+
+  // generate the string
+  while ($count < $numItems) {
+    $content  = filter_var($items[$count], FILTER_SANITIZE_STRING);
+    $stmt = $stmt . "($checklistID, \"$content\", NOW(), NOW()),";
+    $count++;
+  }
+
+  // remove the trailing comma from the string
+  $stmt = substr(trim($stmt), 0, -1);
+
+  return $stmt;
+}
+
+
+
+
+
 ?>

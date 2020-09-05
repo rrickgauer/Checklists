@@ -100,6 +100,12 @@ function addEventListeners() {
   $("#checklists-open").on('click', '.btn-toggle-description', function() {
     toggleChecklistDescription(this);
   });
+
+  $("#checklists-open").on('click', '.btn-open-paste-modal', function() {
+    openPasteModal(this);
+  });
+
+  $("#modal-paste-items .btn-paste-items").on('click', pasteItems);
 }
 
 // implements the autosize script for the textareas
@@ -321,7 +327,15 @@ function getChecklistFooterHtml() {
   // display copy over items modal button
   html += '<button type="button" class="btn btn-sm btn-secondary btn-open-copy-modal">Copy in items</button>';
 
+  // button that opens modal-paste-items
+  html += '<button type="button" class="btn btn-sm btn-secondary btn-open-paste-modal">Import items</button>';
+
+  // delete checklist button
   html += '<button type="button" class="btn btn-sm btn-danger btn-delete-checklist">Delete</button>';
+
+  
+
+
   html += '</div>';
   html += '</div>';
 
@@ -760,7 +774,7 @@ function getSortedItemsByNameAsc(items) {
 // sort the items by original order
 function getSortedItemsByOriginal(checklistID) {
   var data = {
-    function: 'get-checklist',
+    function: 'get-checklist-items',
     id: checklistID,
   }
 
@@ -897,4 +911,41 @@ function copyItems() {
 // toggle the display of a checklist's description
 function toggleChecklistDescription(btn) {
   $(btn).closest('.card-checklist').find('.card-header-description').toggleClass('d-none');
+}
+
+// opens the paste items modal
+function openPasteModal(btn) {
+  var checklist   = $(btn).closest('.card-checklist');
+  var checklistID = $(checklist).attr('data-checklist-id');
+  var modal       = $('#modal-paste-items');
+  
+  // set the modal id to the checklist id
+  $(modal).attr('data-checklist-id', checklistID);
+
+  // show the modal
+  $('#modal-paste-items').modal('show');
+}
+
+// add the list of items to the checklist
+function pasteItems() {
+  var modal       = $('#modal-paste-items');
+  var checklistID = $(modal).attr('data-checklist-id');
+  var newItems    = JSON.stringify($('#paste-items-input').val().split("\n"));
+
+  var data = {
+    function: "add-item-list",
+    items: newItems,
+    checklistID: checklistID,
+  };
+
+  $.post(API, data, function(response) {
+    // dont do anything if there was an error
+    if (response != 'success')
+      return;
+
+    getSortedItemsByOriginal(checklistID);  // reload the checklist items
+    $('#modal-paste-items').modal('hide');  // close the modal
+    $('#paste-items-input').val('');        // clear the input
+    displayAlert('Items added');            // display alert
+  });
 }

@@ -182,6 +182,30 @@ $user = getUser($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);  // get user data
             </div>
           </div>
         </div>
+
+        <!-- paste in a list of items -->
+        <div class="modal fade" id="modal-paste-items" tabindex="-1">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Add list of items</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+
+                <div class="form-group">
+                  <label>Paste items</label>
+                  <textarea class="form-control" id="paste-items-input"></textarea>
+                </div>
+
+                <button type="button" class="btn btn-primary btn-paste-items">Add items to checklist</button>
+                
+              </div>
+            </div>
+          </div>
+        </div>
     </div>
   </div>
 

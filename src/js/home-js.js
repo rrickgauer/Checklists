@@ -914,6 +914,14 @@ function toggleChecklistDescription(btn) {
 // opens the paste items modal
 function openPasteModal(btn) {
 
+  var checklist   = $(btn).closest('.card-checklist');
+  var checklistID = $(checklist).attr('data-checklist-id');
+  var modal = $('#modal-paste-items');
+  
+
+  // set the modal id to the checklist id
+  $(modal).attr('data-checklist-id', checklistID);
+
   $('#modal-paste-items').modal('show');
 
 

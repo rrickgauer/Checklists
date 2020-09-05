@@ -28,7 +28,12 @@ function getAlert($message, $alertType = 'success') {
 }
 
 
-// create new account
+
+/*****************************************************
+ * USERS
+******************************************************/ 
+
+// create new user
 function insertUser($email, $password, $firstName, $lastName) {
   $stmt = 'INSERT INTO Users (email, name_first, name_last, password, date_created) VALUES (:email, :firstName, :lastName, :password, NOW())';
 
@@ -86,9 +91,15 @@ function doesEmailExist($email) {
 
 
 // checks if email and password are a match
+// returns true if valid, false if not valid
 function isValidEmailAndPassword($email, $password) {
-  $pdo = dbConnect();
-  $sql = $pdo->prepare('SELECT password FROM Users WHERE email=:email LIMIT 1');
+  $stmt = '
+  SELECT password
+  FROM   Users
+  WHERE  email = :email
+  LIMIT  1';
+
+  $sql = dbConnect()->prepare($stmt);
 
   // sanitize and bind username
   $email = filter_var($email, FILTER_SANITIZE_EMAIL);
@@ -112,7 +123,6 @@ function isValidEmailAndPassword($email, $password) {
  * date_created_display_time
  * date_created_display_date
  * count_checklists
- *
  ******************************************************************************/
 function getUser($id) {
   $stmt = '
@@ -156,6 +166,65 @@ function deleteUser($userID) {
 
   return $sql;
 }
+
+// updates a user's information
+function updateUserInfo($userID, $email, $firstName, $lastName) {
+  $stmt = '
+  UPDATE Users 
+  SET    email      = :email, 
+         name_first = :firstName, 
+         name_last  = :lastName 
+  WHERE  id = :userID';
+
+  $sql = dbConnect()->prepare($stmt);
+
+  // id
+  $userID = filter_var($userID, FILTER_SANITIZE_NUMBER_INT);
+  $sql->bindParam(':userID', $userID, PDO::PARAM_INT);
+
+  // email
+  $email = filter_var($email, FILTER_SANITIZE_STRING);
+  $sql->bindParam(':email', $email, PDO::PARAM_STR);
+
+  // first name
+  $firstName = filter_var($firstName, FILTER_SANITIZE_STRING);
+  $sql->bindParam(':firstName', $firstName, PDO::PARAM_STR);
+
+  // last name
+  $lastName = filter_var($lastName, FILTER_SANITIZE_STRING);
+  $sql->bindParam(':lastName', $lastName, PDO::PARAM_STR);
+
+  $sql->execute();
+  return $sql;
+}
+
+// update a user password
+function updateUserPassword($userID, $newPassword) {
+  $stmt = '
+  UPDATE Users 
+  SET    password = :newPassword 
+  WHERE  id = :userID';
+
+  $sql = dbConnect()->prepare($stmt);
+
+  // id
+  $userID = filter_var($userID, FILTER_SANITIZE_NUMBER_INT);
+  $sql->bindParam(':userID', $userID, PDO::PARAM_INT);
+
+  // password
+  $newPassword = filter_var($newPassword, FILTER_SANITIZE_STRING);
+  $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+  $sql->bindParam(':newPassword', $hashedPassword, PDO::PARAM_STR);
+
+  $sql->execute();
+  return $sql;
+}
+
+
+
+/*****************************************************
+ * CHECKLISTS
+******************************************************/ 
 
 // insert new checklist
 function insertChecklist($userID, $name, $description = null) {
@@ -293,6 +362,56 @@ function getChecklist($checklistID) {
   return $sql;
 }
 
+
+// delete a checklist
+function deleteChecklist($checklistID) {
+  $stmt = '
+  DELETE FROM Checklists
+  WHERE  id = :checklistID';
+
+  $sql = dbConnect()->prepare($stmt);
+
+  // filter and bind checklist id
+  $checklistID = filter_var($checklistID, FILTER_SANITIZE_NUMBER_INT);
+  $sql->bindParam(':checklistID', $checklistID, PDO::PARAM_INT);
+  $sql->execute();
+
+  return $sql;
+}
+
+// updates a checklst name and description
+function updateChecklist($checklistID, $name, $description = null) {
+  $stmt = '
+  UPDATE Checklists
+  SET    name = :name,
+         description = :description
+  WHERE  id = :checklistID ';
+
+  $sql = dbConnect()->prepare($stmt);
+
+  // filter and bind checklist id
+  $checklistID = filter_var($checklistID, FILTER_SANITIZE_NUMBER_INT);
+  $sql->bindParam(':checklistID', $checklistID, PDO::PARAM_INT);
+
+  // filter and bind name
+  $name = filter_var($name, FILTER_SANITIZE_STRING);
+  $sql->bindParam(':name', $name, PDO::PARAM_STR);
+
+  // filter and bind description
+  $description = filter_var($description, FILTER_SANITIZE_STRING);
+  if ($description == '') // set description to null if it is blank
+    $description = null;
+  $sql->bindParam(':description', $description, PDO::PARAM_STR);
+
+  $sql->execute();
+
+  return $sql;
+}
+
+/*****************************************************
+ * ITEMS
+******************************************************/ 
+
 /**********************************************************************
  * Return a checklist's items
  * 
@@ -330,7 +449,7 @@ function getItems($checklistID) {
   return $sql;
 }
 
-
+// updates an item's content and completed status
 function updateItem($itemID, $content, $completed) {
   $stmt = '
   UPDATE Items
@@ -358,7 +477,7 @@ function updateItem($itemID, $content, $completed) {
 
 }
 
-
+// insert an item into a checklist
 function addItem($checklistID, $content) {
 
   $stmt = '
@@ -431,7 +550,7 @@ function getLatestChecklistItem($checklistID) {
   return $sql;
 }
 
-
+// deletes an item
 function deleteItem($itemID) {
   $stmt = 'DELETE from Items where id = :itemID';
 
@@ -491,104 +610,6 @@ function getItem($itemID) {
 }
 
 
-function deleteChecklist($checklistID) {
-  $stmt = '
-  DELETE FROM Checklists
-  WHERE  id = :checklistID';
-
-  $sql = dbConnect()->prepare($stmt);
-
-  // filter and bind checklist id
-  $checklistID = filter_var($checklistID, FILTER_SANITIZE_NUMBER_INT);
-  $sql->bindParam(':checklistID', $checklistID, PDO::PARAM_INT);
-  $sql->execute();
-
-  return $sql;
-}
-
-
-function updateChecklist($checklistID, $name, $description = null) {
-  $stmt = '
-  UPDATE Checklists
-  SET    name = :name,
-         description = :description
-  WHERE  id = :checklistID ';
-
-  $sql = dbConnect()->prepare($stmt);
-
-  // filter and bind checklist id
-  $checklistID = filter_var($checklistID, FILTER_SANITIZE_NUMBER_INT);
-  $sql->bindParam(':checklistID', $checklistID, PDO::PARAM_INT);
-
-  // filter and bind name
-  $name = filter_var($name, FILTER_SANITIZE_STRING);
-  $sql->bindParam(':name', $name, PDO::PARAM_STR);
-
-  // filter and bind description
-  $description = filter_var($description, FILTER_SANITIZE_STRING);
-  if ($description == '') // set description to null if it is blank
-    $description = null;
-  $sql->bindParam(':description', $description, PDO::PARAM_STR);
-
-  $sql->execute();
-
-  return $sql;
-
-}
-
-function updateUserInfo($userID, $email, $firstName, $lastName) {
-  $stmt = '
-  UPDATE Users 
-  SET    email      = :email, 
-         name_first = :firstName, 
-         name_last  = :lastName 
-  WHERE  id = :userID';
-
-  $sql = dbConnect()->prepare($stmt);
-
-  // id
-  $userID = filter_var($userID, FILTER_SANITIZE_NUMBER_INT);
-  $sql->bindParam(':userID', $userID, PDO::PARAM_INT);
-
-  // email
-  $email = filter_var($email, FILTER_SANITIZE_STRING);
-  $sql->bindParam(':email', $email, PDO::PARAM_STR);
-
-  // first name
-  $firstName = filter_var($firstName, FILTER_SANITIZE_STRING);
-  $sql->bindParam(':firstName', $firstName, PDO::PARAM_STR);
-
-  // last name
-  $lastName = filter_var($lastName, FILTER_SANITIZE_STRING);
-  $sql->bindParam(':lastName', $lastName, PDO::PARAM_STR);
-
-  $sql->execute();
-  return $sql;
-}
-
-function updateUserPassword($userID, $newPassword) {
-  $stmt = '
-  UPDATE Users 
-  SET    password = :newPassword 
-  WHERE  id = :userID';
-
-  $sql = dbConnect()->prepare($stmt);
-
-  // id
-  $userID = filter_var($userID, FILTER_SANITIZE_NUMBER_INT);
-  $sql->bindParam(':userID', $userID, PDO::PARAM_INT);
-
-  // password
-  $newPassword = filter_var($newPassword, FILTER_SANITIZE_STRING);
-  $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
-  $sql->bindParam(':newPassword', $hashedPassword, PDO::PARAM_STR);
-
-  $sql->execute();
-  return $sql;
-}
-
-
-
 // mark all items in a checklist as either complete or incomplete
 function updateAllItemsComplete($checklistID, $completed = 'y') {
   $stmt = '
@@ -641,17 +662,13 @@ function copyOverItems($sourceID, $destinationID) {
   $sourceID = filter_var($sourceID, FILTER_SANITIZE_NUMBER_INT);
   $sql->bindParam(':sourceID', $sourceID, PDO::PARAM_INT);
 
-    // filter and bind destination id
+  // filter and bind destination id
   $destinationID = filter_var($destinationID, FILTER_SANITIZE_NUMBER_INT);
   $sql->bindParam(':destinationID', $destinationID, PDO::PARAM_INT);
 
   $sql->execute();
 
   return $sql;
-
-
-
-
 }
 
 ?>

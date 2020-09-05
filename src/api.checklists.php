@@ -3,7 +3,16 @@ session_start();
 
 include('functions.php');
 
-// create new account
+/*********************************************************
+ * Create a new account
+ * 
+ * post
+ * 
+ * new-email
+ * new-name-first
+ * new-name-last
+ * new-password
+***********************************************************/
 if (isset($_POST['new-email'], $_POST['new-name-first'], $_POST['new-name-last'], $_POST['new-password'])) {
 
   // check if email is already taken
@@ -30,7 +39,14 @@ if (isset($_POST['new-email'], $_POST['new-name-first'], $_POST['new-name-last']
   }
 }
 
-// user log in
+/*********************************************************
+ * Log in a user
+ * 
+ * post
+ * 
+ * login-email
+ * login-password
+***********************************************************/
 else if (isset($_POST['login-email'], $_POST['login-password'])) {
   $email = $_POST['login-email'];
   $password = $_POST['login-password'];
@@ -59,7 +75,15 @@ else if (isset($_POST['login-email'], $_POST['login-password'])) {
   }
 }
 
-// create new checklist
+/*********************************************************
+ * Create a new checklist
+ * 
+ * post
+ * 
+ * new-checklist-name
+ * new-checklist-name
+ * new-checklist-description
+***********************************************************/
 else if (isset($_POST['new-checklist-name'])) {
   $name        = $_POST['new-checklist-name'];
   $description = $_POST['new-checklist-description'];
@@ -74,7 +98,15 @@ else if (isset($_POST['new-checklist-name'])) {
   exit;
 }
 
-// retrieve user checklists
+/*********************************************************
+ * Cget all of the user's checklists
+ * 
+ * get
+ * 
+ * function = get-checklists
+ * 
+ * session (userID)
+***********************************************************/
 else if (isset($_GET['function'], $_SESSION['userID']) && $_GET['function'] == 'get-checklists') {
   $userID = $_SESSION['userID'];
   $checklists = getChecklists($userID)->fetchAll(PDO::FETCH_ASSOC);
@@ -82,7 +114,15 @@ else if (isset($_GET['function'], $_SESSION['userID']) && $_GET['function'] == '
   exit;
 }
 
-// get the data of a checklist
+/*********************************************************
+ * get checklist data
+ * 
+ * get
+ * 
+ * function = get-checklist 
+ * 
+ * checklistID
+ ***********************************************************/
 else if (isset($_GET['function'], $_GET['checklistID']) && $_GET['function'] == 'get-checklist') {
   $checklistID = $_GET['checklistID'];
   $checklist = getChecklist($checklistID)->fetch(PDO::FETCH_ASSOC);
@@ -90,7 +130,15 @@ else if (isset($_GET['function'], $_GET['checklistID']) && $_GET['function'] == 
   exit;
 }
 
-// get the checklist data and its items
+/*********************************************************
+ * get a checklist data and its items
+ * 
+ * get
+ * 
+ * function = get-checklist-and-items
+ * 
+ * checklistID
+ ***********************************************************/
 else if (isset($_GET['function'], $_GET['checklistID']) && $_GET['function'] == 'get-checklist-and-items') {
   $checklistID = $_GET['checklistID'];
   $checklist['checklist'] = getChecklist($checklistID)->fetch(PDO::FETCH_ASSOC);
@@ -99,7 +147,15 @@ else if (isset($_GET['function'], $_GET['checklistID']) && $_GET['function'] == 
   exit;
 }
 
-// retrive the items in a checklist
+/*********************************************************
+ * return all the items in a checklist
+ * 
+ * get
+ * 
+ * function = get-checklist-items
+ * 
+ * checklistID
+ ***********************************************************/
 else if (isset($_GET['function'], $_GET['id']) && $_GET['function'] == 'get-checklist-items') {
   $checklistID = $_GET['id'];
   $items = getItems($checklistID)->fetchAll(PDO::FETCH_ASSOC);
@@ -107,7 +163,17 @@ else if (isset($_GET['function'], $_GET['id']) && $_GET['function'] == 'get-chec
   exit;
 }
 
-// update an item 
+/*********************************************************
+ * Update an item
+ * 
+ * post
+ * 
+ * function = update-item
+ * 
+ * itemID
+ * content
+ * completed
+ ***********************************************************/
 else if (isset($_POST['function'], $_POST['itemID'], $_POST['content'], $_POST['completed']) && $_POST['function'] == 'update-item') {
 
   $itemID    = $_POST['itemID'];
@@ -125,7 +191,16 @@ else if (isset($_POST['function'], $_POST['itemID'], $_POST['content'], $_POST['
 }
 
 
-// add item to a checklist
+/*********************************************************
+ * Add item to a checklist
+ * 
+ * post
+ * 
+ * function = add-item
+ * 
+ * checklistID
+ * content
+ ***********************************************************/
 else if (isset($_POST['function'], $_POST['checklistID'], $_POST['content']) && $_POST['function'] == 'add-item') {
   $checklistID = $_POST['checklistID'];
   $content = $_POST['content'];
@@ -144,7 +219,15 @@ else if (isset($_POST['function'], $_POST['checklistID'], $_POST['content']) && 
 }
 
 
-// delete an item request
+/*********************************************************
+ * Delete an item
+ * 
+ * post
+ * 
+ * function = delete-item
+ * 
+ * itemID
+ ***********************************************************/
 else if (isset($_POST['function'], $_POST['itemID']) && $_POST['function'] == 'delete-item') {
   $itemID = $_POST['itemID'];
 
@@ -158,7 +241,15 @@ else if (isset($_POST['function'], $_POST['itemID']) && $_POST['function'] == 'd
   exit;
 }
 
-// get an item based on its id
+/*********************************************************
+ * Get the data for an item
+ * 
+ * get
+ * 
+ * function = get-item
+ * 
+ * itemID
+ ***********************************************************/
 else if (isset($_GET['function'], $_GET['itemID']) && $_GET['function'] == 'get-item') {
   $itemID = $_GET['itemID'];
   $item = getItem($itemID)->fetch(PDO::FETCH_ASSOC);
@@ -167,7 +258,15 @@ else if (isset($_GET['function'], $_GET['itemID']) && $_GET['function'] == 'get-
 }
 
 
-// delete a checklist
+/*********************************************************
+ * Delete a checklist
+ * 
+ * post
+ * 
+ * function = delete-checklist
+ * 
+ * checklistID
+ ***********************************************************/
 else if (isset($_POST['function'], $_POST['checklistID']) && $_POST['function'] == 'delete-checklist') {
   $checklistID = $_POST['checklistID'];
   $result = deleteChecklist($checklistID);
@@ -180,7 +279,17 @@ else if (isset($_POST['function'], $_POST['checklistID']) && $_POST['function'] 
   exit;
 }
 
-// update checklist data
+/*********************************************************
+ * Update checklist data
+ * 
+ * post
+ * 
+ * function = update-checklist
+ * 
+ * checklistID
+ * name
+ * description (optional)
+ ***********************************************************/
 else if (isset($_POST['function'], $_POST['checklistID'], $_POST['name']) && $_POST['function'] == 'update-checklist') {
   $checklistID = $_POST['checklistID'];
   $name        = $_POST['name'];
@@ -197,7 +306,15 @@ else if (isset($_POST['function'], $_POST['checklistID'], $_POST['name']) && $_P
 }
 
 
-// update user info
+/*********************************************************
+ * Update user data
+ * 
+ * post
+ * 
+ * edit-email
+ * edit-name-first
+ * edit-name-last
+ ***********************************************************/
 else if (isset($_SESSION['userID'], $_POST['edit-email'], $_POST['edit-name-first'], $_POST['edit-name-last'])) {
   $userID    = $_SESSION['userID'];
   $email     = $_POST['edit-email'];
@@ -217,6 +334,14 @@ else if (isset($_SESSION['userID'], $_POST['edit-email'], $_POST['edit-name-firs
   exit;
 }
 
+/*********************************************************
+ * Update user password
+ * 
+ * post
+ * 
+ * edit-password-current   (old password)
+ * edit-password-1         (new password)
+ ***********************************************************/
 else if (isset($_SESSION['userID'], $_POST['edit-password-current'], $_POST['edit-password-1'])) {
   $userID          = $_SESSION['userID'];
   $currentPassword = $_POST['edit-password-current'];
@@ -249,14 +374,30 @@ else if (isset($_SESSION['userID'], $_POST['edit-password-current'], $_POST['edi
 }
 
 
-// mark all items complete
+/*********************************************************
+ * Mark all the items in the checklist complete
+ * 
+ * post
+ *
+ * function = complete-all-items
+ * 
+ * checklistID
+ ***********************************************************/
 else if (isset($_POST['function'], $_POST['checklistID']) && $_POST['function'] == 'complete-all-items') {
   $checklistID = $_POST['checklistID'];
   $result = updateAllItemsComplete($checklistID);
   exit;
 }
 
-// mark all items incomplete
+/*********************************************************
+ * Mark all the items in the checklist incomplete
+ * 
+ * post
+ *
+ * function = incomplete-all-items
+ * 
+ * checklistID
+ ***********************************************************/
 else if (isset($_POST['function'], $_POST['checklistID']) && $_POST['function'] == 'incomplete-all-items') {
   $checklistID = $_POST['checklistID'];
   $result = updateAllItemsComplete($checklistID, 'n');
@@ -264,10 +405,19 @@ else if (isset($_POST['function'], $_POST['checklistID']) && $_POST['function'] 
 }
 
 
-// copy over checklist items into another checklist
+/*********************************************************
+ * Copy over the items in one checklist into another one
+ * 
+ * post
+ *
+ * function = copy-items
+ * 
+ * sourceID         (id of the source checklist)
+ * destinationID    (id of the destination checklist)
+ ***********************************************************/
 else if (isset($_POST['function'], $_POST['sourceID'], $_POST['destinationID']) && $_POST['function'] == 'copy-items') {
   $destinationID = $_POST['destinationID'];
-  $sourceID = $_POST['sourceID'];
+  $sourceID      = $_POST['sourceID'];
 
   $result = copyOverItems($sourceID, $destinationID);
 

@@ -100,6 +100,10 @@ function addEventListeners() {
   $("#checklists-open").on('click', '.btn-toggle-description', function() {
     toggleChecklistDescription(this);
   });
+
+  $("#checklists-open").on('click', '.btn-open-paste-modal', function() {
+    openPasteModal(this);
+  });
 }
 
 // implements the autosize script for the textareas
@@ -321,7 +325,15 @@ function getChecklistFooterHtml() {
   // display copy over items modal button
   html += '<button type="button" class="btn btn-sm btn-secondary btn-open-copy-modal">Copy in items</button>';
 
+  // button that opens modal-paste-items
+  html += '<button type="button" class="btn btn-sm btn-secondary btn-open-paste-modal">Import items</button>';
+
+  // delete checklist button
   html += '<button type="button" class="btn btn-sm btn-danger btn-delete-checklist">Delete</button>';
+
+  
+
+
   html += '</div>';
   html += '</div>';
 
@@ -897,4 +909,12 @@ function copyItems() {
 // toggle the display of a checklist's description
 function toggleChecklistDescription(btn) {
   $(btn).closest('.card-checklist').find('.card-header-description').toggleClass('d-none');
+}
+
+// opens the paste items modal
+function openPasteModal(btn) {
+
+  $('#modal-paste-items').modal('show');
+
+
 }

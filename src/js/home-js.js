@@ -104,6 +104,8 @@ function addEventListeners() {
   $("#checklists-open").on('click', '.btn-open-paste-modal', function() {
     openPasteModal(this);
   });
+
+  $("#modal-paste-items .btn-paste-items").on('click', pasteItems);
 }
 
 // implements the autosize script for the textareas
@@ -772,7 +774,7 @@ function getSortedItemsByNameAsc(items) {
 // sort the items by original order
 function getSortedItemsByOriginal(checklistID) {
   var data = {
-    function: 'get-checklist',
+    function: 'get-checklist-items',
     id: checklistID,
   }
 
@@ -913,16 +915,37 @@ function toggleChecklistDescription(btn) {
 
 // opens the paste items modal
 function openPasteModal(btn) {
-
   var checklist   = $(btn).closest('.card-checklist');
   var checklistID = $(checklist).attr('data-checklist-id');
-  var modal = $('#modal-paste-items');
+  var modal       = $('#modal-paste-items');
   
-
   // set the modal id to the checklist id
   $(modal).attr('data-checklist-id', checklistID);
 
+  // show the modal
   $('#modal-paste-items').modal('show');
+}
 
+// add the list of items to the checklist
+function pasteItems() {
+  var modal       = $('#modal-paste-items');
+  var checklistID = $(modal).attr('data-checklist-id');
+  var newItems    = JSON.stringify($('#paste-items-input').val().split("\n"));
 
+  var data = {
+    function: "add-item-list",
+    items: newItems,
+    checklistID: checklistID,
+  };
+
+  $.post(API, data, function(response) {
+    // dont do anything if there was an error
+    if (response != 'success')
+      return;
+
+    getSortedItemsByOriginal(checklistID);  // reload the checklist items
+    $('#modal-paste-items').modal('hide');  // close the modal
+    $('#paste-items-input').val('');        // clear the input
+    displayAlert('Items added');            // display alert
+  });
 }

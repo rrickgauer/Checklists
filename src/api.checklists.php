@@ -428,5 +428,29 @@ else if (isset($_POST['function'], $_POST['sourceID'], $_POST['destinationID']) 
   exit;
 }
 
+/*********************************************************
+ * Add a list of items to a checklist
+ * 
+ * post
+ * 
+ * function = add-item-list
+ * 
+ * checklistID
+ * items (array of items)
+***********************************************************/
+else if (isset($_POST['function'], $_POST['checklistID'], $_POST['items']) && $_POST['function'] == 'add-item-list') {
+  $checklistID = $_POST['checklistID'];
+  $newItems    = json_decode($_POST['items']);
+  $result      = insertItemList($checklistID, $newItems);
+
+  // return an error if the rowcount does not match the number of items to be inserted
+  if ($result->rowCount() == count($newItems)) 
+    echo 'success';
+   else
+    echo 'error';
+
+  exit;
+}
+
 
 ?>

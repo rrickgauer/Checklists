@@ -68,7 +68,7 @@ function addEventListeners() {
     openEditChecklistModal(this);
   });
 
-  $("#modal-edit-checklist .btn-save-checklist-name").on('click', updateChecklistName);
+  $("#modal-edit-checklist .btn-save-checklist-name").on('click', updateChecklist);
 
   $(".dropdown-sidebar .btn-sort-option").on('click', function() {
     sortSidebar(this);
@@ -192,6 +192,7 @@ function getChecklist(checklistID) {
 
 }
 
+// display a checklist
 function displayChecklist(checklist, items) {
   const size = items.length;
 
@@ -209,6 +210,7 @@ function displayChecklist(checklist, items) {
   $("#checklists-open").append(html);
 }
 
+// generates and returns a checklist header html
 function getChecklistHeaderHtml(checklist) {
   var html = '<div class="card card-checklist animate__animated animate__faster  ' + ANIMATION_ENTRANCE + '" data-checklist-id="';
   html += checklist.id + '">';
@@ -300,6 +302,7 @@ function getChecklistHeaderHtml(checklist) {
   return html;
 }
 
+// generates a checklist footer html
 function getChecklistFooterHtml() {
   var html = '</div>'; // end items
   html += '</div>';
@@ -325,7 +328,7 @@ function getChecklistFooterHtml() {
   return html;
 }
 
-
+// generates an item html
 function getChecklistItemHtml(item) {
   var html = '';
 
@@ -412,10 +415,12 @@ function closeChecklist(closeBtn) {
 
 }
 
+// returns a sidebar checklist object by searching for it's id
 function getSidebarChecklist(checklistID) {
   return $('.sidebar .list-group-item-checklist[data-checklist-id="' + checklistID + '"]');
 }
 
+// returns an open checklist object by searching for it's id
 function getOpenedChecklist(checklistID) {
   return checklist = $('.card-checklist[data-checklist-id="' + checklistID + '"]');
 }
@@ -449,7 +454,7 @@ function addItem(addItemBtn) {
   });
 }
 
-
+// delete an item
 function deleteItem(btn) {
   var item = $(btn).closest(".item");
   var itemID = $(item).attr('data-item-id');
@@ -469,6 +474,7 @@ function deleteItem(btn) {
   });
 }
 
+// edit an item content
 function editItem(btn) {
   var item = $(btn).closest(".item");
   var itemID = $(item).attr('data-item-id');
@@ -483,7 +489,7 @@ function editItem(btn) {
   $(item).html(html);
 }
 
-
+// saves an edit to an item
 function saveItemEdit(btn) {
   var item = $(btn).closest('.item');
   var itemID = $(item).attr('data-item-id');
@@ -517,8 +523,9 @@ function saveItemEdit(btn) {
   });
 }
 
+// cancels an item edit and sets the content to its original data
 function cancelItemEdit(btn) {
-  var item = $(btn).closest('.item');
+  var item   = $(btn).closest('.item');
   var itemID = $(item).attr('data-item-id');
 
   var data = {
@@ -533,12 +540,12 @@ function cancelItemEdit(btn) {
 
 }
 
-
+// delete a checklist
 function deleteChecklist(btn) {
   if (!confirm('Are you sure you want to delete this checklist?'))
     return;
 
-  var checklist = $(btn).closest('.card-checklist');
+  var checklist   = $(btn).closest('.card-checklist');
   var checklistID = $(checklist).attr('data-checklist-id');
 
   var data = {
@@ -548,8 +555,12 @@ function deleteChecklist(btn) {
 
   $.post(API, data, function(response) {
     if (response == 'success') {
-      $(checklist).remove();
-      var sideBarChecklist = getSidebarChecklist(checklistID);
+      
+      // remove the open checklist
+      $(checklist).remove();      
+
+      // remove the checklist from the sidebar
+      var sideBarChecklist = getSidebarChecklist(checklistID);  
       $(sideBarChecklist).remove();
 
       displayAlert('Checklist deleted');
@@ -557,7 +568,7 @@ function deleteChecklist(btn) {
   });
 }
 
-
+// open the edit checklist modal
 function openEditChecklistModal(btn) {
   var checklist          = $(btn).closest('.card-checklist');
   var checklistID        = $(checklist).attr('data-checklist-id');
@@ -586,8 +597,8 @@ function openEditChecklistModal(btn) {
   });
 }
 
-
-function updateChecklistName() {
+// updates the checklist name
+function updateChecklist() {
   var modal          = $("#modal-edit-checklist");
   var checklistID    = $(modal).attr('data-checklist-id');
   var newName        = $(modal).find('input[name="edit-checklist-name"]').val();
@@ -604,13 +615,12 @@ function updateChecklistName() {
     if (response == 'success') {
       setChecklistName(checklistID, newName);
       $(modal).modal('hide');
-
       displayAlert('Checklist updated');
     }
   });
 }
 
-
+// set the new checklist name
 function setChecklistName(id, name) {
   // update sidebar name
   var sidebarChecklist = getSidebarChecklist(id);
@@ -622,9 +632,8 @@ function setChecklistName(id, name) {
 }
 
 
-
+// sort the side bar based on selected option
 function sortSidebar(sortOption) {
-
   switch ($(sortOption).attr('data-sort-value')) {
     case 'name-asc':
       sortChecklistsByNameAsc();
@@ -647,6 +656,7 @@ function sortSidebar(sortOption) {
   }
 }
 
+// sort sidebar by names asc
 function sortChecklistsByNameAsc() {
   var checklists = $(".sidebar .list-group-item-checklist");
 
@@ -659,6 +669,7 @@ function sortChecklistsByNameAsc() {
   $(".sidebar .list-group").html(checklists);
 }
 
+// sort sidebar by names desc
 function sortChecklistsByNameDesc() {
   var checklists = $(".sidebar .list-group-item-checklist");
   
@@ -671,7 +682,7 @@ function sortChecklistsByNameDesc() {
   $(".sidebar .list-group").html(checklists);
 }
 
-
+// sort sidebar by the largest item count
 function sortChecklistsByItemCountLargest() {
   var checklists = $(".sidebar .list-group-item-checklist");
   
@@ -684,7 +695,7 @@ function sortChecklistsByItemCountLargest() {
   $(".sidebar .list-group").html(checklists);
 }
 
-
+// sort checklists by oldest
 function sortChecklsitsByDateOldest() {
   var checklists = $(".sidebar .list-group-item-checklist");
   
@@ -697,6 +708,7 @@ function sortChecklsitsByDateOldest() {
   $(".sidebar .list-group").html(checklists);
 }
 
+// sort checklists by newest
 function sortChecklsitsByDateNewest() {
   var checklists = $(".sidebar .list-group-item-checklist");
   
@@ -709,7 +721,7 @@ function sortChecklsitsByDateNewest() {
   $(".sidebar .list-group").html(checklists);
 }
 
-
+// show/hide a checklist's completed items 
 function toggleCompletedItems(checkbox) {
   var items = $(checkbox).closest('.card-checklist').find('.item.item-completed');
 
@@ -719,8 +731,7 @@ function toggleCompletedItems(checkbox) {
     $(items).hide();
 }
 
-
-
+// sort the items 
 function sortItems(selector) {
   var checklist = $(selector).closest('.card-checklist');
   var items = $(checklist).find('.item');
@@ -735,6 +746,7 @@ function sortItems(selector) {
   $(checklist).find('.items').html(sortedItems);
 }
 
+// sort the items by names asc
 function getSortedItemsByNameAsc(items) {
   items.sort(function (a, b) {
     var textA = $(a).find('.item-content').text();
@@ -745,7 +757,7 @@ function getSortedItemsByNameAsc(items) {
   return items;
 }
 
-
+// sort the items by original order
 function getSortedItemsByOriginal(checklistID) {
   var data = {
     function: 'get-checklist',
@@ -825,9 +837,8 @@ function incrementSidebarChecklistItemCount(checklistID, amount) {
 }
 
 
-
+// opens up the copy items modal
 function openCopyModal(btn) {
-
   // get list of checklists and their ids
   var checklists = $('.list-group-item-checklist');
   const size = checklists.length;
@@ -855,7 +866,7 @@ function openCopyModal(btn) {
   $('#modal-copy-items').modal('show');
 }
 
-
+// generates the html for the copy item modal radio buttons
 function getCopyItemModalRadioHtml(checklistID, checklistName) {
   var html = '<div class="form-check">';
   html += '<input class="form-check-input" type="radio" name="radio-available-checklists" value="' + checklistID + '">';
@@ -864,7 +875,7 @@ function getCopyItemModalRadioHtml(checklistID, checklistName) {
   return html;
 }
 
-
+// copies over items into the checklist from another one
 function copyItems() {
   var destinationID = $('#modal-copy-items').attr('data-checklist-id');
   var sourceID      = $('input[name="radio-available-checklists"]:checked').val();

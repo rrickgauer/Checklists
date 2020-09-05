@@ -28,7 +28,7 @@ function getAlert($message, $alertType = 'success') {
 }
 
 
-// create new account
+// create new user
 function insertUser($email, $password, $firstName, $lastName) {
   $stmt = 'INSERT INTO Users (email, name_first, name_last, password, date_created) VALUES (:email, :firstName, :lastName, :password, NOW())';
 
@@ -86,9 +86,15 @@ function doesEmailExist($email) {
 
 
 // checks if email and password are a match
+// returns true if valid, false if not valid
 function isValidEmailAndPassword($email, $password) {
-  $pdo = dbConnect();
-  $sql = $pdo->prepare('SELECT password FROM Users WHERE email=:email LIMIT 1');
+  $stmt = '
+  SELECT password
+  FROM   Users
+  WHERE  email = :email
+  LIMIT  1';
+
+  $sql = dbConnect()->prepare($stmt);
 
   // sanitize and bind username
   $email = filter_var($email, FILTER_SANITIZE_EMAIL);
@@ -112,7 +118,6 @@ function isValidEmailAndPassword($email, $password) {
  * date_created_display_time
  * date_created_display_date
  * count_checklists
- *
  ******************************************************************************/
 function getUser($id) {
   $stmt = '
@@ -330,7 +335,7 @@ function getItems($checklistID) {
   return $sql;
 }
 
-
+// updates an item's content and completed status
 function updateItem($itemID, $content, $completed) {
   $stmt = '
   UPDATE Items
@@ -358,7 +363,7 @@ function updateItem($itemID, $content, $completed) {
 
 }
 
-
+// insert an item into a checklist
 function addItem($checklistID, $content) {
 
   $stmt = '
@@ -431,7 +436,7 @@ function getLatestChecklistItem($checklistID) {
   return $sql;
 }
 
-
+// deletes an item
 function deleteItem($itemID) {
   $stmt = 'DELETE from Items where id = :itemID';
 
@@ -490,7 +495,7 @@ function getItem($itemID) {
   return $sql;
 }
 
-
+// delete a checklist
 function deleteChecklist($checklistID) {
   $stmt = '
   DELETE FROM Checklists
@@ -506,7 +511,7 @@ function deleteChecklist($checklistID) {
   return $sql;
 }
 
-
+// updates a checklst name and description
 function updateChecklist($checklistID, $name, $description = null) {
   $stmt = '
   UPDATE Checklists
@@ -536,6 +541,7 @@ function updateChecklist($checklistID, $name, $description = null) {
 
 }
 
+// updates a user's information
 function updateUserInfo($userID, $email, $firstName, $lastName) {
   $stmt = '
   UPDATE Users 
@@ -566,6 +572,7 @@ function updateUserInfo($userID, $email, $firstName, $lastName) {
   return $sql;
 }
 
+// update a user password
 function updateUserPassword($userID, $newPassword) {
   $stmt = '
   UPDATE Users 
@@ -641,17 +648,13 @@ function copyOverItems($sourceID, $destinationID) {
   $sourceID = filter_var($sourceID, FILTER_SANITIZE_NUMBER_INT);
   $sql->bindParam(':sourceID', $sourceID, PDO::PARAM_INT);
 
-    // filter and bind destination id
+  // filter and bind destination id
   $destinationID = filter_var($destinationID, FILTER_SANITIZE_NUMBER_INT);
   $sql->bindParam(':destinationID', $destinationID, PDO::PARAM_INT);
 
   $sql->execute();
 
   return $sql;
-
-
-
-
 }
 
 ?>

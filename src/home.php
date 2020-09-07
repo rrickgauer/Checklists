@@ -197,7 +197,7 @@ $user = getUser($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);  // get user data
 
                 <div class="form-group">
                   <label>Paste items</label>
-                  <textarea class="form-control" id="paste-items-input"></textarea>
+                  <textarea class="form-control autosize" rows="1" id="paste-items-input"></textarea>
                 </div>
 
                 <button type="button" class="btn btn-primary btn-paste-items">Add items to checklist</button>

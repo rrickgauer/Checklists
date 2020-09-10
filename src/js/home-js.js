@@ -877,19 +877,6 @@ function setItemsCompleted(checklistID, response) {
     $(checklist).find('.item').removeClass('item-completed').find('.item-checkbox').prop('checked', false);
 }
 
-// increment the item count for the sidebar checklist
-function incrementSidebarChecklistItemCount(checklistID, amount) {
-  var checklist = getSidebarChecklist(checklistID);
-  var itemCount = parseInt($(checklist).find('.badge').text());
-
-  // add the amount to the count
-  itemCount += amount; 
-
-  // display the new amount
-  $(checklist).find('.badge').text(itemCount);
-}
-
-
 // opens up the copy items modal
 function openCopyModal(btn) {
   // get list of checklists and their ids

@@ -1003,7 +1003,10 @@ function addChecklist() {
 
     // reload checklist sidebar
     getChecklists();
-    
+
+    // increment checklists count in sidebar by 1
+    incrementSidebarChecklistCount(1);
+
     // close the modal
     $('#modal-new-checklist').modal('hide');
 

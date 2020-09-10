@@ -881,6 +881,9 @@ function setItemsCompleted(checklistID, response) {
   // uncheck all checkboxes and remove class item-completed
   else
     $(checklist).find('.item').removeClass('item-completed').find('.item-checkbox').prop('checked', false);
+
+  // update item count data in the checklist header
+  updateChecklistDisplayData(checklistID);  
 }
 
 // opens up the copy items modal

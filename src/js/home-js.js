@@ -236,7 +236,6 @@ function getChecklistHeaderHtml(checklist) {
   html += '</div>';
 
   // description
-
   if (checklist.description == null)
     html += '<div class="card-header-description d-none"></div>';
   else
@@ -244,10 +243,12 @@ function getChecklistHeaderHtml(checklist) {
 
   // dates
   html += '<div class="card-header-dates d-none">';
-  html += '<span class="date-created">' + checklist.date_created_display + '</span>';                                                         // date created
+
+  // dates - date created
+  html += '<span class="date-created">' + checklist.date_created_display + '</span>';
   html += '<span>&nbsp;&bull;&nbsp;</span>';
 
-  // date modified
+  // dates - date modified
   html += '<span class="date-modified">Updated <span class="date-modified-time">';
   if (checklist.date_modified_minutes < 60)
     html += checklist.date_modified_minutes + ' minutes ago';
@@ -255,15 +256,15 @@ function getChecklistHeaderHtml(checklist) {
     html += checklist.date_modified_hours + ' hours ago';
   else
     html += checklist.date_modified_days + ' days ago';
-   html += '</span></span>'; // date modified
-  
-  html += '</div>'; // end dates
+   
+  html += '</span></span>';   // end date modified
+  html += '</div>';           // end dates
 
   // item counts
   html += '<div class="card-header-counts d-none">';   
-  html += '<span class="item-count"><span class="count">' + checklist.count_items + '</span> items &bull; </span>';               // total
+  html += '<span class="item-count"><span class="count">' + checklist.count_items + '</span> items &bull; </span>';                        // total
   html += '<span class="item-count-complete"><span class="count">' + checklist.count_items_complete + '</span> completed &bull; </span>';  // complete
-  html += '<span class="item-count-incomplete"><span class="count">' + checklist.count_items_incomplete + '</span> incomplete</span>';       // incomplete
+  html += '<span class="item-count-incomplete"><span class="count">' + checklist.count_items_incomplete + '</span> incomplete</span>';     // incomplete
   html += '</div>';
 
   // end card header
@@ -333,9 +334,6 @@ function getChecklistFooterHtml() {
   // delete checklist button
   html += '<button type="button" class="btn btn-sm btn-danger btn-delete-checklist">Delete</button>';
 
-  
-
-
   html += '</div>';
   html += '</div>';
 
@@ -347,29 +345,37 @@ function getChecklistItemHtml(item) {
   var html = '';
 
   if (item.completed == 'n')
-    html = '<div class="item" data-item-id="';
+    html = '<div class="item" data-item-id="' + item.id + '">';
   else
-    html = '<div class="item item-completed" data-item-id="';
+    html = '<div class="item item-completed" data-item-id="' + item.id + '">';
 
-  html += item.id + '">';
+  // content and checkbox
+  html += '<div class="left form-check form-check-inline"><label>';
 
+  // checkbox
   if (item.completed == 'n')
-    html += '<div class="left"><input class="item-checkbox" type="checkbox">';
+    html += '<input class="form-check-input item-checkbox" type="checkbox">';
   else
-    html += '<div class="left"><input class="item-checkbox" type="checkbox" checked>';
-  
-  html += '<span class="item-content">' + item.content + '</span></div>';
+    html += '<input class="form-check-input item-checkbox" type="checkbox" checked>';
+
+  // content
+  html += '<span class="item-content">' + item.content + '</span>';
+  html += '</label></div>'; // end content and checkbox
+
+    // dropdown
   html += '<div class="right">';
 
-  // dropdown
+  // dropdown: button
   html += '<div class="dropleft">';
   html += '<button type="button" class="btn btn-sm btn-xs" data-toggle="dropdown">';
   html += '<i class="bx bx-dots-horizontal-rounded"></i>';
   html += '</button>';
+
+  // dropdown: menu
   html += '<div class="dropdown-menu">';
   html += '<button class="dropdown-item btn-edit-item" type="button">Edit</button>';
   html += '<button class="dropdown-item btn-delete-item" type="button">Delete</button>';
-  html += '</div>'; // dropdown menu
+  html += '</div>'; // end dropdown menu
 
   html += '</div>'; // div.right
   html += '</div>'; // card footer

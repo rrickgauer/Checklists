@@ -99,7 +99,7 @@ else if (isset($_POST['new-checklist-name'])) {
 }
 
 /*********************************************************
- * Cget all of the user's checklists
+ * Get all of the user's checklists
  * 
  * get
  * 

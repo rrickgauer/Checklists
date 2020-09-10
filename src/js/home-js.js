@@ -261,9 +261,9 @@ function getChecklistHeaderHtml(checklist) {
 
   // item counts
   html += '<div class="card-header-counts">';   
-  html += '<span class="item-count">' + checklist.count_items + ' items &bull; </span>';               // total
-  html += '<span class="item-count-complete">' + checklist.count_items_complete + ' completed &bull; </span>';  // complete
-  html += '<span class="item-count-incomplete">' + checklist.count_items_incomplete + ' incomplete</span>';       // incomplete
+  html += '<span class="item-count"><span class="count">' + checklist.count_items + '</span> items &bull; </span>';               // total
+  html += '<span class="item-count-complete"><span class="count">' + checklist.count_items_complete + '</span> completed &bull; </span>';  // complete
+  html += '<span class="item-count-incomplete"><span class="count">' + checklist.count_items_incomplete + '</span> incomplete</span>';       // incomplete
   html += '</div>';
 
   // end card header
@@ -378,6 +378,45 @@ function getChecklistItemHtml(item) {
   return html;
 }
 
+////////////////////////////////////////////
+// update the item counts for a checklist //
+////////////////////////////////////////////
+function updateChecklistDisplayData(checklistID) {
+  var data = {
+    function: "get-checklist",
+    checklistID: checklistID,
+  }
+
+  $.getJSON(API, data, function(response) {
+    // open checklist
+    var openChecklist = getOpenedChecklist(checklistID);
+    $(openChecklist).find('.item-count .count').text(response.count_items);
+    $(openChecklist).find('.item-count-complete .count').text(response.count_items_complete);
+    $(openChecklist).find('.item-count-incomplete .count').text(response.count_items_incomplete);
+    $(openChecklist).find('.card-header-description').text(response.description);
+
+    // sidebar checklist
+    var sideBarChecklist = getSidebarChecklist(checklistID);
+    $(sideBarChecklist).find('.badge-pill').text(response.count_items);
+
+    // checklist name
+    setChecklistName(checklistID, response.name);
+  });
+}
+
+////////////////////////////////
+// update the checklist name //
+////////////////////////////////
+function setChecklistName(id, name) {
+  // update sidebar name
+  var sidebarChecklist = getSidebarChecklist(id);
+  $(sidebarChecklist).find('.checklist-name').text(name);
+
+  // update open checklist
+  var openChecklist = getOpenedChecklist(id);
+  $(openChecklist).find('.card-header h4').text(name);
+}
+
 // toggle an item's completed status
 function toggleItemComplete(checkbox) {
   var item    = $(checkbox).closest('.item');
@@ -398,22 +437,26 @@ function toggleItemComplete(checkbox) {
 
 
   $.post(API, data, function(response) {
-    if (response == 'success') {
-      $(item).toggleClass('item-completed');
 
-      // item is now completed
-      if ($(item).hasClass('item-completed')) {
-        // check if show done checkbox is checked
-        var showDoneCheckbox = $(item).closest('.card-checklist').find('.show-completed-items');
+    if (response != 'success')
+      return;
 
-        // hide item if show done checkbox is unchecked
-        if ($(showDoneCheckbox).is(':checked') == false) {
-          $(item).hide();
-        }
+    $(item).toggleClass('item-completed');
+
+    // item is now completed
+    if ($(item).hasClass('item-completed')) {
+      // check if show done checkbox is checked
+      var showDoneCheckbox = $(item).closest('.card-checklist').find('.show-completed-items');
+
+      // hide item if show done checkbox is unchecked
+      if ($(showDoneCheckbox).is(':checked') == false) {
+        $(item).hide();
       }
     }
-  });
 
+    var checklistID = $(checkbox).closest('.card-checklist').attr('data-checklist-id');
+    updateChecklistDisplayData(checklistID);
+  });
 } 
 
 // close a checklist
@@ -460,11 +503,19 @@ function addItem(addItemBtn) {
   }
 
   $.post(API, data, function(response) {
-    var itemHtml = getChecklistItemHtml(JSON.parse(response));
+    if (response == 'error') {
+      displayAlert('Error. There was an issue adding the item. Please try again.')
+      return;
+    }
+
+    var item = JSON.parse(response);
+
+    // append item to the checklist html
+    var itemHtml = getChecklistItemHtml(item);
     $(checklist).find('.items').prepend(itemHtml);
     $(checklist).find('.item-input-new').val('');
 
-    incrementSidebarChecklistItemCount(checklistID, 1); // add 1 to item count in the sidebar
+    updateChecklistDisplayData(checklistID);
   });
 }
 
@@ -480,11 +531,14 @@ function deleteItem(btn) {
   }
 
   $.post(API, data, function(response) {
-    if (response == 'success') {
-      $(item).remove();
-      displayAlert('Item was deleted');
-      incrementSidebarChecklistItemCount(checklistID, -1);  // subtract 1 from item count in sidebar
+    if (response != 'success') {
+      displayAlert('Error. There was an issue deleting the item. Please try again.')
+      return;
     }
+
+    $(item).remove();
+    updateChecklistDisplayData(checklistID);
+    displayAlert('Item was deleted');
   });
 }
 
@@ -627,24 +681,12 @@ function updateChecklist() {
 
   $.post(API, data, function(response) {
     if (response == 'success') {
-      setChecklistName(checklistID, newName);
+      updateChecklistDisplayData(checklistID);
       $(modal).modal('hide');
       displayAlert('Checklist updated');
     }
   });
 }
-
-// set the new checklist name
-function setChecklistName(id, name) {
-  // update sidebar name
-  var sidebarChecklist = getSidebarChecklist(id);
-  $(sidebarChecklist).find('.checklist-name').text(name);
-
-  // update open checklist
-  var openChecklist = getOpenedChecklist(id);
-  $(openChecklist).find('.card-header h4').text(name);
-}
-
 
 // sort the side bar based on selected option
 function sortSidebar(sortOption) {
@@ -837,19 +879,6 @@ function setItemsCompleted(checklistID, response) {
   else
     $(checklist).find('.item').removeClass('item-completed').find('.item-checkbox').prop('checked', false);
 }
-
-// increment the item count for the sidebar checklist
-function incrementSidebarChecklistItemCount(checklistID, amount) {
-  var checklist = getSidebarChecklist(checklistID);
-  var itemCount = parseInt($(checklist).find('.badge').text());
-
-  // add the amount to the count
-  itemCount += amount; 
-
-  // display the new amount
-  $(checklist).find('.badge').text(itemCount);
-}
-
 
 // opens up the copy items modal
 function openCopyModal(btn) {

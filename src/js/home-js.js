@@ -334,9 +334,6 @@ function getChecklistFooterHtml() {
   // delete checklist button
   html += '<button type="button" class="btn btn-sm btn-danger btn-delete-checklist">Delete</button>';
 
-  
-
-
   html += '</div>';
   html += '</div>';
 

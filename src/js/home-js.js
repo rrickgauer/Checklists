@@ -938,6 +938,8 @@ function copyItems() {
 // toggle the display of a checklist's description
 function toggleChecklistDescription(btn) {
   $(btn).closest('.card-checklist').find('.card-header-description').toggleClass('d-none');
+  $(btn).closest('.card-checklist').find('.card-header-dates').toggleClass('d-none');
+  $(btn).closest('.card-checklist').find('.card-header-counts').toggleClass('d-none');
 }
 
 // opens the paste items modal

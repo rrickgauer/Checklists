@@ -79,22 +79,29 @@ else if (isset($_POST['login-email'], $_POST['login-password'])) {
  * Create a new checklist
  * 
  * post
+ *
+ * function = insert-checklist
  * 
- * new-checklist-name
  * new-checklist-name
  * new-checklist-description
 ***********************************************************/
-else if (isset($_POST['new-checklist-name'])) {
-  $name        = $_POST['new-checklist-name'];
-  $description = $_POST['new-checklist-description'];
+else if (isset($_POST['name'], $_POST['function'], $_SESSION['userID']) && $_POST['function'] == 'insert-checklist') {
+  $name        = $_POST['name'];
+  $description = $_POST['description'];
   $result      = insertChecklist($_SESSION['userID'], $name, $description);
 
-  if ($result->rowCount() == 1) 
-    $_SESSION['checklist-created'] = true;
-  else
-    $_SESSION['checklist-created'] = false;
+  if ($result->rowCount() != 1) {
+    echo 'error';
+    exit;
+  }
 
-  header('Location: home.php');
+  // get the id of the newest checklist
+  $checklistID = getNewestChecklistID($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);
+
+  // get the checklist data
+  $checklist = getChecklist($checklistID['id'])->fetch(PDO::FETCH_ASSOC);
+
+  echo json_encode($checklist);
   exit;
 }
 

@@ -670,7 +670,7 @@ function updateChecklist() {
 
   $.post(API, data, function(response) {
     if (response == 'success') {
-      setChecklistName(checklistID, newName);
+      updateChecklistDisplayData(checklistID);
       $(modal).modal('hide');
       displayAlert('Checklist updated');
     }

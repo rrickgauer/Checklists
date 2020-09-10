@@ -404,7 +404,18 @@ function updateChecklistDisplayData(checklistID) {
   });
 }
 
+////////////////////////////////
+// update the checklist name //
+////////////////////////////////
+function setChecklistName(id, name) {
+  // update sidebar name
+  var sidebarChecklist = getSidebarChecklist(id);
+  $(sidebarChecklist).find('.checklist-name').text(name);
 
+  // update open checklist
+  var openChecklist = getOpenedChecklist(id);
+  $(openChecklist).find('.card-header h4').text(name);
+}
 
 // toggle an item's completed status
 function toggleItemComplete(checkbox) {
@@ -676,18 +687,6 @@ function updateChecklist() {
     }
   });
 }
-
-// set the new checklist name
-function setChecklistName(id, name) {
-  // update sidebar name
-  var sidebarChecklist = getSidebarChecklist(id);
-  $(sidebarChecklist).find('.checklist-name').text(name);
-
-  // update open checklist
-  var openChecklist = getOpenedChecklist(id);
-  $(openChecklist).find('.card-header h4').text(name);
-}
-
 
 // sort the side bar based on selected option
 function sortSidebar(sortOption) {

@@ -1002,8 +1002,8 @@ function addChecklist() {
     } 
 
     // reload checklist sidebar
-    getChecklists();  
-
+    getChecklists();
+    
     // close the modal
     $('#modal-new-checklist').modal('hide');
 
@@ -1014,4 +1014,20 @@ function addChecklist() {
     // alert user of successful creation
     displayAlert('Checklist created');
   });
+}
+
+////////////////////////////////////////////////////////////////////////////
+// Increment the checklists count in the side bar by the amount passed in //
+////////////////////////////////////////////////////////////////////////////
+function incrementSidebarChecklistCount(amount) {
+  var sideBarChecklistCount = $('.sidebar-header .count-checklists');
+  
+  // intial checklist count
+  var count = parseInt($(sideBarChecklist).text());
+
+  // perform the increment operation
+  count += amount;
+
+  // set the text to the new count
+  $(sideBarChecklist).text(count);
 }

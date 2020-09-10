@@ -393,10 +393,14 @@ function updateChecklistDisplayData(checklistID) {
     $(openChecklist).find('.item-count .count').text(response.count_items);
     $(openChecklist).find('.item-count-complete .count').text(response.count_items_complete);
     $(openChecklist).find('.item-count-incomplete .count').text(response.count_items_incomplete);
+    $(openChecklist).find('.card-header-description').text(response.description);
 
     // sidebar checklist
     var sideBarChecklist = getSidebarChecklist(checklistID);
     $(sideBarChecklist).find('.badge-pill').text(response.count_items);
+
+    // checklist name
+    setChecklistName(checklistID, response.name);
   });
 }
 

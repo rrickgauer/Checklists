@@ -261,9 +261,9 @@ function getChecklistHeaderHtml(checklist) {
 
   // item counts
   html += '<div class="card-header-counts">';   
-  html += '<span class="item-count">' + checklist.count_items + ' items &bull; </span>';               // total
-  html += '<span class="item-count-complete">' + checklist.count_items_complete + ' completed &bull; </span>';  // complete
-  html += '<span class="item-count-incomplete">' + checklist.count_items_incomplete + ' incomplete</span>';       // incomplete
+  html += '<span class="item-count"><span class="count">' + checklist.count_items + '</span> items &bull; </span>';               // total
+  html += '<span class="item-count-complete"><span class="count">' + checklist.count_items_complete + '</span> completed &bull; </span>';  // complete
+  html += '<span class="item-count-incomplete"><span class="count">' + checklist.count_items_incomplete + '</span> incomplete</span>';       // incomplete
   html += '</div>';
 
   // end card header
@@ -378,6 +378,30 @@ function getChecklistItemHtml(item) {
   return html;
 }
 
+////////////////////////////////////////////
+// update the item counts for a checklist //
+////////////////////////////////////////////
+function updateChecklistDisplayData(checklistID) {
+  var data = {
+    function: "get-checklist",
+    checklistID: checklistID,
+  }
+
+  $.getJSON(API, data, function(response) {
+    // open checklist
+    var openChecklist = getOpenedChecklist(checklistID);
+    $(openChecklist).find('.item-count .count').text(response.count_items);
+    $(openChecklist).find('.item-count-complete .count').text(response.count_items_complete);
+    $(openChecklist).find('.item-count-incomplete .count').text(response.count_items_incomplete);
+
+    // sidebar checklist
+    var sideBarChecklist = getSidebarChecklist(checklistID);
+    $(sideBarChecklist).find('.badge-pill').text(response.count_items);
+  });
+}
+
+
+
 // toggle an item's completed status
 function toggleItemComplete(checkbox) {
   var item    = $(checkbox).closest('.item');
@@ -398,22 +422,26 @@ function toggleItemComplete(checkbox) {
 
 
   $.post(API, data, function(response) {
-    if (response == 'success') {
-      $(item).toggleClass('item-completed');
 
-      // item is now completed
-      if ($(item).hasClass('item-completed')) {
-        // check if show done checkbox is checked
-        var showDoneCheckbox = $(item).closest('.card-checklist').find('.show-completed-items');
+    if (response != 'success')
+      return;
 
-        // hide item if show done checkbox is unchecked
-        if ($(showDoneCheckbox).is(':checked') == false) {
-          $(item).hide();
-        }
+    $(item).toggleClass('item-completed');
+
+    // item is now completed
+    if ($(item).hasClass('item-completed')) {
+      // check if show done checkbox is checked
+      var showDoneCheckbox = $(item).closest('.card-checklist').find('.show-completed-items');
+
+      // hide item if show done checkbox is unchecked
+      if ($(showDoneCheckbox).is(':checked') == false) {
+        $(item).hide();
       }
     }
-  });
 
+    var checklistID = $(checkbox).closest('.card-checklist').attr('data-checklist-id');
+    updateChecklistDisplayData(checklistID);
+  });
 } 
 
 // close a checklist

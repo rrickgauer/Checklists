@@ -241,7 +241,7 @@ function getChecklistHeaderHtml(checklist) {
     html += '<div class="card-header-description d-none">' + checklist.description + '</div>';
 
   // dates
-  html += '<div class="card-header-dates">';
+  html += '<div class="card-header-dates d-none">';
   html += '<span class="date-created">' + checklist.date_created_display + '</span>';                                                         // date created
   html += '<span>&nbsp;&bull;&nbsp;</span>';
 
@@ -257,10 +257,8 @@ function getChecklistHeaderHtml(checklist) {
   
   html += '</div>'; // end dates
 
-
-
   // item counts
-  html += '<div class="card-header-counts">';   
+  html += '<div class="card-header-counts d-none">';   
   html += '<span class="item-count"><span class="count">' + checklist.count_items + '</span> items &bull; </span>';               // total
   html += '<span class="item-count-complete"><span class="count">' + checklist.count_items_complete + '</span> completed &bull; </span>';  // complete
   html += '<span class="item-count-incomplete"><span class="count">' + checklist.count_items_incomplete + '</span> incomplete</span>';       // incomplete
@@ -405,7 +403,7 @@ function updateChecklistDisplayData(checklistID) {
 }
 
 ////////////////////////////////
-// update the checklist name //
+// update  the checklist name //
 ////////////////////////////////
 function setChecklistName(id, name) {
   // update sidebar name
@@ -940,6 +938,8 @@ function copyItems() {
 // toggle the display of a checklist's description
 function toggleChecklistDescription(btn) {
   $(btn).closest('.card-checklist').find('.card-header-description').toggleClass('d-none');
+  $(btn).closest('.card-checklist').find('.card-header-dates').toggleClass('d-none');
+  $(btn).closest('.card-checklist').find('.card-header-counts').toggleClass('d-none');
 }
 
 // opens the paste items modal

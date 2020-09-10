@@ -26,7 +26,7 @@ $user = getUser($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);  // get user data
 
       <div class="sidebar-header split align-items-center">
         <h5 class="ml-3 mt-3 mb-3 mr-2">
-          Your checklists (<span class="count-checklists"><?php echo $user['count_checklists']; ?>)
+          Your checklists (<span class="count-checklists"><?php echo $user['count_checklists']; ?></span>)
         </h5>
 
         <div class="dropleft dropdown-sidebar">

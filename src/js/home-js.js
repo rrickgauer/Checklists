@@ -236,7 +236,6 @@ function getChecklistHeaderHtml(checklist) {
   html += '</div>';
 
   // description
-
   if (checklist.description == null)
     html += '<div class="card-header-description d-none"></div>';
   else
@@ -244,10 +243,12 @@ function getChecklistHeaderHtml(checklist) {
 
   // dates
   html += '<div class="card-header-dates d-none">';
-  html += '<span class="date-created">' + checklist.date_created_display + '</span>';                                                         // date created
+
+  // dates - date created
+  html += '<span class="date-created">' + checklist.date_created_display + '</span>';
   html += '<span>&nbsp;&bull;&nbsp;</span>';
 
-  // date modified
+  // dates - date modified
   html += '<span class="date-modified">Updated <span class="date-modified-time">';
   if (checklist.date_modified_minutes < 60)
     html += checklist.date_modified_minutes + ' minutes ago';
@@ -255,15 +256,15 @@ function getChecklistHeaderHtml(checklist) {
     html += checklist.date_modified_hours + ' hours ago';
   else
     html += checklist.date_modified_days + ' days ago';
-   html += '</span></span>'; // date modified
-  
-  html += '</div>'; // end dates
+   
+  html += '</span></span>';   // end date modified
+  html += '</div>';           // end dates
 
   // item counts
   html += '<div class="card-header-counts d-none">';   
-  html += '<span class="item-count"><span class="count">' + checklist.count_items + '</span> items &bull; </span>';               // total
+  html += '<span class="item-count"><span class="count">' + checklist.count_items + '</span> items &bull; </span>';                        // total
   html += '<span class="item-count-complete"><span class="count">' + checklist.count_items_complete + '</span> completed &bull; </span>';  // complete
-  html += '<span class="item-count-incomplete"><span class="count">' + checklist.count_items_incomplete + '</span> incomplete</span>';       // incomplete
+  html += '<span class="item-count-incomplete"><span class="count">' + checklist.count_items_incomplete + '</span> incomplete</span>';     // incomplete
   html += '</div>';
 
   // end card header

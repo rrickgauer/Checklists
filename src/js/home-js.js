@@ -106,6 +106,8 @@ function addEventListeners() {
   });
 
   $("#modal-paste-items .btn-paste-items").on('click', pasteItems);
+
+  $('.btn-add-checklist').on('click', addChecklist);
 }
 
 // implements the autosize script for the textareas
@@ -976,5 +978,40 @@ function pasteItems() {
     $('#modal-paste-items').modal('hide');  // close the modal
     $('#paste-items-input').val('');        // clear the input
     displayAlert('Items added');            // display alert
+  });
+}
+
+////////////////////////////
+// Create a new checklist //
+////////////////////////////
+function addChecklist() {
+  var name = $('#modal-new-checklist input[name="new-checklist-name"]').val();
+  var description = $('#modal-new-checklist textarea[name="new-checklist-description"]').val();
+
+  var data = {
+    name: name,
+    description: description,
+    function: "insert-checklist",
+  };
+
+  $.post(API, data, function(response) {
+
+    if (response == 'error') {
+      displayAlert('There was an error creating the checklist.');
+      return;
+    } 
+
+    // reload checklist sidebar
+    getChecklists();  
+
+    // close the modal
+    $('#modal-new-checklist').modal('hide');
+
+    // clear the modal inputs
+    $('#modal-new-checklist input[name="new-checklist-name"]').val('');
+    $('#modal-new-checklist textarea[name="new-checklist-description"]').val('');
+    
+    // alert user of successful creation
+    displayAlert('Checklist created');
   });
 }

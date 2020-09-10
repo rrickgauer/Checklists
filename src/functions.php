@@ -363,6 +363,30 @@ function getChecklist($checklistID) {
 }
 
 
+/*************************************************************************
+ * Return the id of a the newest checklist a user has created
+ * 
+ * id
+**************************************************************************/ 
+function getNewestChecklistID($userID) {
+  $stmt = '
+  SELECT Checklists.id
+  FROM   Checklists
+  WHERE  user_id = :userID
+  ORDER  BY date_created DESC
+  LIMIT  1';
+
+  $sql = dbConnect()->prepare($stmt);
+
+  // filter and bind user id
+  $userID = filter_var($userID, FILTER_SANITIZE_NUMBER_INT);
+  $sql->bindParam(':userID', $userID, PDO::PARAM_INT);
+
+  $sql->execute();
+  return $sql;
+}
+
+
 // delete a checklist
 function deleteChecklist($checklistID) {
   $stmt = '

@@ -109,7 +109,7 @@ $user = getUser($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);  // get user data
                   </div>
 
                   <!-- submit button -->
-                  <input type="submit" class="btn btn-primary float-right" value="Save checklist">
+                  <button type="button" class="btn btn-primary float-right btn-add-checklist">Create checklist</button>
                 </form>
               </div>
             </div>

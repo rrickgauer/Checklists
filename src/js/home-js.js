@@ -1029,11 +1029,11 @@ function incrementSidebarChecklistCount(amount) {
   var sideBarChecklistCount = $('.sidebar-header .count-checklists');
   
   // intial checklist count
-  var count = parseInt($(sideBarChecklist).text());
+  var count = parseInt($(sideBarChecklistCount).text());
 
   // perform the increment operation
   count += amount;
 
   // set the text to the new count
-  $(sideBarChecklist).text(count);
+  $(sideBarChecklistCount).text(count);
 }

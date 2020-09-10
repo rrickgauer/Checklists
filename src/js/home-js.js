@@ -516,11 +516,14 @@ function deleteItem(btn) {
   }
 
   $.post(API, data, function(response) {
-    if (response == 'success') {
-      $(item).remove();
-      displayAlert('Item was deleted');
-      incrementSidebarChecklistItemCount(checklistID, -1);  // subtract 1 from item count in sidebar
+    if (response != 'success') {
+      displayAlert('Error. There was an issue deleting the item. Please try again.')
+      return;
     }
+
+    $(item).remove();
+    updateChecklistDisplayData(checklistID);
+    displayAlert('Item was deleted');
   });
 }
 

@@ -345,29 +345,37 @@ function getChecklistItemHtml(item) {
   var html = '';
 
   if (item.completed == 'n')
-    html = '<div class="item" data-item-id="';
+    html = '<div class="item" data-item-id="' + item.id + '">';
   else
-    html = '<div class="item item-completed" data-item-id="';
+    html = '<div class="item item-completed" data-item-id="' + item.id + '">';
 
-  html += item.id + '">';
+  // content and checkbox
+  html += '<div class="left form-check form-check-inline"><label>';
 
+  // checkbox
   if (item.completed == 'n')
-    html += '<div class="left"><input class="item-checkbox" type="checkbox">';
+    html += '<input class="form-check-input item-checkbox" type="checkbox">';
   else
-    html += '<div class="left"><input class="item-checkbox" type="checkbox" checked>';
-  
-  html += '<span class="item-content">' + item.content + '</span></div>';
+    html += '<input class="form-check-input item-checkbox" type="checkbox" checked>';
+
+  // content
+  html += '<span class="item-content">' + item.content + '</span>';
+  html += '</label></div>'; // end content and checkbox
+
+    // dropdown
   html += '<div class="right">';
 
-  // dropdown
+  // dropdown: button
   html += '<div class="dropleft">';
   html += '<button type="button" class="btn btn-sm btn-xs" data-toggle="dropdown">';
   html += '<i class="bx bx-dots-horizontal-rounded"></i>';
   html += '</button>';
+
+  // dropdown: menu
   html += '<div class="dropdown-menu">';
   html += '<button class="dropdown-item btn-edit-item" type="button">Edit</button>';
   html += '<button class="dropdown-item btn-delete-item" type="button">Delete</button>';
-  html += '</div>'; // dropdown menu
+  html += '</div>'; // end dropdown menu
 
   html += '</div>'; // div.right
   html += '</div>'; // card footer

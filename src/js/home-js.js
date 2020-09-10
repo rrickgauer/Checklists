@@ -630,6 +630,9 @@ function deleteChecklist(btn) {
       // remove the checklist from the sidebar
       var sideBarChecklist = getSidebarChecklist(checklistID);  
       $(sideBarChecklist).remove();
+      
+      // subtract 1 from checklists count in sidebar
+      incrementSidebarChecklistCount(-1);
 
       displayAlert('Checklist deleted');
     }

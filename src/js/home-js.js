@@ -488,11 +488,19 @@ function addItem(addItemBtn) {
   }
 
   $.post(API, data, function(response) {
-    var itemHtml = getChecklistItemHtml(JSON.parse(response));
+    if (response == 'error') {
+      displayAlert('Error. There was an issue adding the item. Please try again.')
+      return;
+    }
+
+    var item = JSON.parse(response);
+
+    // append item to the checklist html
+    var itemHtml = getChecklistItemHtml(item);
     $(checklist).find('.items').prepend(itemHtml);
     $(checklist).find('.item-input-new').val('');
 
-    incrementSidebarChecklistItemCount(checklistID, 1); // add 1 to item count in the sidebar
+    updateChecklistDisplayData(checklistID);
   });
 }
 

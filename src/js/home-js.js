@@ -226,9 +226,12 @@ function getChecklistHeaderHtml(checklist) {
 
   // name
   html += '<div class="card-header-name">';
-  html += '<div class="d-flex">';
+  html += '<div class="d-flex align-items-center">';
   html += '<h4>' + checklist.name + '</h4>';
-  html += '<button class="btn btn-sm btn-xs btn-toggle-description" type="button"><i class="bx bx-detail"></i></button>';
+
+  // toggle details button
+  html += '<button class="btn btn-sm btn-xs btn-toggle-description" type="button"><i class="bx bx-menu-alt-left"></i></button>';
+  
   html += '</div>';
   html += '<div>';
   html += '<button type="button" class="close close-checklist float-right"><span aria-hidden="true">×</span></button>';

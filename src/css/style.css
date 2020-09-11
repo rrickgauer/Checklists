@@ -85,10 +85,9 @@ a.btn-danger {
 #checklists-open .card-checklist .card-header .card-header-description {
   margin-bottom: 10px;
 }
-#checklists-open .card-checklist .card-header .btn-toggle-description i {
+#checklists-open .card-checklist .card-header .btn-toggle-description {
   color: white;
-  font-size: 1.2em;
-  font-weight: 100;
+  font-size: 1.4em;
 }
 #checklists-open .card-checklist .card-header .card-header-name {
   display: flex;

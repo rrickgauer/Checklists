@@ -19,7 +19,8 @@ include('functions.php');
     <div class="mt-big"></div>
 
     <h1 class="text-center mt-big">Checklists</h1>
-
+  <? if($_GET['user_deleted']) echo getAlert('Your account has been successfully deleted.');
+  ?>
     <div class="row">
 
       <div class="col-sm-12 col-md-6 mb-4">

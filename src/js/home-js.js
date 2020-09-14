@@ -856,6 +856,8 @@ function toggleCompleteItems(btn) {
     completeAllItems(checklistID);
   else
     incompleteAllItems(checklistID);
+
+  updateChecklistDisplayData(checklistID);
 }
 
 // mark all items in a checklist as complete
@@ -949,6 +951,7 @@ function copyItems() {
 
   $.post(API, data, function(response) {
     getSortedItemsByOriginal(destinationID);
+    updateChecklistDisplayData(destinationID);
   });
 
   $('#modal-copy-items').modal('hide');
@@ -992,10 +995,11 @@ function pasteItems() {
     if (response != 'success')
       return;
 
-    getSortedItemsByOriginal(checklistID);  // reload the checklist items
-    $('#modal-paste-items').modal('hide');  // close the modal
-    $('#paste-items-input').val('');        // clear the input
-    displayAlert('Items added');            // display alert
+    getSortedItemsByOriginal(checklistID);    // reload the checklist items
+    updateChecklistDisplayData(checklistID);  // update item counts
+    $('#modal-paste-items').modal('hide');    // close the modal
+    $('#paste-items-input').val('');          // clear the input
+    displayAlert('Items added');              // display alert
   });
 }
 

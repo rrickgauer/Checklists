@@ -816,8 +816,8 @@ function sortItems(selector) {
 // sort the items by names asc
 function getSortedItemsByNameAsc(items) {
   items.sort(function (a, b) {
-    var textA = $(a).find('.item-content').text();
-    var textB = $(b).find('.item-content').text();
+    var textA = $(a).find('.item-content').text().toUpperCase();
+    var textB = $(b).find('.item-content').text().toUpperCase();
     return (textA < textB) ? -1 : 1;
   });
 

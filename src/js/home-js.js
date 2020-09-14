@@ -82,7 +82,7 @@ function addEventListeners() {
     sortItems(this);
   });
 
-  $("#checklists-open").on('click', '.dropdown-complete-items .dropdown-item', function() {
+  $("#checklists-open").on('click', '.dropdown-checklist-actions .complete-items', function() {
     toggleCompleteItems(this);
   });
 

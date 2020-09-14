@@ -18,7 +18,7 @@ if (isset($_POST['password'])) {
 
   if (isValidEmailAndPassword($email, $password)) {
     $result = deleteUser($_SESSION['userID']);
-    header('Location: login.php');
+    header("Location: login.php?user_deleted=1");
   } else {
     $deleteUser = false;
   }

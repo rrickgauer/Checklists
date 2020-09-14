@@ -232,9 +232,42 @@ function getChecklistHeaderHtml(checklist) {
   // toggle details button
   html += '<button class="btn btn-sm btn-xs btn-toggle-description" type="button"><i class="bx bx-menu-alt-left"></i></button>';
   html += '</div>';
-  html += '<div>';
-  html += '<button type="button" class="close close-checklist float-right"><span aria-hidden="true">×</span></button>';
+
+  // checklist actions and close button
+  html += '<div class="d-flex align-items-center">';
+
+  // checklist actions dropdown
+  html += '<div class="dropdown dropdown-checklist-actions mr-2">';
+  html += '<button type="button" class="btn btn-sm btn-xs close" data-toggle="dropdown">';
+  html += '<i class="bx bx-dots-horizontal"></i>'
+  html += '</button>';
+  html += '<div class="dropdown-menu">';
+
+  // edit checklist name
+  html += '<button type="button" class="dropdown-item btn-edit-checklist-name">Edit name</button>';
+
+  // mark items complete/incomplete
+  html += '<button class="dropdown-item complete-items" type="button" data-value="complete">Complete</button>';
+  html += '<button class="dropdown-item complete-items" type="button" data-value="incomplete">Incomplete</button>';
+
+  // display copy over items modal button
+  html += '<button type="button" class="dropdown-item btn-open-copy-modal">Copy in items</button>';
+
+  // button that opens modal-paste-items
+  html += '<button type="button" class="dropdown-item btn-open-paste-modal">Import items</button>';
+
+  // delete checklist button
+  html += '<button type="button" class="dropdown-item btn-delete-checklist">Delete</button>';
+
   html += '</div>';
+  html += '</div>';
+
+
+  // close button
+  html += '<button type="button" class="close close-checklist"><span aria-hidden="true">×</span></button>';
+  html += '</div>'; // end close button section
+
+
   html += '</div>';
 
   // description

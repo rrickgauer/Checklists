@@ -210,9 +210,6 @@ function displayChecklist(checklist, items) {
   // body
   for (var count = 0; count < size; count++) 
     html += getChecklistItemHtml(items[count]);
-  
-  // footer
-  html += getChecklistFooterHtml();
 
   // add to the open checklists dom
   $("#checklists-open").append(html);
@@ -340,37 +337,6 @@ function getChecklistHeaderHtml(checklist) {
   html += '</div>'; // end toolbar
 
   html += '<div class="items">';
-
-  return html;
-}
-
-// generates a checklist footer html
-function getChecklistFooterHtml() {
-  var html = '</div>'; // end items
-  html += '</div>';
-  html += '<div class="card-footer d-flex">';
-  html += '<button type="button" class="btn btn-sm btn-secondary btn-edit-checklist-name">Edit name</button>';
-
-  // mark items complete/incomplete dropdown
-  html += '<div class="dropup dropdown-complete-items">';
-  html += '<button class="btn btn-sm btn-secondary" type="button" data-toggle="dropdown">Mark items</button>';
-  html += '<div class="dropdown-menu">';
-  html += '<button class="dropdown-item" type="button" data-value="complete">Complete</button>';
-  html += '<button class="dropdown-item" type="button" data-value="incomplete">Incomplete</button>';
-  html += '</div>';
-  html += '</div>';
-
-  // display copy over items modal button
-  html += '<button type="button" class="btn btn-sm btn-secondary btn-open-copy-modal">Copy in items</button>';
-
-  // button that opens modal-paste-items
-  html += '<button type="button" class="btn btn-sm btn-secondary btn-open-paste-modal">Import items</button>';
-
-  // delete checklist button
-  html += '<button type="button" class="btn btn-sm btn-danger btn-delete-checklist">Delete</button>';
-
-  html += '</div>';
-  html += '</div>';
 
   return html;
 }

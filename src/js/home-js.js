@@ -82,7 +82,7 @@ function addEventListeners() {
     sortItems(this);
   });
 
-  $("#checklists-open").on('click', '.dropdown-complete-items .dropdown-item', function() {
+  $("#checklists-open").on('click', '.dropdown-checklist-actions .complete-items', function() {
     toggleCompleteItems(this);
   });
 
@@ -210,9 +210,6 @@ function displayChecklist(checklist, items) {
   // body
   for (var count = 0; count < size; count++) 
     html += getChecklistItemHtml(items[count]);
-  
-  // footer
-  html += getChecklistFooterHtml();
 
   // add to the open checklists dom
   $("#checklists-open").append(html);
@@ -232,9 +229,47 @@ function getChecklistHeaderHtml(checklist) {
   // toggle details button
   html += '<button class="btn btn-sm btn-xs btn-toggle-description" type="button"><i class="bx bx-menu-alt-left"></i></button>';
   html += '</div>';
-  html += '<div>';
-  html += '<button type="button" class="close close-checklist float-right"><span aria-hidden="true">×</span></button>';
+
+  ////////////////////////////////
+  // checklist actions dropdown //
+  ////////////////////////////////
+  html += '<div class="d-flex align-items-center">';
+
+  // menu
+  html += '<div class="dropdown dropdown-checklist-actions mr-2">';
+  html += '<button type="button" class="btn btn-sm btn-xs close" data-toggle="dropdown">';
+  html += '<i class="bx bx-dots-horizontal"></i>'
+  html += '</button>';
+  html += '<div class="dropdown-menu">';
+  html += '<h6 class="dropdown-header">Checklist Actions</h6>';
+
+  // close checklist
+  html += '<button type="button" class="dropdown-item close-checklist">Close</button>';
+  html += '<div class="dropdown-divider"></div>';
+
+  // mark items complete/incomplete
+  html += '<button class="dropdown-item complete-items" type="button" data-value="complete">Mark all items complete</button>';
+  html += '<button class="dropdown-item complete-items" type="button" data-value="incomplete">Mark all items incomplete</button>';
+  html += '<div class="dropdown-divider"></div>';
+
+  // display copy over items modal button
+  html += '<button type="button" class="dropdown-item btn-open-copy-modal">Get items from another list</button>';
+
+  // button that opens modal-paste-items
+  html += '<button type="button" class="dropdown-item btn-open-paste-modal">Import items</button>';
+  html += '<div class="dropdown-divider"></div>';
+
+  // edit checklist name
+  html += '<button type="button" class="dropdown-item btn-edit-checklist-name">Edit name</button>';
+
+  // delete checklist button
+  html += '<button type="button" class="dropdown-item btn-delete-checklist">Delete checklist</button>';
+
   html += '</div>';
+  html += '</div>';
+  html += '</div>'; // end checklist actions dropdown
+
+
   html += '</div>';
 
   // description
@@ -307,37 +342,6 @@ function getChecklistHeaderHtml(checklist) {
   html += '</div>'; // end toolbar
 
   html += '<div class="items">';
-
-  return html;
-}
-
-// generates a checklist footer html
-function getChecklistFooterHtml() {
-  var html = '</div>'; // end items
-  html += '</div>';
-  html += '<div class="card-footer d-flex">';
-  html += '<button type="button" class="btn btn-sm btn-secondary btn-edit-checklist-name">Edit name</button>';
-
-  // mark items complete/incomplete dropdown
-  html += '<div class="dropup dropdown-complete-items">';
-  html += '<button class="btn btn-sm btn-secondary" type="button" data-toggle="dropdown">Mark items</button>';
-  html += '<div class="dropdown-menu">';
-  html += '<button class="dropdown-item" type="button" data-value="complete">Complete</button>';
-  html += '<button class="dropdown-item" type="button" data-value="incomplete">Incomplete</button>';
-  html += '</div>';
-  html += '</div>';
-
-  // display copy over items modal button
-  html += '<button type="button" class="btn btn-sm btn-secondary btn-open-copy-modal">Copy in items</button>';
-
-  // button that opens modal-paste-items
-  html += '<button type="button" class="btn btn-sm btn-secondary btn-open-paste-modal">Import items</button>';
-
-  // delete checklist button
-  html += '<button type="button" class="btn btn-sm btn-danger btn-delete-checklist">Delete</button>';
-
-  html += '</div>';
-  html += '</div>';
 
   return html;
 }

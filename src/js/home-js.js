@@ -236,8 +236,8 @@ function getChecklistHeaderHtml(checklist) {
   html += '<div class="d-flex align-items-center">';
 
   // menu
-  html += '<div class="dropdown dropdown-checklist-actions mr-2">';
-  html += '<button type="button" class="btn btn-sm btn-xs close" data-toggle="dropdown">';
+  html += '<div class="dropleft dropdown-checklist-actions mr-2">';
+  html += '<button type="button" class="btn btn-sm btn-xs close" data-toggle="dropdown" data-display="static">';
   html += '<i class="bx bx-dots-horizontal"></i>'
   html += '</button>';
   html += '<div class="dropdown-menu">';

@@ -856,6 +856,8 @@ function toggleCompleteItems(btn) {
     completeAllItems(checklistID);
   else
     incompleteAllItems(checklistID);
+
+  updateChecklistDisplayData(checklistID);
 }
 
 // mark all items in a checklist as complete

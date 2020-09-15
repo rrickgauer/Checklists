@@ -242,7 +242,9 @@ function updateUserInfo($userID, $email, $firstName, $lastName) {
   return $sql;
 }
 
-// update a user password
+////////////////////////////
+// update a user password //
+////////////////////////////
 function updateUserPassword($userID, $newPassword) {
   $stmt = '
   UPDATE Users 

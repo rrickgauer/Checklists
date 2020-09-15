@@ -149,7 +149,31 @@ else if (isset($_POST['reset-email'], $_POST['reset-answer'])) {
 }
 
 
+/*********************************************************
+ * reset a user password
+ * 
+ * post
+ *
+ * 
+ * reset-password-1
+ * reset-password-2
+***********************************************************/
+else if (isset($_POST['reset-password-1'], $_POST['reset-password-2'], $_SESSION['userID'])) {
 
+  // passwords do not match
+  if ($_POST['reset-password-1'] != $_POST['reset-password-2']) {
+    header('Location: reset-password.php?error=password-mismatch');
+    exit;
+  }
+
+  $password = $_POST['reset-password-1'];
+  $userID = $_SESSION['userID'];
+  
+  $result = updateUserPassword($userID, $password);
+  
+  header('Location: login.php');
+  exit;
+}
 
 
 /*********************************************************
@@ -557,5 +581,7 @@ else if (isset($_POST['function'], $_POST['checklistID']) && $_POST['function'] 
   exit;
 }
 
+
+echo var_dump($_POST);
 
 ?>

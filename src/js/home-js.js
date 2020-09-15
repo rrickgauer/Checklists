@@ -121,6 +121,10 @@ function addEventListeners() {
 
   $("#modal-export-checklist .btn-export-checklist").on('click', exportChecklist);
 
+  $("#checklists-open").on('click', '.btn-delete-completed-items', function() {
+    deleteCompletedItems(this);
+  });
+
 }
 
 // implements the autosize script for the textareas
@@ -254,7 +258,6 @@ function getChecklistHeaderHtml(checklist) {
   html += '<i class="bx bx-dots-horizontal"></i>'
   html += '</button>';
   html += '<div class="dropdown-menu">';
-  html += '<h6 class="dropdown-header">Checklist Actions</h6>';
 
   // close checklist
   html += '<button type="button" class="dropdown-item close-checklist">Close</button>';
@@ -274,6 +277,10 @@ function getChecklistHeaderHtml(checklist) {
 
   // export checkist items
   html += '<button type="button" class="dropdown-item btn-open-export-checklist-modal">Export items</button>';
+  html += '<div class="dropdown-divider"></div>';
+
+  // delete completed items
+  html += '<button type="button" class="dropdown-item btn-delete-completed-items">Remove completed items</button>';
   html += '<div class="dropdown-divider"></div>';
 
   // edit checklist name
@@ -1159,4 +1166,33 @@ function exportChecklistMarkdown(items) {
   }
 
   return html;
+}
+
+/////////////////////////////////////////////////
+// Remove all completed items from a checklist //
+/////////////////////////////////////////////////
+function deleteCompletedItems(btn) {
+  var checklist = $(btn).closest('.card-checklist');
+  var checklistID = $(checklist).attr('data-checklist-id');
+
+  var data = {
+    function: "delete-completed-items",
+    checklistID: checklistID,
+  };
+
+  $.post(API, data, function(response) {
+    // error removing the completed items
+    if (response != 'success') {
+      displayAlert('There was an error removing the completed items.');
+      return;
+    }
+
+    // remove the completed items from the checklist
+    $(checklist).find('.item.item-completed').remove();
+
+    // update the checklist item counts
+    updateChecklistDisplayData(checklistID);
+
+    displayAlert('Items removed');
+  });
 }

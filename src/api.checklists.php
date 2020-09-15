@@ -459,5 +459,26 @@ else if (isset($_POST['function'], $_POST['checklistID'], $_POST['items']) && $_
   exit;
 }
 
+/*********************************************************
+ * Add a list of items to a checklist
+ * 
+ * post
+ * 
+ * function = delete-completed-items
+ * 
+ * checklistID
+***********************************************************/
+else if (isset($_POST['function'], $_POST['checklistID']) && $_POST['function'] == 'delete-completed-items') {
+  $checklistID = $_POST['checklistID'];
+  $result = deleteCompletedItems($checklistID, 'y');
+
+  if ($result->rowCount() >= 0)
+    echo 'success';
+  else
+    echo 'error';
+
+  exit;
+}
+
 
 ?>

@@ -661,6 +661,31 @@ function updateAllItemsComplete($checklistID, $completed = 'y') {
 }
 
 
+////////////////////////////////////////////////////////////////////////////////
+// Deletes all items in a checklist marked as either complete or incomplete //
+////////////////////////////////////////////////////////////////////////////////
+function deleteCompletedItems($checklistID, $completed = 'y') {
+  $stmt = '
+  DELETE FROM Items
+  WHERE  checklist_id = :checklistID AND
+         completed = :completed';
+
+  $sql = dbConnect()->prepare($stmt);
+
+  // filter and bind checklistID
+  $checklistID = filter_var($checklistID, FILTER_SANITIZE_NUMBER_INT);
+  $sql->bindParam(':checklistID', $checklistID, PDO::PARAM_INT);
+
+  // filter and bind completed
+  $completed = filter_var($completed, FILTER_SANITIZE_STRING);
+  $sql->bindParam(':completed', $completed, PDO::PARAM_STR);
+
+  $sql->execute();
+
+  return $sql;
+}
+
+
 // copy the items from one checklist (source) into another checklist (destination)
 function copyOverItems($sourceID, $destinationID) {
   $stmt = '

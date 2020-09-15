@@ -6,6 +6,18 @@ session_destroy();
 $_SESSION = array();
 
 include('functions.php');
+
+function printSecurityQuestions() {
+  $securityQuestions = getSecurityQuestions();
+  
+  $html = '';
+  while ($question = $securityQuestions->fetch(PDO::FETCH_ASSOC)) {
+    $html .= '<option value = "' . $question['id'] . '">' . $question['question'] . '</option>';
+  }
+
+  echo $html;
+}
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -105,6 +117,23 @@ include('functions.php');
                 </div>
               </div>
 
+              <!-- security question -->
+              <div class="form-row">
+                <!-- dropdown -->
+                <div class="form-group col-md-6">
+                  <label>Security question</label>                  
+                  <select name="new-security-question" class="form-control" required>
+                    <?php printSecurityQuestions(); ?>
+                  </select>
+                </div>
+
+                <!-- answer -->
+                <div class="form-group col-md-6">
+                  <label>Answer</label>
+                  <input type="text" class="form-control" name="new-security-question-answer" required>
+                </div>
+              </div>
+
               <input type="submit" class="btn btn-primary" value="Create account">
             </form>
           </div>
@@ -149,7 +178,12 @@ include('functions.php');
                 </div>
               </div>
 
-              <input type="submit" class="btn btn-primary" value="Log in">
+              <div class="d-flex justify-content-between align-items-baseline">
+                <input type="submit" class="btn btn-primary" value="Log in">
+                <a href="security-question.php" title="I forgot my password">I forgot my password</a>
+              </div>
+
+              
             </form>
           </div>
         </div>

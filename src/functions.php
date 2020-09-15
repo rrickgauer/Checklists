@@ -27,6 +27,21 @@ function getAlert($message, $alertType = 'success') {
   </div>";
 }
 
+/////////////////////////////////////////////////////
+// Return all the security questions and their IDs //
+/////////////////////////////////////////////////////
+function getSecurityQuestions() {
+  $stmt = '
+  SELECT id,
+         question
+  FROM   Security_Questions
+  ORDER  BY question ASC';
+
+  $sql = dbConnect()->prepare($stmt);
+  $sql->execute();
+
+  return $sql;
+}
 
 
 /*****************************************************
@@ -34,8 +49,27 @@ function getAlert($message, $alertType = 'success') {
 ******************************************************/ 
 
 // create new user
-function insertUser($email, $password, $firstName, $lastName) {
-  $stmt = 'INSERT INTO Users (email, name_first, name_last, password, date_created) VALUES (:email, :firstName, :lastName, :password, NOW())';
+function insertUser($email, $password, $firstName, $lastName, $securityQuestionID, $securityQuestionAnswer) {
+  $stmt = '
+  INSERT INTO Users (
+    email,
+    name_first,
+    name_last,
+    password,
+    date_created,
+    security_question_id,
+    security_question_answer
+  )
+
+  VALUES (
+    :email,
+    :firstName,
+    :lastName,
+    :password,
+    NOW(),
+    :securityQuestionID,
+    :securityQuestionAnswer
+  )';
 
   $sql = dbConnect()->prepare($stmt);
 
@@ -55,6 +89,14 @@ function insertUser($email, $password, $firstName, $lastName) {
   $password = filter_var($password, FILTER_SANITIZE_STRING);
   $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
   $sql->bindParam(':password', $hashedPassword, PDO::PARAM_STR);
+
+  // security question id
+  $securityQuestionID = filter_var($securityQuestionID, FILTER_SANITIZE_NUMBER_INT);
+  $sql->bindParam(':securityQuestionID', $securityQuestionID, PDO::PARAM_INT);
+
+  // security question answer
+  $securityQuestionAnswer = filter_var($securityQuestionAnswer, FILTER_SANITIZE_STRING);
+  $sql->bindParam(':securityQuestionAnswer', $securityQuestionAnswer, PDO::PARAM_STR);
 
   $sql->execute();
   return $sql;
@@ -120,6 +162,7 @@ function isValidEmailAndPassword($email, $password) {
  * name_first
  * name_last
  * date_created
+ * security_question_answer
  * date_created_display_time
  * date_created_display_date
  * count_checklists
@@ -131,6 +174,7 @@ function getUser($id) {
          name_first,
          name_last,
          date_created,
+         security_question_answer,
          DATE_FORMAT(date_created, "%l:%i %p") AS date_created_display_time,
          DATE_FORMAT(date_created, "%c/%d/%Y") AS date_created_display_date,
          (SELECT COUNT(Checklists.id)
@@ -198,7 +242,9 @@ function updateUserInfo($userID, $email, $firstName, $lastName) {
   return $sql;
 }
 
-// update a user password
+////////////////////////////
+// update a user password //
+////////////////////////////
 function updateUserPassword($userID, $newPassword) {
   $stmt = '
   UPDATE Users 
@@ -220,6 +266,24 @@ function updateUserPassword($userID, $newPassword) {
   return $sql;
 }
 
+
+/////////////////////////////////////
+// Get the users security question //
+/////////////////////////////////////
+function getUserSecurityQuestion($userID) {
+  $stmt = 'SELECT Security_Questions.question FROM Security_Questions where id = (select Users.security_question_id FROM Users where id = :userID) LIMIT 1';
+
+  $sql = dbConnect()->prepare($stmt);
+
+  // filter and bind id
+  $userID = filter_var($userID, FILTER_SANITIZE_NUMBER_INT);
+  $sql->bindParam(':userID', $userID, PDO::PARAM_INT);
+
+  $sql->execute();
+
+  return $sql;
+
+}
 
 
 /*****************************************************

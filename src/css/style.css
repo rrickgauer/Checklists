@@ -62,7 +62,6 @@ a.btn-danger {
   overflow-x: auto;
   flex-wrap: nowrap;
   align-items: flex-start;
-  margin-right: 20px;
 }
 #checklists-open .checklists-wrapper {
   position: absolute;

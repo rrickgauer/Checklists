@@ -8,8 +8,7 @@ CREATE TABLE Users (
     password     CHAR(255) NOT NULL,
     date_created DATETIME NOT NULL,
     PRIMARY KEY (id)
-)
-engine = innodb;
+) engine = innodb;
 
 CREATE TABLE Checklists (
     id            INT UNSIGNED NOT NULL UNIQUE auto_increment,
@@ -20,8 +19,7 @@ CREATE TABLE Checklists (
     date_modified DATETIME,
     PRIMARY KEY (id),
     FOREIGN KEY (user_id) REFERENCES Users(id) ON UPDATE CASCADE ON DELETE CASCADE
-)
-engine=innodb;
+) engine=innodb;
 
 CREATE TABLE Items (
     id            INT UNSIGNED NOT NULL UNIQUE auto_increment,
@@ -33,6 +31,11 @@ CREATE TABLE Items (
     rank          DECIMAL (7, 7) NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (checklist_id) REFERENCES Checklists(id) ON UPDATE CASCADE ON DELETE CASCADE
-)
-engine = innodb; 
+) engine = innodb;
+
+CREATE TABLE Security_Questions (
+    id       INT UNSIGNED NOT NULL UNIQUE auto_increment,
+    question CHAR(250) NOT NULL UNIQUE,
+    PRIMARY KEY (id)
+) engine = innodb;
 

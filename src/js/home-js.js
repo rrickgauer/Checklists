@@ -1017,6 +1017,7 @@ function pasteItems() {
     $('#modal-paste-items').modal('hide');    // close the modal
     $('#paste-items-input').val('');          // clear the input
     displayAlert('Items added');              // display alert
+    autosize.update($('textarea.autosize'));  // update textarea size
   });
 }
 

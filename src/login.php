@@ -6,6 +6,24 @@ session_destroy();
 $_SESSION = array();
 
 include('functions.php');
+
+// $securityQuestions = getSecurityQuestions();
+
+// var_dump($securityQuestions->fetchAll(PDO::FETCH_ASSOC));
+
+
+function printSecurityQuestions() {
+  $securityQuestions = getSecurityQuestions();
+  
+  $html = '';
+  while ($question = $securityQuestions->fetch(PDO::FETCH_ASSOC)) {
+
+    $html .= '<option value = ' . $question['id'] . '">' . $question['question'] . '</option>';
+  }
+
+  echo $html;
+}
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -102,6 +120,23 @@ include('functions.php');
                     <span class="input-group-text"><i class='bx bx-lock-alt'></i></span>
                   </div>
                   <input type="password" class="form-control" name="new-password" required>
+                </div>
+              </div>
+
+              <!-- security question -->
+              <div class="form-row">
+                <!-- dropdown -->
+                <div class="form-group col-md-6">
+                  <label>Security question</label>                  
+                  <select name="new-security-question" class="form-control" required>
+                    <?php printSecurityQuestions(); ?>
+                  </select>
+                </div>
+
+                <!-- answer -->
+                <div class="form-group col-md-6">
+                  <label>Answer</label>
+                  <input type="text" class="form-control" name="new-security-question-answer" required>
                 </div>
               </div>
 

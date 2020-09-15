@@ -8,7 +8,6 @@
       <ul class="navbar-nav left">
         <li class="nav-item"><a class="nav-link" id="nav-item-home" href="home.php">Home</a></li>
         <li class="nav-item"><a class="nav-link" id="nav-item-settings" href="settings.php">Settings</a></li>
-        
       </ul>
 
       <ul class="navbar-nav right">

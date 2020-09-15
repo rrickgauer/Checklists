@@ -6,18 +6,6 @@ body {
 #navbar {
   background-color: white;
 }
-#navbar .navbar-items {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-#navbar .navbar-items .right {
-  display: flex;
-  align-items: flex-start;
-}
-#navbar .navbar-items .bxl-github {
-  font-size: 1.5em;
-}
 
 .wrapper {
   display: flex;
@@ -308,6 +296,20 @@ a.btn-danger {
   .sidebar .split h5,
 .item-content {
     font-size: 1em !important;
+  }
+}
+@media screen and (min-width: 769px) {
+  .navbar-items {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .navbar-items .right {
+    display: flex;
+    align-items: flex-start;
+  }
+  .navbar-items .bxl-github {
+    font-size: 1.5em;
   }
 }
 

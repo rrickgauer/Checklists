@@ -1122,6 +1122,9 @@ function exportChecklist() {
 
   // close the modal
   $(modal).modal('hide');
+
+  // reset the radio buttons
+  $(modal).find('input[name="export-checklist-radio"]').prop('checked', false);
 }
 
 

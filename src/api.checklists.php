@@ -12,8 +12,17 @@ include('functions.php');
  * new-name-first
  * new-name-last
  * new-password
+ * new-security-question
+ * new-security-question-answer
 ***********************************************************/
-if (isset($_POST['new-email'], $_POST['new-name-first'], $_POST['new-name-last'], $_POST['new-password'])) {
+if (isset($_POST['new-email'], $_POST['new-name-first'], $_POST['new-name-last'], $_POST['new-password'], $_POST['new-security-question'], $_POST['new-security-question-answer'])) {
+
+  $email                  = $_POST['new-email'];
+  $firstName              = $_POST['new-name-first'];
+  $lastName               = $_POST['new-name-last'];
+  $password               = $_POST['new-password'];
+  $securityQuestionID     = $_POST['new-security-question'];
+  $securityQuestionAnswer = $_POST['new-security-question-answer'];
 
   // check if email is already taken
   if (doesEmailExist($_POST['new-email'])) {
@@ -21,8 +30,8 @@ if (isset($_POST['new-email'], $_POST['new-name-first'], $_POST['new-name-last']
     exit;
   } 
 
-  // insert the new user
-  $result = insertUser($_POST['new-email'], $_POST['new-password'], $_POST['new-name-first'], $_POST['new-name-last']);
+  // insert the user
+  $result = insertUser($email, $password, $firstName, $lastName, $securityQuestionID, $securityQuestionAnswer);
 
   // if account creation was successful go to their home page
   if ($result->rowCount() == 1) {

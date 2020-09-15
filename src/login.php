@@ -178,7 +178,12 @@ function printSecurityQuestions() {
                 </div>
               </div>
 
-              <input type="submit" class="btn btn-primary" value="Log in">
+              <div class="d-flex justify-content-between align-items-baseline">
+                <input type="submit" class="btn btn-primary" value="Log in">
+                <a href="security-question.php" title="I forgot my password">I forgot my password</a>
+              </div>
+
+              
             </form>
           </div>
         </div>

@@ -162,6 +162,7 @@ function isValidEmailAndPassword($email, $password) {
  * name_first
  * name_last
  * date_created
+ * security_question_answer
  * date_created_display_time
  * date_created_display_date
  * count_checklists
@@ -173,6 +174,7 @@ function getUser($id) {
          name_first,
          name_last,
          date_created,
+         security_question_answer,
          DATE_FORMAT(date_created, "%l:%i %p") AS date_created_display_time,
          DATE_FORMAT(date_created, "%c/%d/%Y") AS date_created_display_date,
          (SELECT COUNT(Checklists.id)
@@ -262,6 +264,24 @@ function updateUserPassword($userID, $newPassword) {
   return $sql;
 }
 
+
+/////////////////////////////////////
+// Get the users security question //
+/////////////////////////////////////
+function getUserSecurityQuestion($userID) {
+  $stmt = 'SELECT Security_Questions.question FROM Security_Questions where id = (select Users.security_question_id FROM Users where id = :userID) LIMIT 1';
+
+  $sql = dbConnect()->prepare($stmt);
+
+  // filter and bind id
+  $userID = filter_var($userID, FILTER_SANITIZE_NUMBER_INT);
+  $sql->bindParam(':userID', $userID, PDO::PARAM_INT);
+
+  $sql->execute();
+
+  return $sql;
+
+}
 
 
 /*****************************************************

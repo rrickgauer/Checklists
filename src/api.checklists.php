@@ -84,6 +84,74 @@ else if (isset($_POST['login-email'], $_POST['login-password'])) {
   }
 }
 
+
+/*********************************************************
+ * get a users security question
+ * 
+ * get
+ *
+ * function = get-security-question
+ * 
+ * email
+***********************************************************/
+else if (isset($_GET['function'], $_GET['email']) && $_GET['function'] == 'get-security-question') {
+  $email = $_GET['email'];
+
+  // if email does not exist, go back to login page
+  if (!doesEmailExist($email)) {
+    echo 'email-not-exist';
+    exit;
+  }
+
+  $userID = getUserIdFromEmail($email)->fetch(PDO::FETCH_ASSOC);
+  $result = getUserSecurityQuestion($userID['id'])->fetch(PDO::FETCH_ASSOC);
+  echo $result['question'];
+  exit;
+}
+
+
+
+/*********************************************************
+ * validate user security question answer
+ * 
+ * post
+ *
+ * 
+ * reset-email
+ * reset-answer
+***********************************************************/
+else if (isset($_POST['reset-email'], $_POST['reset-answer'])) {
+  $email = $_POST['reset-email'];
+  $answer = $_POST['reset-answer'];
+
+
+  // if email does not exist, go back to login page
+  if (!doesEmailExist($email)) {
+    echo 'email-not-exist';
+    exit;
+  }
+
+  $userID = getUserIdFromEmail($email)->fetch(PDO::FETCH_ASSOC);
+  $userID = $userID['id'];
+
+  $user = getUser($userID)->fetch(PDO::FETCH_ASSOC);
+
+  if (strcasecmp($answer, $user['security_question_answer']) != 0) {
+    echo 'answers do not match';
+    exit;
+  }
+
+  $_SESSION['userID'] = $userID;
+
+  // go to user home page
+  header('Location: reset-password.php');
+  exit;
+}
+
+
+
+
+
 /*********************************************************
  * Create a new checklist
  * 

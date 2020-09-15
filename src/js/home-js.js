@@ -267,7 +267,7 @@ function getChecklistHeaderHtml(checklist) {
   // export checkist items
   html += '<button type="button" class="dropdown-item btn-open-export-checklist-modal">Export items</button>';
   html += '<div class="dropdown-divider"></div>';
-  
+
   // edit checklist name
   html += '<button type="button" class="dropdown-item btn-edit-checklist-name">Edit name</button>';
 
@@ -1069,5 +1069,12 @@ function incrementSidebarChecklistCount(amount) {
 
 
 function openExportChecklistModal(btn) {
+  var modal = $('#modal-export-checklist');
+
+  // set the modal's checklist id
+  var checklistID = $(btn).closest('.card-checklist').attr('data-checklist-id');
+  $(modal).attr('data-checklist-id', checklistID);
+
+  // show the modal
   $('#modal-export-checklist').modal('show');
 }

@@ -158,6 +158,7 @@ function getChecklists() {
   // send request to the api
   $.get(API, data, function(response) {
     displayChecklists(JSON.parse(response));
+    rescanOpenChecklists();
   });
 }
 
@@ -188,6 +189,19 @@ function getChecklistSidebarHtml(checklist) {
   return html;
 }
 
+//////////////////////////////////////////////////////////////
+// Adds the active class to any open checklists on the boar //
+//////////////////////////////////////////////////////////////
+function rescanOpenChecklists() {
+  var openChecklists = $('.card-checklist');
+
+  for (var count = 0; count < openChecklists.length; count++) {
+    var checklistID = $(openChecklists[count]).attr('data-checklist-id');
+
+    var sidebarChecklist = getSidebarChecklist(checklistID);
+    $(sidebarChecklist).addClass('active');
+  }
+}
 
 // open a checklist
 function openChecklist(selector) {

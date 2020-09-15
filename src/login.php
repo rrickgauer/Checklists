@@ -7,18 +7,12 @@ $_SESSION = array();
 
 include('functions.php');
 
-// $securityQuestions = getSecurityQuestions();
-
-// var_dump($securityQuestions->fetchAll(PDO::FETCH_ASSOC));
-
-
 function printSecurityQuestions() {
   $securityQuestions = getSecurityQuestions();
   
   $html = '';
   while ($question = $securityQuestions->fetch(PDO::FETCH_ASSOC)) {
-
-    $html .= '<option value = ' . $question['id'] . '">' . $question['question'] . '</option>';
+    $html .= '<option value = "' . $question['id'] . '">' . $question['question'] . '</option>';
   }
 
   echo $html;

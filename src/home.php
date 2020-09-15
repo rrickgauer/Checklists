@@ -206,6 +206,23 @@ $user = getUser($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);  // get user data
             </div>
           </div>
         </div>
+
+        <!-- export checklist modal -->
+        <div class="modal fade" id="modal-export-checklist" tabindex="-1">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Export checklist</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <p>Export the items in a checklist</p>
+              </div>
+            </div>
+          </div>
+        </div>
     </div>
   </div>
 

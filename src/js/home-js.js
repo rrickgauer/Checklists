@@ -108,6 +108,11 @@ function addEventListeners() {
   $("#modal-paste-items .btn-paste-items").on('click', pasteItems);
 
   $('.btn-add-checklist').on('click', addChecklist);
+
+  $("#checklists-open").on('click', '.btn-open-export-checklist-modal', function() {
+    openExportChecklistModal(this);
+  });
+
 }
 
 // implements the autosize script for the textareas
@@ -259,6 +264,10 @@ function getChecklistHeaderHtml(checklist) {
   html += '<button type="button" class="dropdown-item btn-open-paste-modal">Import items</button>';
   html += '<div class="dropdown-divider"></div>';
 
+  // export checkist items
+  html += '<button type="button" class="dropdown-item btn-open-export-checklist-modal">Export items</button>';
+  html += '<div class="dropdown-divider"></div>';
+  
   // edit checklist name
   html += '<button type="button" class="dropdown-item btn-edit-checklist-name">Edit name</button>';
 
@@ -1055,4 +1064,10 @@ function incrementSidebarChecklistCount(amount) {
 
   // set the text to the new count
   $(sideBarChecklistCount).text(count);
+}
+
+
+
+function openExportChecklistModal(btn) {
+  $('#modal-export-checklist').modal('show');
 }

@@ -2,6 +2,12 @@ const API                = 'api.checklists.php';
 const ANIMATION_ENTRANCE = 'animate__flipInX';
 const ANIMATION_EXIT     = 'animate__flipOutX';
 
+const EXPORT_TYPES = {
+  TEXT: "text",
+  MARKDOWN: "markdown",
+  PDF: "pdf",
+};
+
 // main function
 $(document).ready(function() {
   addEventListeners();
@@ -112,6 +118,8 @@ function addEventListeners() {
   $("#checklists-open").on('click', '.btn-open-export-checklist-modal', function() {
     openExportChecklistModal(this);
   });
+
+  $("#modal-export-checklist .btn-export-checklist").on('click', exportChecklist);
 
 }
 
@@ -1067,7 +1075,9 @@ function incrementSidebarChecklistCount(amount) {
 }
 
 
-
+//////////////////////////////////////
+// Opens the export checklist modal //
+//////////////////////////////////////
 function openExportChecklistModal(btn) {
   var modal = $('#modal-export-checklist');
 
@@ -1077,4 +1087,72 @@ function openExportChecklistModal(btn) {
 
   // show the modal
   $('#modal-export-checklist').modal('show');
+}
+
+////////////////////////////////////////////////////
+// Exports a checklist item into a new window     //
+//                                                //
+// Can either be plain text or markdown checklist //
+////////////////////////////////////////////////////
+function exportChecklist() {
+  var modal = $('#modal-export-checklist');
+  var checklistID = $(modal).attr('data-checklist-id');
+  var outputType = $(modal).find('input[name="export-checklist-radio"]:checked').val();
+
+
+  var data = {
+    function: "get-checklist-items",
+    id: checklistID,
+  }
+
+  // call to the server
+  $.getJSON(API, data, function(response) {
+    var html;
+
+    // determine which type of output user wants
+    if (outputType == EXPORT_TYPES.TEXT)
+      html = exportChecklistText(response);
+    else
+      html = exportChecklistMarkdown(response); 
+
+    // write the output to a new window
+    var wnd = window.open("about:blank", "", "_blank");
+    wnd.document.write(html);
+  });
+
+  // close the modal
+  $(modal).modal('hide');
+}
+
+
+//////////////////////////////////////////////////////////
+// Generates and returns the html for plain text export //
+//////////////////////////////////////////////////////////
+function exportChecklistText(items) {
+  var html = '';
+
+  for (var count = 0; count < items.length; count++) 
+    html += items[count].content + '<br>';
+  
+  return html;
+}
+
+//////////////////////////////////////////////////////////
+// Generates and returns the html for a markdown export //
+//////////////////////////////////////////////////////////
+function exportChecklistMarkdown(items) {
+  var html = '';
+
+  for (var count = 0; count < items.length; count++) {
+    var item = items[count];
+
+    if (item.completed == 'n')
+      html += '- [ ] ' + item.content;
+    else
+      html += '- [x] ' + item.content;
+
+    html += '<br>';
+  }
+
+  return html;
 }

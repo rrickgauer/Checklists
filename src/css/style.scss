@@ -12,6 +12,21 @@ body {
 
 #navbar {
   background-color: white;
+
+  .navbar-items {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .right {
+      display: flex;
+      align-items: flex-start;
+    }
+
+    .bxl-github {
+      font-size: 1.5em;
+    }
+  }
 }
 
 .wrapper {

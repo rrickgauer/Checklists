@@ -254,7 +254,6 @@ function getChecklistHeaderHtml(checklist) {
   html += '<i class="bx bx-dots-horizontal"></i>'
   html += '</button>';
   html += '<div class="dropdown-menu">';
-  html += '<h6 class="dropdown-header">Checklist Actions</h6>';
 
   // close checklist
   html += '<button type="button" class="dropdown-item close-checklist">Close</button>';

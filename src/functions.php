@@ -27,6 +27,22 @@ function getAlert($message, $alertType = 'success') {
   </div>";
 }
 
+/////////////////////////////////////////////////////
+// Return all the security questions and their IDs //
+/////////////////////////////////////////////////////
+function getSecurityQuestions() {
+  $stmt = '
+  SELECT id,
+         question
+  FROM   Security_Questions
+  ORDER  BY question ASC';
+
+  $sql = dbConnect()->prepare($stmt);
+  $sql->execute();
+
+  return $sql;
+}
+
 
 
 /*****************************************************

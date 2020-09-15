@@ -1,7 +1,7 @@
-DROP TABLE IF EXISTS Items, Checklists, Users;
+DROP TABLE IF EXISTS Security_Questions, Items, Checklists, Users;
 
 CREATE TABLE Users (
-    id           INT UNSIGNED NOT NULL UNIQUE auto_increment,
+    id           INT UNSIGNED NOT NULL UNIQUE AUTO_INCREMENT,
     email        CHAR(50) NOT NULL UNIQUE,
     name_first   CHAR(40) NOT NULL,
     name_last    CHAR(60) NOT NULL,
@@ -11,7 +11,7 @@ CREATE TABLE Users (
 ) engine = innodb;
 
 CREATE TABLE Checklists (
-    id            INT UNSIGNED NOT NULL UNIQUE auto_increment,
+    id            INT UNSIGNED NOT NULL UNIQUE AUTO_INCREMENT,
     user_id       INT UNSIGNED NOT NULL,
     name          CHAR(100) NOT NULL,
     description   VARCHAR(250),
@@ -22,7 +22,7 @@ CREATE TABLE Checklists (
 ) engine=innodb;
 
 CREATE TABLE Items (
-    id            INT UNSIGNED NOT NULL UNIQUE auto_increment,
+    id            INT UNSIGNED NOT NULL UNIQUE AUTO_INCREMENT,
     checklist_id  INT UNSIGNED NOT NULL,
     content       CHAR(250),
     completed     ENUM ('y', 'n') NOT NULL DEFAULT 'n',
@@ -34,7 +34,7 @@ CREATE TABLE Items (
 ) engine = innodb;
 
 CREATE TABLE Security_Questions (
-    id       INT UNSIGNED NOT NULL UNIQUE auto_increment,
+    id       INT UNSIGNED NOT NULL UNIQUE AUTO_INCREMENT,
     question CHAR(250) NOT NULL UNIQUE,
     PRIMARY KEY (id)
 ) engine = innodb;

@@ -212,13 +212,32 @@ $user = getUser($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);  // get user data
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title">Export checklist</h5>
+                <h5 class="modal-title">Export</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
               <div class="modal-body">
-                <p>Export the items in a checklist</p>
+                <p>Save as</p>
+
+                <!-- lines of text -->
+                <div class="form-check">
+                  <label><input type="radio" name="export-checklist-radio" value="text">&nbsp;Lines of text</label>
+                </div>
+
+                <!-- markdown -->
+                <div class="form-check">
+                  <label><input type="radio" name="export-checklist-radio" value="markdown">&nbsp;Markdown</label>
+                </div>
+
+                <!-- pdf -->
+                <div class="form-check">
+                  <label><input type="radio" name="export-checklist-radio" value="pdf" disabled>&nbsp;PDF (coming soon)</label>
+                </div>
+
+                <!-- submit button -->
+                <button type="button" class="btn btn-primary btn-export-checklist mt-2">Export checklist</button>
+
               </div>
             </div>
           </div>

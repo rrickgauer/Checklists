@@ -44,14 +44,32 @@ function getSecurityQuestions() {
 }
 
 
-
 /*****************************************************
  * USERS
 ******************************************************/ 
 
 // create new user
-function insertUser($email, $password, $firstName, $lastName) {
-  $stmt = 'INSERT INTO Users (email, name_first, name_last, password, date_created) VALUES (:email, :firstName, :lastName, :password, NOW())';
+function insertUser($email, $password, $firstName, $lastName, $securityQuestionID, $securityQuestionAnswer) {
+  $stmt = '
+  INSERT INTO Users (
+    email,
+    name_first,
+    name_last,
+    password,
+    date_created,
+    security_question_id,
+    security_question_answer
+  )
+
+  VALUES (
+    :email,
+    :firstName,
+    :lastName,
+    :password,
+    NOW(),
+    :securityQuestionID,
+    :securityQuestionAnswer
+  )';
 
   $sql = dbConnect()->prepare($stmt);
 
@@ -71,6 +89,14 @@ function insertUser($email, $password, $firstName, $lastName) {
   $password = filter_var($password, FILTER_SANITIZE_STRING);
   $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
   $sql->bindParam(':password', $hashedPassword, PDO::PARAM_STR);
+
+  // security question id
+  $securityQuestionID = filter_var($securityQuestionID, FILTER_SANITIZE_NUMBER_INT);
+  $sql->bindParam(':securityQuestionID', $securityQuestionID, PDO::PARAM_INT);
+
+  // security question answer
+  $securityQuestionAnswer = filter_var($securityQuestionAnswer, FILTER_SANITIZE_STRING);
+  $sql->bindParam(':securityQuestionAnswer', $securityQuestionAnswer, PDO::PARAM_STR);
 
   $sql->execute();
   return $sql;

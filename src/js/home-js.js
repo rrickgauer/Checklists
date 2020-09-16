@@ -277,10 +277,6 @@ function getChecklistHeaderHtml(checklist) {
   html += '</button>';
   html += '<div class="dropdown-menu">';
 
-  // close checklist
-  html += '<button type="button" class="dropdown-item close-checklist">Close</button>';
-  html += '<div class="dropdown-divider"></div>';
-
   // mark items complete/incomplete
   html += '<button class="dropdown-item complete-items" type="button" data-value="complete">Mark all items complete</button>';
   html += '<button class="dropdown-item complete-items" type="button" data-value="incomplete">Mark all items incomplete</button>';
@@ -309,8 +305,9 @@ function getChecklistHeaderHtml(checklist) {
 
   html += '</div>';
   html += '</div>';
-  html += '</div>'; // end checklist actions dropdown
 
+  html += '<button type="button" class="btn btn-sm btn-xs close close-checklist mb-1"><span aria-hidden="true">&times;</span></button>';
+  html += '</div>'; // end checklist actions dropdown
 
   html += '</div>';
 

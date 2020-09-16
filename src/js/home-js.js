@@ -1,6 +1,8 @@
-const API                = 'api.checklists.php';
-const ANIMATION_ENTRANCE = 'animate__flipInX';
-const ANIMATION_EXIT     = 'animate__flipOutX';
+const API                     = 'api.checklists.php';
+const ANIMATION_ENTRANCE      = 'animate__flipInX';
+const ANIMATION_EXIT          = 'animate__flipOutX';
+const ITEM_ANIMATION_EXIT     = 'animate__bounceOut animate__animated';
+const ITEM_ANIMATION_ENTRANCE = 'animate__bounceIn';
 
 const EXPORT_TYPES = {
   TEXT: "text",
@@ -393,9 +395,9 @@ function getChecklistItemHtml(item) {
   var html = '';
 
   if (item.completed == 'n')
-    html = '<div class="item" data-item-id="' + item.id + '">';
+    html = '<div class="item animate__animated animate__bounceIn" data-item-id="' + item.id + '">';
   else
-    html = '<div class="item item-completed" data-item-id="' + item.id + '">';
+    html = '<div class="item item-completed animate__animated animate__bounceIn" data-item-id="' + item.id + '">';
 
   // content and checkbox
   html += '<div class="left form-check form-check-inline"><label>';
@@ -407,7 +409,7 @@ function getChecklistItemHtml(item) {
     html += '<input class="form-check-input item-checkbox" type="checkbox" checked>';
 
   // content
-  html += '<span class="item-content">' + item.content + '</span>';
+  html += '<span class="item-content animate__animated">' + item.content + '</span>';
   html += '</label></div>'; // end content and checkbox
 
     // dropdown
@@ -504,7 +506,15 @@ function toggleItemComplete(checkbox) {
 
       // hide item if show done checkbox is unchecked
       if ($(showDoneCheckbox).is(':checked') == false) {
-        $(item).hide();
+
+        // exit animation
+        $(item).addClass(ITEM_ANIMATION_EXIT);
+
+        // hide the item after animation finishes
+        setTimeout(function(){ 
+          $(item).hide(); 
+          $(item).removeClass(ITEM_ANIMATION_EXIT);
+        }, 500);
       }
     }
 
@@ -849,8 +859,18 @@ function toggleCompletedItems(checkbox) {
 
   if (checkbox.checked)
     $(items).show();
-  else
-    $(items).hide();
+  else {
+
+    // exit animation
+    $(items).addClass(ITEM_ANIMATION_EXIT);
+
+    // hide the item after animation finishes
+    setTimeout(function(){ 
+      $(items).hide(); 
+      $(items).removeClass(ITEM_ANIMATION_EXIT);
+    }, 500);
+
+  }
 }
 
 // sort the items 

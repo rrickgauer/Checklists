@@ -92,6 +92,7 @@ a.btn-danger {
 #checklists-open .card-checklist .card-header .card-header-name {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 #checklists-open .card-checklist .card-footer {
   align-items: flex-start;

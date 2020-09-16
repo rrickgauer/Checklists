@@ -689,6 +689,10 @@ function deleteChecklist(btn) {
       incrementSidebarChecklistCount(-1);
 
       displayAlert('Checklist deleted');
+
+      // show stock image if no checklists are open
+      if (!isAChecklistOpen())
+        $("#no-open-checklists-img").show();
     }
   });
 }

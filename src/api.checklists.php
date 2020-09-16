@@ -431,7 +431,7 @@ else if (isset($_SESSION['userID'], $_POST['edit-email'], $_POST['edit-name-firs
 
   $result = updateUserInfo($userID, $email, $firstName, $lastName);
 
-  if ($result->rowCount() == 1)
+  if ($result->rowCount() >= 0 && $result <= 1)
     $_SESSION['user-info-updated'] = true;
   else {
     $_SESSION['user-info-updated'] = false;

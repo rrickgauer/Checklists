@@ -146,6 +146,16 @@ a.btn-danger {
       display: flex;
       align-items: baseline;
 
+      label {
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+      }
+
+      .item-checkbox {
+        margin-top: 8px;
+      }
+
       * {
         margin: 0px 5px;
       }

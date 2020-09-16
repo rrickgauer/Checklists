@@ -120,6 +120,14 @@ a.btn-danger {
   display: flex;
   align-items: baseline;
 }
+#checklists-open .item .left label {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+#checklists-open .item .left .item-checkbox {
+  margin-top: 8px;
+}
 #checklists-open .item .left * {
   margin: 0px 5px;
 }

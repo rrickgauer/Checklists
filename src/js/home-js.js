@@ -676,20 +676,29 @@ function deleteChecklist(btn) {
   }
 
   $.post(API, data, function(response) {
-    if (response == 'success') {
-      
-      // remove the open checklist
-      $(checklist).remove();      
 
-      // remove the checklist from the sidebar
-      var sideBarChecklist = getSidebarChecklist(checklistID);  
-      $(sideBarChecklist).remove();
-      
-      // subtract 1 from checklists count in sidebar
-      incrementSidebarChecklistCount(-1);
-
-      displayAlert('Checklist deleted');
+    // exit if error occurred on the server side
+    if (repsonse != 'success') {
+      displayAlert('There was an error. Checklist not deleted.');
+      return;
     }
+
+    // remove the open checklist
+    $(checklist).remove();      
+
+    // remove the checklist from the sidebar
+    var sideBarChecklist = getSidebarChecklist(checklistID);  
+    $(sideBarChecklist).remove();
+    
+    // subtract 1 from checklists count in sidebar
+    incrementSidebarChecklistCount(-1);
+
+    displayAlert('Checklist deleted');
+
+    // show stock image if no checklists are open
+    if (!isAChecklistOpen())
+      $("#no-open-checklists-img").show();
+    
   });
 }
 

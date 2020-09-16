@@ -125,6 +125,8 @@ function addEventListeners() {
     deleteCompletedItems(this);
   });
 
+  $('.btn-remove-empty-checklists').on('click', removeEmptyChecklists);
+
 }
 
 // implements the autosize script for the textareas
@@ -1210,5 +1212,34 @@ function deleteCompletedItems(btn) {
     updateChecklistDisplayData(checklistID);
 
     displayAlert('Items removed');
+  });
+}
+
+//////////////////////////////////////////////////////////
+// Remove all the checklists that have no items in them //
+//                                                      //
+// Possibly remove ones with all completed items        //
+//////////////////////////////////////////////////////////
+function removeEmptyChecklists() {
+
+  var data = {
+    function: "delete-empty-checklists",
+  };
+
+  $.post(API, data, function(response) {
+    if (response != 'success') {
+      displayAlert('There was an error. Checklists were not deleted.');
+      return;
+    } 
+
+    else {
+      // refresh sidebar
+      getChecklists();  
+
+      // remove any open checklists that are empty
+      $('.card-checklist .item-count .count:contains(0)').closest('.card-checklist').remove();
+      
+      displayAlert('Empty checklists removed.');
+    }
   });
 }

@@ -496,6 +496,37 @@ function updateChecklist($checklistID, $name, $description = null) {
   return $sql;
 }
 
+///////////////////////////////////////////////////////////////////
+// Delete all of a users's checklists that have no items in them //
+///////////////////////////////////////////////////////////////////
+function deleteEmptyChecklists($userID) {
+  $stmt = '
+  DELETE FROM Checklists
+  WHERE  id IN
+         (SELECT *
+          FROM   (SELECT id
+                  FROM   Checklists
+                  WHERE  user_id = :userID AND
+                         0 IN
+                         (SELECT Count(id)
+                          FROM   Items
+                          WHERE  checklist_id = Checklists.id)) AS x)';
+
+  $sql = dbConnect()->prepare($stmt);
+
+  // filter and bind user id
+  $userID = filter_var($userID, FILTER_SANITIZE_NUMBER_INT);
+  $sql->bindParam(':userID', $userID, PDO::PARAM_INT);
+
+  $sql->execute();
+  return $sql;
+}
+
+
+
+
+
+
 /*****************************************************
  * ITEMS
 ******************************************************/ 

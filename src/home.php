@@ -34,6 +34,8 @@ $user = getUser($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);  // get user data
           <div class="dropdown-menu">
             <button type="button" class="dropdown-item" data-toggle="modal" data-target="#modal-new-checklist">New checklist</button>
             <div class="dropdown-divider"></div>
+            <button type="button" class="dropdown-item btn-remove-empty-checklists">Remove empty checklists</button>
+            <div class="dropdown-divider"></div>
             <h6 class="dropdown-header">Sorting</h6>
             <button type="button" class="dropdown-item btn-sort-option" data-sort-value="original">Original</button>
             <button type="button" class="dropdown-item btn-sort-option" data-sort-value="name-asc">Name ascending</button>

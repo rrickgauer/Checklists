@@ -581,7 +581,25 @@ else if (isset($_POST['function'], $_POST['checklistID']) && $_POST['function'] 
   exit;
 }
 
+/*********************************************************
+ * Remove all of a user's checklists witjh 0 items
+ * 
+ * post
+ * 
+ * function = delete-empty-checklists
+ * 
+***********************************************************/
+else if (isset($_POST['function'], $_SESSION['userID']) && $_POST['function'] == 'delete-empty-checklists') {
+  $userID = $_SESSION['userID'];
 
-echo var_dump($_POST);
+  $result = deleteEmptyChecklists($userID);
+
+  if ($result->rowCount() >= 0)
+    echo 'success';
+  else
+    echo 'error';
+
+  exit;
+}
 
 ?>

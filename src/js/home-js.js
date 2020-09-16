@@ -314,12 +314,12 @@ function getChecklistHeaderHtml(checklist) {
 
   // description
   if (checklist.description == null)
-    html += '<div class="card-header-description"></div>';
+    html += '<div class="card-header-description d-none"></div>';
   else
-    html += '<div class="card-header-description">' + checklist.description + '</div>';
+    html += '<div class="card-header-description d-none">' + checklist.description + '</div>';
 
   // dates
-  html += '<div class="card-header-dates">';
+  html += '<div class="card-header-dates d-none">';
 
   // dates - date created
   html += '<span class="date-created">' + checklist.date_created_display + '</span>';
@@ -340,7 +340,7 @@ function getChecklistHeaderHtml(checklist) {
   html += '</div>';           // end dates
 
   // item counts
-  html += '<div class="card-header-counts">';   
+  html += '<div class="card-header-counts d-none">';   
   html += '<span class="item-count"><span class="count">' + checklist.count_items + '</span> items &bull; </span>';                        // total
   html += '<span class="item-count-complete"><span class="count">' + checklist.count_items_complete + '</span> completed &bull; </span>';  // complete
   html += '<span class="item-count-incomplete"><span class="count">' + checklist.count_items_incomplete + '</span> incomplete</span>';     // incomplete

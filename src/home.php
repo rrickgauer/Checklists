@@ -1,11 +1,14 @@
 <?php 
 session_start();
 
-// goto login.php if session is not set
+// goto log user out if session data is not set
 if (!isset($_SESSION['userID'])) {
-  header('Location: login.php');
+  header('Location: logout.php');
   exit;
 }
+
+// remeber the users login for a month extending every time they login
+setcookie('userID', $_SESSION['userID'], time() + (86400 * 30), '/');
 
 include('functions.php');
 $user = getUser($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);  // get user data

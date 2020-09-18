@@ -1,9 +1,14 @@
 <?php
 
-// clear session data
 session_start();
-session_destroy();
-$_SESSION = array();
+
+// go to home page if user has already logged on
+if (isset($_COOKIE['userID'])) {
+  $_SESSION['userID'] = $_COOKIE['userID'];
+  header('Location: home.php');
+  exit;
+}
+
 
 include('functions.php');
 
@@ -57,6 +62,8 @@ function printSecurityQuestions() {
         </ul>
 
         <div class="tab-content" id="pills-tabContent">
+
+          <!-- create new account form -->
           <div class="tab-pane fade show active" id="sign-up" role="tabpanel">
             <?php
               // error when creating account
@@ -71,7 +78,6 @@ function printSecurityQuestions() {
                   echo getAlert('There was an error creating your account. Please try again.', 'danger');
               }
             ?>
-            <!-- create new account form -->
             <form class="form-create-account" method="post" action="api.checklists.php">
               <!-- email -->
               <div class="form-group">
@@ -138,7 +144,7 @@ function printSecurityQuestions() {
             </form>
           </div>
         
-
+          <!-- login form -->
           <div class="tab-pane fade" id="log-in" role="tabpanel">
             <?php
               // error when loggin in
@@ -154,7 +160,7 @@ function printSecurityQuestions() {
               }
             ?>
 
-            <!-- login form -->
+            
             <form class="form-login" method="post" action="api.checklists.php">
               <!-- email -->
               <div class="form-group">

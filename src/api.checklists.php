@@ -171,7 +171,7 @@ else if (isset($_POST['reset-password-1'], $_POST['reset-password-2'], $_SESSION
   
   $result = updateUserPassword($userID, $password);
   
-  header('Location: login.php');
+  header('Location: logout.php');
   exit;
 }
 

@@ -11,7 +11,7 @@
       </ul>
 
       <ul class="navbar-nav right">
-        <li class="nav-item"><a class="nav-link" id="nav-item-logout" href="login.php">Logout</a></li>
+        <li class="nav-item"><a class="nav-link" id="nav-item-logout" href="logout.php">Logout</a></li>
         <!-- github link -->
         <li class="nav-item">
           <a class="nav-link" id="nav-item-github" href="https://github.com/rrickgauer/Checklists" target="_blank">

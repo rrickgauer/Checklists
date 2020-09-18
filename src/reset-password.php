@@ -4,7 +4,7 @@ session_start();
 
 // goto login.php if session is not set
 if (!isset($_SESSION['userID'])) {
-  header('Location: login.php');
+  header('Location: logout.php');
   exit;
 }
 

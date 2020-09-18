@@ -3,12 +3,14 @@
 session_start();
 // goto login.php if session is not set
 if (!isset($_SESSION['userID'])) {
-  header('Location: login.php');
+  header('Location: logout.php');
   exit;
 }
 
 include('functions.php');
 
+
+// attempt was made to delete the account
 if (isset($_POST['password'])) {
   $deleteUser = true;
 
@@ -16,9 +18,12 @@ if (isset($_POST['password'])) {
   $email    = $user['email'];
   $password = $_POST['password'];
 
+  // check if email and password are a match,
+  // if true, delete the account
+  // if false, display error message
   if (isValidEmailAndPassword($email, $password)) {
     $result = deleteUser($_SESSION['userID']);
-    header("Location: login.php?user_deleted=1");
+    header("Location: logout.php?user_deleted=1");
   } else {
     $deleteUser = false;
   }

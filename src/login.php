@@ -23,6 +23,35 @@ function printSecurityQuestions() {
   echo $html;
 }
 
+// determine what error message to display when creating account
+function createAccountAttemptMessage() {
+  if (isset($_GET['create-account']) && $_GET['create-account'] == 'failed') {
+    $reason = $_GET['reason'];
+
+    // email already exists.
+    if ($reason == 'email-exists')
+      echo getAlert('Error. Email is already taken. Please try again.', 'danger');
+    // unknown error
+    else if ($reason == 'unknown')
+      echo getAlert('There was an error creating your account. Please try again.', 'danger');
+  }
+}
+
+// determine what error message to display when loggin in
+function displayLoginErrorMessage() {
+    // error when loggin in
+    if (isset($_GET['login']) && $_GET['login'] == 'failed') {
+      $reason = $_GET['reason'];
+
+      // email does not exist.
+      if ($reason == 'email-undetected')
+        echo getAlert('Email does not exist..', 'danger');
+      // email and password do not match
+      else if ($reason == 'email-password-match')
+        echo getAlert('Email and password do not match.', 'danger');
+    }
+}
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -65,19 +94,9 @@ function printSecurityQuestions() {
 
           <!-- create new account form -->
           <div class="tab-pane fade show active" id="sign-up" role="tabpanel">
-            <?php
-              // error when creating account
-              if (isset($_GET['create-account']) && $_GET['create-account'] == 'failed') {
-                $reason = $_GET['reason'];
 
-                // email already exists.
-                if ($reason == 'email-exists')
-                  echo getAlert('Error. Email is already taken. Please try again.', 'danger');
-                // unknown error
-                else if ($reason == 'unknown')
-                  echo getAlert('There was an error creating your account. Please try again.', 'danger');
-              }
-            ?>
+            <?php createAccountAttemptMessage(); ?>
+
             <form class="form-create-account" method="post" action="api.checklists.php">
               <!-- email -->
               <div class="form-group">
@@ -146,20 +165,8 @@ function printSecurityQuestions() {
         
           <!-- login form -->
           <div class="tab-pane fade" id="log-in" role="tabpanel">
-            <?php
-              // error when loggin in
-              if (isset($_GET['login']) && $_GET['login'] == 'failed') {
-                $reason = $_GET['reason'];
 
-                // email does not exist.
-                if ($reason == 'email-undetected')
-                  echo getAlert('Email does not exist..', 'danger');
-                // email and password do not match
-                else if ($reason == 'email-password-match')
-                  echo getAlert('Email and password do not match.', 'danger');
-              }
-            ?>
-
+            <?php displayLoginErrorMessage() ?>
             
             <form class="form-login" method="post" action="api.checklists.php">
               <!-- email -->

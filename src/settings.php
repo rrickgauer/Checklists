@@ -11,6 +11,37 @@ include('functions.php');
 
 $user = getUser($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);
 
+// display approriate message when info updated
+function determineUserInfoUpdateMessage() {
+  if (isset($_SESSION['user-info-updated'])) {
+    if ($_SESSION['user-info-updated'] == true)
+      echo getAlert('Your info has been updated');
+    else
+      echo getAlert('There was an error updated your information. Please try again', 'danger');
+
+    unset($_SESSION['user-info-updated']);
+  }
+}
+
+// display approriate message when password is updated
+function determinePasswordUpdateMessage() {
+  if (isset($_SESSION['user-password-updated'])) {
+    if ($_SESSION['user-password-updated'])
+      echo getAlert('Your password was updated.');
+    else {
+      if ($_SESSION['reason'] == 'incorrect-current-password')
+        echo getAlert('Incorrect current password. Your password was not updated.', 'danger');
+      else
+        echo getAlert('There was an error updating your password. Please try again.', 'danger');
+
+      unset($_SESSION['reason']);
+    }
+
+    unset($_SESSION['user-password-updated']);
+  }
+}
+
+
 ?>
 
 <!DOCTYPE html>
@@ -34,16 +65,7 @@ $user = getUser($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);
 
         <div class="card-body">
 
-          <?php
-          if (isset($_SESSION['user-info-updated'])) {
-            if ($_SESSION['user-info-updated'] == true)
-              echo getAlert('Your info has been updated');
-            else
-              echo getAlert('There was an error updated your information. Please try again', 'danger');
-
-            unset($_SESSION['user-info-updated']);
-          }
-          ?>
+          <?php determineUserInfoUpdateMessage(); ?>
 
           <form class="form-user-info" method="post" action="api.checklists.php">
             <!-- email -->
@@ -93,22 +115,7 @@ $user = getUser($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);
 
         <div class="card-body">
 
-          <?php
-          if (isset($_SESSION['user-password-updated'])) {
-            if ($_SESSION['user-password-updated'])
-              echo getAlert('Your password was updated.');
-            else {
-              if ($_SESSION['reason'] == 'incorrect-current-password')
-                echo getAlert('Incorrect current password. Your password was not updated.', 'danger');
-              else
-                echo getAlert('There was an error updating your password. Please try again.', 'danger');
-
-              unset($_SESSION['reason']);
-            }
-
-            unset($_SESSION['user-password-updated']);
-          }
-          ?>
+          <?php determinePasswordUpdateMessage(); ?>
 
           <form class="form-edit-password" method="post" action="api.checklists.php">
             <!-- current password -->

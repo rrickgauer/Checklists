@@ -160,9 +160,10 @@ function getChecklists() {
   }
 
   // send request to the api
-  $.get(API, data, function(response) {
-    displayChecklists(JSON.parse(response));
+  $.getJSON(API, data, function(checklists) {
+    displayChecklists(checklists);
     rescanOpenChecklists();
+    $('.sidebar .count-checklists').text(checklists.length);  // set checklist count
   });
 }
 

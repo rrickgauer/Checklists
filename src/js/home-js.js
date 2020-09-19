@@ -129,6 +129,13 @@ function addEventListeners() {
 
   $('.btn-remove-empty-checklists').on('click', removeEmptyChecklists);
 
+  // prevent new checklist form submission if user hits enter
+  $('#modal-new-checklist .form-new-checklist input[name="new-checklist-name"]').on('keypress keydown keyup', function (e) {
+    if (e.keyCode == 13) {
+      e.preventDefault();
+    }
+  });
+
 }
 
 // implements the autosize script for the textareas

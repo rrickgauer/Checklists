@@ -413,22 +413,10 @@ function getChecklistItemHtml(item) {
   html += '<span class="item-content animate__animated">' + item.content + '</span>';
   html += '</label></div>'; // end content and checkbox
 
-    // dropdown
+  // edit and delete item buttons
   html += '<div class="right">';
-
-  // dropdown: button
-  html += '<div class="dropleft">';
-  html += '<button type="button" class="btn btn-sm btn-xs" data-toggle="dropdown">';
-  html += '<i class="bx bx-dots-horizontal-rounded"></i>';
-  html += '</button>';
-
-  // dropdown: menu
-  html += '<div class="dropdown-menu">';
-  html += '<button class="dropdown-item btn-edit-item" type="button">Edit</button>';
-  html += '<button class="dropdown-item btn-delete-item" type="button">Delete</button>';
-  html += '</div>'; // end dropdown menu
-
-  html += '</div>'; // div.right
+  html += '<button type="button" class="btn btn-sm btn-xs btn-edit-item"><i class="bx bx-edit"></i></button>';
+  html += '<button type="button" class="btn btn-sm btn-xs btn-delete-item"><i class="bx bx-x"></i></button>';
   html += '</div>'; // card footer
   html += '</div>'; // card
 

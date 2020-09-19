@@ -677,7 +677,7 @@ function deleteChecklist(btn) {
   $.post(API, data, function(response) {
 
     // exit if error occurred on the server side
-    if (repsonse != 'success') {
+    if (response != 'success') {
       displayAlert('There was an error. Checklist not deleted.');
       return;
     }

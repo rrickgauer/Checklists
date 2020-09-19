@@ -32,9 +32,9 @@ $user = getUser($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);  // get user data
           Your checklists (<span class="count-checklists"><?php echo $user['count_checklists']; ?></span>)
         </h5>
 
-        <div class="dropleft dropdown-sidebar">
-          <button class="btn btn-sm btn-xs btn-light mr-3" type="button" data-toggle="dropdown" data-display="static">Actions</button>
-          <div class="dropdown-menu">
+        <div class="dropdown dropdown-sidebar">
+          <button class="btn btn-sm btn-xs btn-light mr-3" type="button" data-toggle="dropdown" data-display="static" data-reference="parent">Actions</button>
+          <div class="dropdown-menu dropdown-menu-right">
             <button type="button" class="dropdown-item" data-toggle="modal" data-target="#modal-new-checklist">New checklist</button>
             <div class="dropdown-divider"></div>
             <button type="button" class="dropdown-item btn-remove-empty-checklists">Remove empty checklists</button>

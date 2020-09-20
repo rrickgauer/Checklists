@@ -1173,6 +1173,9 @@ function exportChecklist() {
     // write the output to a new window
     var wnd = window.open("about:blank", "", "_blank");
     wnd.document.write(html);
+  })
+  .fail(function(response) {
+    displayAlert('There was an error in the API request');
   });
 
   // close the modal

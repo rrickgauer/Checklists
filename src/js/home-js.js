@@ -742,6 +742,9 @@ function openEditChecklistModal(btn) {
 
     // show the modal
     $('#modal-edit-checklist').modal('show');
+  })
+  .fail(function(response) {
+    displayAlert('There was an error opening the checklist modal.');
   });
 }
 

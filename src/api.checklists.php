@@ -238,7 +238,11 @@ else if (isset($_GET['function'], $_SESSION['userID']) && $_GET['function'] == '
 else if (isset($_GET['function'], $_GET['checklistID']) && $_GET['function'] == 'get-checklist') {
   $checklistID = $_GET['checklistID'];
   $checklist = getChecklist($checklistID)->fetch(PDO::FETCH_ASSOC);
-  echo json_encode($checklist);
+
+  if (!is_array($checklist))
+    echo http_response_code(400);
+  else
+    echo json_encode($checklist);
   exit;
 }
 

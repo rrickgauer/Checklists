@@ -239,11 +239,12 @@ function getChecklist(checklistID) {
     checklistID: checklistID,
   };
 
-  $.get(API, data, function(response) {
-    var data = JSON.parse(response);
-    displayChecklist(data.checklist, data.items);
+  $.getJSON(API, data, function(response) {
+    displayChecklist(response.checklist, response.items);
+  })
+  .fail(function(response) {
+    displayAlert('There was an error with the API request');
   });
-
 }
 
 // display a checklist

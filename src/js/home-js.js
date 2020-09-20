@@ -661,9 +661,13 @@ function cancelItemEdit(btn) {
     itemID: itemID,
   }
 
-  $.get(API, data, function(response) {
-    var itemHtml = getChecklistItemHtml(JSON.parse(response));
+
+  $.getJSON(API, data, function(response) {
+    var itemHtml = getChecklistItemHtml(response);
     $(item).replaceWith(itemHtml);
+  }).fail(function(response) {
+    displayAlert('There was an error with the API response.');
+    return;
   });
 
 }

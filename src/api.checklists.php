@@ -361,7 +361,12 @@ else if (isset($_POST['function'], $_POST['itemID']) && $_POST['function'] == 'd
 else if (isset($_GET['function'], $_GET['itemID']) && $_GET['function'] == 'get-item') {
   $itemID = $_GET['itemID'];
   $item = getItem($itemID)->fetch(PDO::FETCH_ASSOC);
-  echo json_encode($item);
+
+  if (!is_array($item))
+    echo http_response_code(400);
+  else
+    echo json_encode($item);
+
   exit;
 }
 

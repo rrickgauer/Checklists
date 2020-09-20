@@ -913,14 +913,15 @@ function getSortedItemsByOriginal(checklistID) {
   $.getJSON(API, data, function(items) {
     var html = '';
 
-    for (var count = 0; count < items.length; count++) {
+    for (var count = 0; count < items.length; count++) 
       html += getChecklistItemHtml(items[count]);
-    }
-
+    
     var openChecklist = getOpenedChecklist(checklistID);
-
     $(openChecklist).find('.items').html(html);
   })
+  .fail(function(response) {
+    displayAlert('There was an error.');
+  });
 }
 
 // decide whether to mark all items complete or incomplete

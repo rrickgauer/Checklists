@@ -192,7 +192,7 @@ else if (isset($_POST['name'], $_POST['function'], $_SESSION['userID']) && $_POS
   $result      = insertChecklist($_SESSION['userID'], $name, $description);
 
   if ($result->rowCount() != 1) {
-    echo 'error';
+    http_response_code(400);
     exit;
   }
 

@@ -1101,11 +1101,6 @@ function addChecklist() {
 
   $.post(API, data, function(response) {
 
-    if (response == 'error') {
-      displayAlert('There was an error creating the checklist.');
-      return;
-    } 
-
     // reload checklist sidebar
     getChecklists();
 
@@ -1121,6 +1116,9 @@ function addChecklist() {
     
     // alert user of successful creation
     displayAlert('Checklist created');
+  })
+  .fail(function(response) {
+    displayAlert('There was an error creating the checklist.');
   });
 }
 

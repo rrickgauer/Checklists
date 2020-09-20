@@ -457,6 +457,9 @@ function updateChecklistDisplayData(checklistID) {
 
     // checklist name
     setChecklistName(checklistID, response.name);
+  })
+  .fail(function(response) {
+    displayAlert('There was an error with the API response');
   });
 }
 

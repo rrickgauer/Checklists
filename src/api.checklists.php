@@ -334,7 +334,7 @@ else if (isset($_POST['function'], $_POST['checklistID'], $_POST['content']) && 
 
   // return that there was an error
   if ($result->rowCount() != 1) {
-    echo 'error';
+    echo http_response_code(400);
     exit;
   }
 

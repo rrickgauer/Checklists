@@ -570,19 +570,19 @@ function addItem(addItemBtn) {
   }
 
   $.post(API, data, function(response) {
-    if (response == 'error') {
-      displayAlert('Error. There was an issue adding the item. Please try again.')
-      return;
-    }
-
     var item = JSON.parse(response);
 
     // append item to the checklist html
     var itemHtml = getChecklistItemHtml(item);
     $(checklist).find('.items').prepend(itemHtml);
+
+    // clear the input
     $(checklist).find('.item-input-new').val('');
 
     updateChecklistDisplayData(checklistID);
+  })
+  .fail(function(response) {
+    displayAlert('Error. There was an issue adding the item. Please try again.');
   });
 }
 

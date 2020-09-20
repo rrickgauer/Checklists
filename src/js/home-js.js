@@ -171,6 +171,9 @@ function getChecklists() {
     displayChecklists(checklists);
     rescanOpenChecklists();
     $('.sidebar .count-checklists').text(checklists.length);  // set checklist count
+  })
+  .fail(function(response) {
+    displayAlert('There was an error in the API request.');
   });
 }
 

@@ -694,12 +694,6 @@ function deleteChecklist(btn) {
 
   $.post(API, data, function(response) {
 
-    // exit if error occurred on the server side
-    if (response != 'success') {
-      displayAlert('There was an error. Checklist not deleted.');
-      return;
-    }
-
     // remove the open checklist
     $(checklist).remove();      
 
@@ -716,6 +710,9 @@ function deleteChecklist(btn) {
     if (!isAChecklistOpen())
       $("#no-open-checklists-img").show();
     
+  })
+  .fail(function(response) {
+    displayAlert('There was an error. Checklist not deleted.');
   });
 }
 

@@ -1243,12 +1243,6 @@ function deleteCompletedItems(btn) {
   };
 
   $.post(API, data, function(response) {
-    // error removing the completed items
-    if (response != 'success') {
-      displayAlert('There was an error removing the completed items.');
-      return;
-    }
-
     // remove the completed items from the checklist
     $(checklist).find('.item.item-completed').remove();
 
@@ -1256,6 +1250,9 @@ function deleteCompletedItems(btn) {
     updateChecklistDisplayData(checklistID);
 
     displayAlert('Items removed');
+  })
+  .fail(function(response) {
+    displayAlert('There was an error removing the completed items.');
   });
 }
 

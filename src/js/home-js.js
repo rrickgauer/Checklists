@@ -1037,6 +1037,9 @@ function copyItems() {
   $.post(API, data, function(response) {
     getSortedItemsByOriginal(destinationID);
     updateChecklistDisplayData(destinationID);
+  })
+  .fail(function(response) {
+    displayAlert('There was an error copying the items.');
   });
 
   $('#modal-copy-items').modal('hide');

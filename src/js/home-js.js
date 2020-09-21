@@ -496,10 +496,6 @@ function toggleItemComplete(checkbox) {
 
 
   $.post(API, data, function(response) {
-
-    if (response != 'success')
-      return;
-
     $(item).toggleClass('item-completed');
 
     // item is now completed
@@ -523,6 +519,9 @@ function toggleItemComplete(checkbox) {
 
     var checklistID = $(checkbox).closest('.card-checklist').attr('data-checklist-id');
     updateChecklistDisplayData(checklistID);
+  })
+  .fail(function(response) {
+    displayAlert('There was an error');
   });
 } 
 

@@ -959,7 +959,9 @@ function incompleteAllItems(checklistID) {
     function: 'incomplete-all-items',
   };
 
-  $.post(API, data);
+  $.post(API, data).fail(function(response) {
+    displayAlert('There was an error incompleting the items.');
+  });
   setItemsCompleted(checklistID, false);
 }
 

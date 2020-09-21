@@ -1267,15 +1267,11 @@ function removeEmptyChecklists() {
   };
 
   $.post(API, data, function(response) {
-    if (response != 'success') {
-      displayAlert('There was an error. Checklists were not deleted.');
-      return;
-    } 
-
-    else {
-      getChecklists();  
-      $('.card-checklist .item-count .count:contains(0)').closest('.card-checklist').remove();
-      displayAlert('Empty checklists removed.');
-    }
+    getChecklists();  
+    $('.card-checklist .item-count .count:contains(0)').closest('.card-checklist').remove();
+    displayAlert('Empty checklists removed.');
+  })
+  .fail(function(response) {
+    displayAlert('There was an error. Checklists were not deleted.');
   });
 }

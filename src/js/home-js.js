@@ -640,19 +640,21 @@ function saveItemEdit(btn) {
   }
 
   $.post(API, data, function(response) {
-    if (response == 'success') {
-      var updatedItem = {
-        id: itemID,
-        content: newContent,
-        completed: completed,
-      }
-
-      var newHtml = getChecklistItemHtml(updatedItem);
-      $(item).replaceWith(newHtml);
-
-      // display alert
-      displayAlert('Item updated');
+    var updatedItem = {
+      id: itemID,
+      content: newContent,
+      completed: completed,
     }
+
+    var newHtml = getChecklistItemHtml(updatedItem);
+    $(item).replaceWith(newHtml);
+
+    // display alert
+    displayAlert('Item updated');
+    
+  })
+  .fail(function(response) {
+    displayAlert('There was an error.');
   });
 }
 
@@ -1261,7 +1263,6 @@ function deleteCompletedItems(btn) {
 // Possibly remove ones with all completed items        //
 //////////////////////////////////////////////////////////
 function removeEmptyChecklists() {
-
   var data = {
     function: "delete-empty-checklists",
   };

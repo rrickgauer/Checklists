@@ -762,11 +762,12 @@ function updateChecklist() {
   }
 
   $.post(API, data, function(response) {
-    if (response == 'success') {
-      updateChecklistDisplayData(checklistID);
-      $(modal).modal('hide');
-      displayAlert('Checklist updated');
-    }
+    updateChecklistDisplayData(checklistID);
+    $(modal).modal('hide');
+    displayAlert('Checklist updated');
+  })
+  .fail(function(response) {
+    displayAlert('There was an error');
   });
 }
 

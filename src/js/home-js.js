@@ -598,14 +598,12 @@ function deleteItem(btn) {
   }
 
   $.post(API, data, function(response) {
-    if (response != 'success') {
-      displayAlert('Error. There was an issue deleting the item. Please try again.')
-      return;
-    }
-
     $(item).remove();
     updateChecklistDisplayData(checklistID);
     displayAlert('Item was deleted');
+  })
+  .fail(function(response) {
+    displayAlert('Error. There was an issue deleting the item. Please try again.')
   });
 }
 

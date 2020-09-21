@@ -117,7 +117,7 @@ function determinePasswordUpdateMessage() {
 
           <?php determinePasswordUpdateMessage(); ?>
 
-          <form class="form-edit-password" method="post" action="api.checklists.php">
+          <form class="form-edit-password" id="form-edit-password" method="post" action="api.checklists.php">
             <!-- current password -->
             <div class="form-group">
               <label for="edit-password-current">Current password</label>
@@ -126,6 +126,7 @@ function determinePasswordUpdateMessage() {
                   <span class="input-group-text"><i class='bx bx-lock-alt'></i></span>
                 </div>
                 <input type="password" class="form-control" id="edit-password-current" name="edit-password-current" required>
+                <div class="invalid-feedback"></div>
               </div>
             </div>
 
@@ -136,7 +137,8 @@ function determinePasswordUpdateMessage() {
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i class='bx bx-lock-alt'></i></span>
                 </div>
-                <input type="password" class="form-control" id="edit-password-1" name="edit-password-1" required>
+                <input type="password" class="form-control edit-password" id="edit-password-1" name="edit-password-1" required>
+                <div class="invalid-feedback"></div>
               </div>
             </div>
 
@@ -148,11 +150,14 @@ function determinePasswordUpdateMessage() {
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i class='bx bx-lock-alt'></i></span>
                 </div>
-                <input type="password" class="form-control" id="edit-password-2" name="edit-password-2" required>
+                <input type="password" class="form-control edit-password" id="edit-password-2" name="edit-password-2" required>
+                <div class="invalid-feedback"></div>
               </div>
             </div>
 
-            <input type="submit" value="Update password" class="btn btn-primary">
+            <button type="button" class="btn btn-primary btn-update-password">Update password</button>
+
+            <!-- <input type="submit" value="Update password" class="btn btn-primary"> -->
           </form>
         </div>
         
@@ -172,5 +177,6 @@ function determinePasswordUpdateMessage() {
 
 
 <?php include('footer.php'); ?>
+<script src="js/settings-js.js"></script>
 </body>
 </html>

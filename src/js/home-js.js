@@ -171,6 +171,9 @@ function getChecklists() {
     displayChecklists(checklists);
     rescanOpenChecklists();
     $('.sidebar .count-checklists').text(checklists.length);  // set checklist count
+  })
+  .fail(function(response) {
+    displayAlert('There was an error in the API request.');
   });
 }
 
@@ -239,11 +242,12 @@ function getChecklist(checklistID) {
     checklistID: checklistID,
   };
 
-  $.get(API, data, function(response) {
-    var data = JSON.parse(response);
-    displayChecklist(data.checklist, data.items);
+  $.getJSON(API, data, function(response) {
+    displayChecklist(response.checklist, response.items);
+  })
+  .fail(function(response) {
+    displayAlert('There was an error with the API request');
   });
-
 }
 
 // display a checklist
@@ -453,6 +457,9 @@ function updateChecklistDisplayData(checklistID) {
 
     // checklist name
     setChecklistName(checklistID, response.name);
+  })
+  .fail(function(response) {
+    displayAlert('There was an error with the API response');
   });
 }
 
@@ -489,10 +496,6 @@ function toggleItemComplete(checkbox) {
 
 
   $.post(API, data, function(response) {
-
-    if (response != 'success')
-      return;
-
     $(item).toggleClass('item-completed');
 
     // item is now completed
@@ -516,6 +519,9 @@ function toggleItemComplete(checkbox) {
 
     var checklistID = $(checkbox).closest('.card-checklist').attr('data-checklist-id');
     updateChecklistDisplayData(checklistID);
+  })
+  .fail(function(response) {
+    displayAlert('There was an error');
   });
 } 
 
@@ -563,19 +569,19 @@ function addItem(addItemBtn) {
   }
 
   $.post(API, data, function(response) {
-    if (response == 'error') {
-      displayAlert('Error. There was an issue adding the item. Please try again.')
-      return;
-    }
-
     var item = JSON.parse(response);
 
     // append item to the checklist html
     var itemHtml = getChecklistItemHtml(item);
     $(checklist).find('.items').prepend(itemHtml);
+
+    // clear the input
     $(checklist).find('.item-input-new').val('');
 
     updateChecklistDisplayData(checklistID);
+  })
+  .fail(function(response) {
+    displayAlert('Error. There was an issue adding the item. Please try again.');
   });
 }
 
@@ -591,14 +597,12 @@ function deleteItem(btn) {
   }
 
   $.post(API, data, function(response) {
-    if (response != 'success') {
-      displayAlert('Error. There was an issue deleting the item. Please try again.')
-      return;
-    }
-
     $(item).remove();
     updateChecklistDisplayData(checklistID);
     displayAlert('Item was deleted');
+  })
+  .fail(function(response) {
+    displayAlert('Error. There was an issue deleting the item. Please try again.')
   });
 }
 
@@ -635,19 +639,21 @@ function saveItemEdit(btn) {
   }
 
   $.post(API, data, function(response) {
-    if (response == 'success') {
-      var updatedItem = {
-        id: itemID,
-        content: newContent,
-        completed: completed,
-      }
-
-      var newHtml = getChecklistItemHtml(updatedItem);
-      $(item).replaceWith(newHtml);
-
-      // display alert
-      displayAlert('Item updated');
+    var updatedItem = {
+      id: itemID,
+      content: newContent,
+      completed: completed,
     }
+
+    var newHtml = getChecklistItemHtml(updatedItem);
+    $(item).replaceWith(newHtml);
+
+    // display alert
+    displayAlert('Item updated');
+    
+  })
+  .fail(function(response) {
+    displayAlert('There was an error.');
   });
 }
 
@@ -661,9 +667,13 @@ function cancelItemEdit(btn) {
     itemID: itemID,
   }
 
-  $.get(API, data, function(response) {
-    var itemHtml = getChecklistItemHtml(JSON.parse(response));
+
+  $.getJSON(API, data, function(response) {
+    var itemHtml = getChecklistItemHtml(response);
     $(item).replaceWith(itemHtml);
+  }).fail(function(response) {
+    displayAlert('There was an error with the API response.');
+    return;
   });
 
 }
@@ -683,12 +693,6 @@ function deleteChecklist(btn) {
 
   $.post(API, data, function(response) {
 
-    // exit if error occurred on the server side
-    if (response != 'success') {
-      displayAlert('There was an error. Checklist not deleted.');
-      return;
-    }
-
     // remove the open checklist
     $(checklist).remove();      
 
@@ -705,6 +709,9 @@ function deleteChecklist(btn) {
     if (!isAChecklistOpen())
       $("#no-open-checklists-img").show();
     
+  })
+  .fail(function(response) {
+    displayAlert('There was an error. Checklist not deleted.');
   });
 }
 
@@ -734,6 +741,9 @@ function openEditChecklistModal(btn) {
 
     // show the modal
     $('#modal-edit-checklist').modal('show');
+  })
+  .fail(function(response) {
+    displayAlert('There was an error opening the checklist modal.');
   });
 }
 
@@ -752,11 +762,12 @@ function updateChecklist() {
   }
 
   $.post(API, data, function(response) {
-    if (response == 'success') {
-      updateChecklistDisplayData(checklistID);
-      $(modal).modal('hide');
-      displayAlert('Checklist updated');
-    }
+    updateChecklistDisplayData(checklistID);
+    $(modal).modal('hide');
+    displayAlert('Checklist updated');
+  })
+  .fail(function(response) {
+    displayAlert('There was an error');
   });
 }
 
@@ -905,14 +916,15 @@ function getSortedItemsByOriginal(checklistID) {
   $.getJSON(API, data, function(items) {
     var html = '';
 
-    for (var count = 0; count < items.length; count++) {
+    for (var count = 0; count < items.length; count++) 
       html += getChecklistItemHtml(items[count]);
-    }
-
+    
     var openChecklist = getOpenedChecklist(checklistID);
-
     $(openChecklist).find('.items').html(html);
   })
+  .fail(function(response) {
+    displayAlert('There was an error.');
+  });
 }
 
 // decide whether to mark all items complete or incomplete
@@ -934,7 +946,10 @@ function completeAllItems(checklistID) {
     function: 'complete-all-items',
   };
 
-  $.post(API, data);
+  $.post(API, data).fail(function(response) {
+    displayAlert('There was an error completing the items.');
+    return;
+  });
   setItemsCompleted(checklistID, true);
 }
 
@@ -946,7 +961,9 @@ function incompleteAllItems(checklistID) {
     function: 'incomplete-all-items',
   };
 
-  $.post(API, data);
+  $.post(API, data).fail(function(response) {
+    displayAlert('There was an error incompleting the items.');
+  });
   setItemsCompleted(checklistID, false);
 }
 
@@ -1019,6 +1036,9 @@ function copyItems() {
   $.post(API, data, function(response) {
     getSortedItemsByOriginal(destinationID);
     updateChecklistDisplayData(destinationID);
+  })
+  .fail(function(response) {
+    displayAlert('There was an error copying the items.');
   });
 
   $('#modal-copy-items').modal('hide');
@@ -1058,16 +1078,15 @@ function pasteItems() {
   };
 
   $.post(API, data, function(response) {
-    // dont do anything if there was an error
-    if (response != 'success')
-      return;
-
     getSortedItemsByOriginal(checklistID);    // reload the checklist items
     updateChecklistDisplayData(checklistID);  // update item counts
     $('#modal-paste-items').modal('hide');    // close the modal
     $('#paste-items-input').val('');          // clear the input
     displayAlert('Items added');              // display alert
     autosize.update($('textarea.autosize'));  // update textarea size
+  })
+  .fail(function(response) {
+    displayAlert('There was an error copying in the items.');
   });
 }
 
@@ -1086,11 +1105,6 @@ function addChecklist() {
 
   $.post(API, data, function(response) {
 
-    if (response == 'error') {
-      displayAlert('There was an error creating the checklist.');
-      return;
-    } 
-
     // reload checklist sidebar
     getChecklists();
 
@@ -1106,6 +1120,9 @@ function addChecklist() {
     
     // alert user of successful creation
     displayAlert('Checklist created');
+  })
+  .fail(function(response) {
+    displayAlert('There was an error creating the checklist.');
   });
 }
 
@@ -1169,6 +1186,9 @@ function exportChecklist() {
     // write the output to a new window
     var wnd = window.open("about:blank", "", "_blank");
     wnd.document.write(html);
+  })
+  .fail(function(response) {
+    displayAlert('There was an error in the API request');
   });
 
   // close the modal
@@ -1224,12 +1244,6 @@ function deleteCompletedItems(btn) {
   };
 
   $.post(API, data, function(response) {
-    // error removing the completed items
-    if (response != 'success') {
-      displayAlert('There was an error removing the completed items.');
-      return;
-    }
-
     // remove the completed items from the checklist
     $(checklist).find('.item.item-completed').remove();
 
@@ -1237,6 +1251,9 @@ function deleteCompletedItems(btn) {
     updateChecklistDisplayData(checklistID);
 
     displayAlert('Items removed');
+  })
+  .fail(function(response) {
+    displayAlert('There was an error removing the completed items.');
   });
 }
 
@@ -1246,21 +1263,16 @@ function deleteCompletedItems(btn) {
 // Possibly remove ones with all completed items        //
 //////////////////////////////////////////////////////////
 function removeEmptyChecklists() {
-
   var data = {
     function: "delete-empty-checklists",
   };
 
   $.post(API, data, function(response) {
-    if (response != 'success') {
-      displayAlert('There was an error. Checklists were not deleted.');
-      return;
-    } 
-
-    else {
-      getChecklists();  
-      $('.card-checklist .item-count .count:contains(0)').closest('.card-checklist').remove();
-      displayAlert('Empty checklists removed.');
-    }
+    getChecklists();  
+    $('.card-checklist .item-count .count:contains(0)').closest('.card-checklist').remove();
+    displayAlert('Empty checklists removed.');
+  })
+  .fail(function(response) {
+    displayAlert('There was an error. Checklists were not deleted.');
   });
 }

@@ -192,7 +192,7 @@ else if (isset($_POST['name'], $_POST['function'], $_SESSION['userID']) && $_POS
   $result      = insertChecklist($_SESSION['userID'], $name, $description);
 
   if ($result->rowCount() != 1) {
-    echo 'error';
+    http_response_code(400);
     exit;
   }
 
@@ -218,7 +218,11 @@ else if (isset($_POST['name'], $_POST['function'], $_SESSION['userID']) && $_POS
 else if (isset($_GET['function'], $_SESSION['userID']) && $_GET['function'] == 'get-checklists') {
   $userID = $_SESSION['userID'];
   $checklists = getChecklists($userID)->fetchAll(PDO::FETCH_ASSOC);
-  echo json_encode($checklists);
+
+  if (!is_array($checklists))
+    echo http_response_code(400);
+  else
+    echo json_encode($checklists);
   exit;
 }
 
@@ -234,7 +238,11 @@ else if (isset($_GET['function'], $_SESSION['userID']) && $_GET['function'] == '
 else if (isset($_GET['function'], $_GET['checklistID']) && $_GET['function'] == 'get-checklist') {
   $checklistID = $_GET['checklistID'];
   $checklist = getChecklist($checklistID)->fetch(PDO::FETCH_ASSOC);
-  echo json_encode($checklist);
+
+  if (!is_array($checklist))
+    echo http_response_code(400);
+  else
+    echo json_encode($checklist);
   exit;
 }
 
@@ -251,7 +259,11 @@ else if (isset($_GET['function'], $_GET['checklistID']) && $_GET['function'] == 
   $checklistID = $_GET['checklistID'];
   $checklist['checklist'] = getChecklist($checklistID)->fetch(PDO::FETCH_ASSOC);
   $checklist['items'] = getItems($checklistID)->fetchAll(PDO::FETCH_ASSOC);
-  echo json_encode($checklist);
+
+  if (!is_array($checklist))
+    echo http_response_code(400);
+  else
+    echo json_encode($checklist);
   exit;
 }
 
@@ -267,7 +279,13 @@ else if (isset($_GET['function'], $_GET['checklistID']) && $_GET['function'] == 
 else if (isset($_GET['function'], $_GET['id']) && $_GET['function'] == 'get-checklist-items') {
   $checklistID = $_GET['id'];
   $items = getItems($checklistID)->fetchAll(PDO::FETCH_ASSOC);
-  echo json_encode($items);
+
+  // error handling
+  if (!is_array($items))
+    echo http_response_code(400);
+  else 
+    echo json_encode($items);
+
   exit;
 }
 
@@ -292,7 +310,7 @@ else if (isset($_POST['function'], $_POST['itemID'], $_POST['content'], $_POST['
   if ($result->rowCount() == 1)
     echo 'success';
   else
-    echo 'failure';
+    echo http_response_code(400);
 
   exit;
 
@@ -316,7 +334,7 @@ else if (isset($_POST['function'], $_POST['checklistID'], $_POST['content']) && 
 
   // return that there was an error
   if ($result->rowCount() != 1) {
-    echo 'error';
+    echo http_response_code(400);
     exit;
   }
 
@@ -344,7 +362,7 @@ else if (isset($_POST['function'], $_POST['itemID']) && $_POST['function'] == 'd
   if ($result->rowCount() == 1)
     echo 'success';
   else
-    echo 'error';
+    echo http_response_code(400);
 
   exit;
 }
@@ -361,7 +379,12 @@ else if (isset($_POST['function'], $_POST['itemID']) && $_POST['function'] == 'd
 else if (isset($_GET['function'], $_GET['itemID']) && $_GET['function'] == 'get-item') {
   $itemID = $_GET['itemID'];
   $item = getItem($itemID)->fetch(PDO::FETCH_ASSOC);
-  echo json_encode($item);
+
+  if (!is_array($item))
+    echo http_response_code(400);
+  else
+    echo json_encode($item);
+
   exit;
 }
 
@@ -382,7 +405,7 @@ else if (isset($_POST['function'], $_POST['checklistID']) && $_POST['function'] 
   if ($result->rowCount() == 1)
     echo 'success';
   else 
-    echo 'error';
+    echo http_response_code(400);
 
   exit;
 }
@@ -408,7 +431,7 @@ else if (isset($_POST['function'], $_POST['checklistID'], $_POST['name']) && $_P
   if ($result->rowCount() == 1)
     echo 'success';
   else
-    echo 'error';
+    echo http_response_code(400);
 
   exit;
 }
@@ -494,6 +517,10 @@ else if (isset($_SESSION['userID'], $_POST['edit-password-current'], $_POST['edi
 else if (isset($_POST['function'], $_POST['checklistID']) && $_POST['function'] == 'complete-all-items') {
   $checklistID = $_POST['checklistID'];
   $result = updateAllItemsComplete($checklistID);
+
+  if ($result->rowCount() < 0)
+    echo http_response_code(400);
+
   exit;
 }
 
@@ -532,7 +559,7 @@ else if (isset($_POST['function'], $_POST['sourceID'], $_POST['destinationID']) 
   if ($result->rowCount() >= 0)
     echo 'success';
   else
-    echo 'error';
+    echo http_response_code(400);
   exit;
 }
 
@@ -555,7 +582,7 @@ else if (isset($_POST['function'], $_POST['checklistID'], $_POST['items']) && $_
   if ($result->rowCount() == count($newItems)) 
     echo 'success';
    else
-    echo 'error';
+    echo http_response_code(400);
 
   exit;
 }
@@ -576,7 +603,7 @@ else if (isset($_POST['function'], $_POST['checklistID']) && $_POST['function'] 
   if ($result->rowCount() >= 0)
     echo 'success';
   else
-    echo 'error';
+    echo http_response_code(400);
 
   exit;
 }
@@ -597,7 +624,7 @@ else if (isset($_POST['function'], $_SESSION['userID']) && $_POST['function'] ==
   if ($result->rowCount() >= 0)
     echo 'success';
   else
-    echo 'error';
+    echo http_response_code(400);
 
   exit;
 }

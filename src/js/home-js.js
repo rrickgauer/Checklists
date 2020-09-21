@@ -949,7 +949,10 @@ function completeAllItems(checklistID) {
     function: 'complete-all-items',
   };
 
-  $.post(API, data);
+  $.post(API, data).fail(function(response) {
+    displayAlert('There was an error completing the items.');
+    return;
+  });
   setItemsCompleted(checklistID, true);
 }
 

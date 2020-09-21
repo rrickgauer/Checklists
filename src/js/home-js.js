@@ -1076,16 +1076,15 @@ function pasteItems() {
   };
 
   $.post(API, data, function(response) {
-    // dont do anything if there was an error
-    if (response != 'success')
-      return;
-
     getSortedItemsByOriginal(checklistID);    // reload the checklist items
     updateChecklistDisplayData(checklistID);  // update item counts
     $('#modal-paste-items').modal('hide');    // close the modal
     $('#paste-items-input').val('');          // clear the input
     displayAlert('Items added');              // display alert
     autosize.update($('textarea.autosize'));  // update textarea size
+  })
+  .fail(function(response) {
+    displayAlert('There was an error copying in the items.');
   });
 }
 

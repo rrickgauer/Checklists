@@ -39,7 +39,7 @@ $user = getUser($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);  // get user data
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i class='bx bx-lock-alt'></i></span>
                 </div>
-                <input type="password" class="form-control" id="reset-password-1" name="reset-password-1" required>
+                <input type="password" class="form-control" id="reset-password-1" name="reset-password-1" minlength="8" required>
               </div>
             </div>
 
@@ -50,7 +50,7 @@ $user = getUser($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);  // get user data
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i class='bx bx-lock-alt'></i></span>
                 </div>
-                <input type="password" class="form-control" id="reset-password-2" name="reset-password-2" required>
+                <input type="password" class="form-control" id="reset-password-2" name="reset-password-2" minlength="8" required>
               </div>
             </div>
 

@@ -137,7 +137,7 @@ function determinePasswordUpdateMessage() {
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i class='bx bx-lock-alt'></i></span>
                 </div>
-                <input type="password" class="form-control edit-password" id="edit-password-1" name="edit-password-1" required>
+                <input type="password" class="form-control edit-password" id="edit-password-1" name="edit-password-1" minlength="8" required>
                 <div class="invalid-feedback"></div>
               </div>
             </div>
@@ -150,7 +150,7 @@ function determinePasswordUpdateMessage() {
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i class='bx bx-lock-alt'></i></span>
                 </div>
-                <input type="password" class="form-control edit-password" id="edit-password-2" name="edit-password-2" required>
+                <input type="password" class="form-control edit-password" id="edit-password-2" name="edit-password-2" minlength="8" required>
                 <div class="invalid-feedback"></div>
               </div>
             </div>

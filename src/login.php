@@ -138,7 +138,7 @@ function displayLoginErrorMessage() {
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class='bx bx-lock-alt'></i></span>
                   </div>
-                  <input type="password" class="form-control" name="new-password" required>
+                  <input type="password" class="form-control" name="new-password" minlength="8" required>
                 </div>
               </div>
 

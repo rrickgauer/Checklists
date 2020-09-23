@@ -275,6 +275,10 @@ a.btn-danger {
 }
 
 @media screen and (max-width: 768px) {
+  #checklists-open {
+    scroll-snap-type: x mandatory;
+  }
+
   .sidebar {
     min-width: 250px;
     max-width: 250px;
@@ -289,7 +293,8 @@ a.btn-danger {
 
   .card-checklist {
     margin-top: 20px !important;
-    width: 370px;
+    width: 345px;
+    scroll-snap-align: center;
   }
   .card-checklist .card-footer {
     flex-wrap: wrap;

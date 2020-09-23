@@ -359,6 +359,14 @@ a.btn-danger {
     width: 345px;
     scroll-snap-align: center;
 
+    .card-checklist-name {
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      width: 215px;
+      display: block;
+      overflow: hidden;
+    }
+
     .card-footer {
       flex-wrap: wrap;
 

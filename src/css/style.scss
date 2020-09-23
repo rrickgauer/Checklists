@@ -227,6 +227,10 @@ a.btn-danger {
   background: #888;
 }
 
+::-webkit-scrollbar:horizontal {
+  height: 7px;
+}
+
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #555;

@@ -168,6 +168,10 @@ a.btn-danger {
     .item-content {
       font-size: 1.1em;
       overflow-wrap: anywhere;
+
+      &:hover {
+        cursor: pointer;
+      }
     }
 
     .edit-content {

@@ -609,7 +609,7 @@ else if (isset($_POST['function'], $_POST['checklistID']) && $_POST['function'] 
 }
 
 /*********************************************************
- * Remove all of a user's checklists witjh 0 items
+ * Remove all of a user's checklists with 0 items
  * 
  * post
  * 
@@ -628,5 +628,46 @@ else if (isset($_POST['function'], $_SESSION['userID']) && $_POST['function'] ==
 
   exit;
 }
+
+/*********************************************************
+ * Set the show_completed_items flag to y
+ * 
+ * post
+ * 
+ * function = show-completed-items
+ * 
+***********************************************************/
+else if (isset($_POST['function'], $_POST['checklistID']) && $_POST['function'] == 'show-completed-items') {
+  $checklistID = $_POST['checklistID'];
+  $result = updateChecklistShowCompletedItems($checklistID, 'y');
+
+  // if anything other than 1 item was updated there was an error
+  if ($result->rowCount() != 1)
+    echo http_response_code(400);
+
+  exit;
+}
+
+/*********************************************************
+ * Set the show_completed_items flag to n
+ * 
+ * post
+ * 
+ * function = hide-completed-items
+ * 
+***********************************************************/
+else if (isset($_POST['function'], $_POST['checklistID']) && $_POST['function'] == 'hide-completed-items') {
+  $checklistID = $_POST['checklistID'];
+  $result = updateChecklistShowCompletedItems($checklistID, 'n');
+
+  // if anything other than 1 item was updated there was an error
+  if ($result->rowCount() != 1)
+    echo http_response_code(400);
+
+  exit;
+}
+
+
+
 
 ?>

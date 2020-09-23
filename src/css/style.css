@@ -139,6 +139,9 @@ a.btn-danger {
   font-size: 1.1em;
   overflow-wrap: anywhere;
 }
+#checklists-open .item .item-content:hover {
+  cursor: pointer;
+}
 #checklists-open .item .edit-content {
   display: flex;
   justify-content: space-between;

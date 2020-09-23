@@ -113,6 +113,8 @@ a.btn-danger {
 }
 #checklists-open .item .right {
   margin-left: 10px;
+  display: flex;
+  flex-wrap: nowrap;
 }
 #checklists-open .item .right .bx:hover {
   cursor: pointer;

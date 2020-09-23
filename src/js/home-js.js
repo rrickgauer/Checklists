@@ -280,7 +280,7 @@ function getChecklistHeaderHtml(checklist) {
   // name
   html += '<div class="card-header-name">';
   html += '<div class="d-flex align-items-center">';
-  html += '<h4>' + checklist.name + '</h4>';
+  html += '<h4 class="card-checklist-name">' + checklist.name + '</h4>';
 
   // toggle details button
   html += '<button class="btn btn-sm btn-xs btn-toggle-description" type="button"><i class="bx bx-menu-alt-left"></i></button>';

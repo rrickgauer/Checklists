@@ -20,12 +20,13 @@ CREATE TABLE Users (
 ) engine = innodb;
 
 CREATE TABLE Checklists (
-    id            INT UNSIGNED NOT NULL UNIQUE AUTO_INCREMENT,
-    user_id       INT UNSIGNED NOT NULL,
-    name          CHAR(100) NOT NULL,
-    description   VARCHAR(250),
-    date_created  DATETIME NOT NULL,
-    date_modified DATETIME,
+    id                   INT UNSIGNED NOT NULL UNIQUE AUTO_INCREMENT,
+    user_id              INT UNSIGNED NOT NULL,
+    name                 CHAR(100) NOT NULL,
+    description          VARCHAR(250),
+    date_created         DATETIME NOT NULL,
+    date_modified        DATETIME,
+    show_completed_items ENUM('y', 'n') NOT NULL DEFAULT 'y',
     PRIMARY KEY (id),
     FOREIGN KEY (user_id) REFERENCES Users(id) ON UPDATE CASCADE ON DELETE CASCADE
 ) engine=innodb;

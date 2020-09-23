@@ -263,6 +263,12 @@ function displayChecklist(checklist, items) {
 
   // add to the open checklists dom
   $("#checklists-open").append(html);
+
+  // hide the completed items if the show_completed_items flag is set to n
+  if (checklist.show_completed_items == 'n') {
+    var openChecklist = getOpenedChecklist(checklist.id);
+    $(openChecklist).find('.item-completed').hide();
+  }
 }
 
 // generates and returns a checklist header html
@@ -380,9 +386,14 @@ function getChecklistHeaderHtml(checklist) {
   **********/
   html += '<div class="toolbar d-flex justify-content-between">';
 
-  // show done
+  // show completed items
   html += '<div class="form-check form-check-inline">';
-  html += '<input class="form-check-input show-completed-items" type="checkbox" checked>';
+
+  if (checklist.show_completed_items == 'y')
+    html += '<input class="form-check-input show-completed-items" type="checkbox" checked>';
+  else
+    html += '<input class="form-check-input show-completed-items" type="checkbox">';
+
   html += '<label class="form-check-label">Show done</label>';
   html += '</div>';
 

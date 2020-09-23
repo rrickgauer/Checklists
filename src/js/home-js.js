@@ -860,13 +860,40 @@ function sortChecklsitsByDateNewest() {
   $(".sidebar .list-group").html(checklists);
 }
 
-// show/hide a checklist's completed items 
+//////////////////////////////////////////////
+// Show-hide a checklist's completed items  //
+//////////////////////////////////////////////
 function toggleCompletedItems(checkbox) {
-  var items = $(checkbox).closest('.card-checklist').find('.item.item-completed');
+  var items       = $(checkbox).closest('.card-checklist').find('.item.item-completed');
+  var checklistID = $(checkbox).closest('.card-checklist').attr('data-checklist-id');
 
-  if (checkbox.checked)
+  // show completed items
+  if (checkbox.checked) {
     $(items).show();
+
+    var data = {
+      function: "show-completed-items",
+      checklistID: checklistID,
+    }
+
+    // update the database field
+    $.post(API, data).fail(function(response) {
+      displayAlert('There was an error showing the completed items.');
+    });
+
+  }
+
+  // hide completed items
   else {
+    var data = {
+      function: "hide-completed-items",
+      checklistID: checklistID,
+    }
+
+    // update the database field
+    $.post(API, data).fail(function(response) {
+      displayAlert('There was an error hiding the completed items.');
+    });
 
     // exit animation
     $(items).addClass(ITEM_ANIMATION_EXIT);
@@ -876,7 +903,6 @@ function toggleCompletedItems(checkbox) {
       $(items).hide(); 
       $(items).removeClass(ITEM_ANIMATION_EXIT);
     }, 500);
-
   }
 }
 

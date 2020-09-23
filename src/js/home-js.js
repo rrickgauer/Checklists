@@ -263,6 +263,12 @@ function displayChecklist(checklist, items) {
 
   // add to the open checklists dom
   $("#checklists-open").append(html);
+
+  // hide the completed items if the show_completed_items flag is set to n
+  if (checklist.show_completed_items == 'n') {
+    var openChecklist = getOpenedChecklist(checklist.id);
+    $(openChecklist).find('.item-completed').hide();
+  }
 }
 
 // generates and returns a checklist header html
@@ -380,9 +386,14 @@ function getChecklistHeaderHtml(checklist) {
   **********/
   html += '<div class="toolbar d-flex justify-content-between">';
 
-  // show done
+  // show completed items
   html += '<div class="form-check form-check-inline">';
-  html += '<input class="form-check-input show-completed-items" type="checkbox" checked>';
+
+  if (checklist.show_completed_items == 'y')
+    html += '<input class="form-check-input show-completed-items" type="checkbox" checked>';
+  else
+    html += '<input class="form-check-input show-completed-items" type="checkbox">';
+
   html += '<label class="form-check-label">Show done</label>';
   html += '</div>';
 
@@ -860,13 +871,40 @@ function sortChecklsitsByDateNewest() {
   $(".sidebar .list-group").html(checklists);
 }
 
-// show/hide a checklist's completed items 
+//////////////////////////////////////////////
+// Show-hide a checklist's completed items  //
+//////////////////////////////////////////////
 function toggleCompletedItems(checkbox) {
-  var items = $(checkbox).closest('.card-checklist').find('.item.item-completed');
+  var items       = $(checkbox).closest('.card-checklist').find('.item.item-completed');
+  var checklistID = $(checkbox).closest('.card-checklist').attr('data-checklist-id');
 
-  if (checkbox.checked)
+  // show completed items
+  if (checkbox.checked) {
     $(items).show();
+
+    var data = {
+      function: "show-completed-items",
+      checklistID: checklistID,
+    }
+
+    // update the database field
+    $.post(API, data).fail(function(response) {
+      displayAlert('There was an error showing the completed items.');
+    });
+
+  }
+
+  // hide completed items
   else {
+    var data = {
+      function: "hide-completed-items",
+      checklistID: checklistID,
+    }
+
+    // update the database field
+    $.post(API, data).fail(function(response) {
+      displayAlert('There was an error hiding the completed items.');
+    });
 
     // exit animation
     $(items).addClass(ITEM_ANIMATION_EXIT);
@@ -876,7 +914,6 @@ function toggleCompletedItems(checkbox) {
       $(items).hide(); 
       $(items).removeClass(ITEM_ANIMATION_EXIT);
     }, 500);
-
   }
 }
 

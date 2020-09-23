@@ -370,6 +370,7 @@ function getChecklists($userID) {
  * id
  * name
  * description
+ * show_completed_items
  * date_created
  * date_created_display
  * date_modified_minutes
@@ -384,6 +385,7 @@ function getChecklist($checklistID) {
   SELECT Checklists.id,
          Checklists.name,
          Checklists.description,
+         Checklists.show_completed_items,
          Checklists.date_created,
          DATE_FORMAT(Checklists.date_created, "%c/%d/%Y") AS date_created_display,
          (SELECT ABS(TIMESTAMPDIFF(minute, NOW(), Items.date_modified))
@@ -826,7 +828,9 @@ function insertItemList($checklistID, $items) {
   return $sql;
 }
 
-// generate the insert statement for insertItemList()
+////////////////////////////////////////////////////////
+// Generate the insert statement for insertItemList() //
+////////////////////////////////////////////////////////
 function getInsertItemListSqlStatement($checklistID, $items) {
   $stmt     = '';
   $numItems = count($items);
@@ -846,6 +850,26 @@ function getInsertItemListSqlStatement($checklistID, $items) {
 }
 
 
+function updateChecklistShowCompletedItems($checklistID, $showCompletedItems = 'y') {
+  $stmt = '
+  UPDATE Checklists
+  SET    show_completed_items = :showCompletedItems
+  WHERE  id = :checklistID';
+
+  $sql = dbConnect()->prepare($stmt);
+
+  // filter and bind checklistID
+  $checklistID = filter_var($checklistID, FILTER_SANITIZE_NUMBER_INT);
+  $sql->bindParam(':checklistID', $checklistID, PDO::PARAM_INT);
+
+  // filter and bind show completed items
+  $showCompletedItems = filter_var($showCompletedItems, FILTER_SANITIZE_STRING);
+  $sql->bindParam(':showCompletedItems', $showCompletedItems, PDO::PARAM_STR);
+
+  $sql->execute();
+
+  return $sql;
+}
 
 
 

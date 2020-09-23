@@ -370,6 +370,7 @@ function getChecklists($userID) {
  * id
  * name
  * description
+ * show_completed_items
  * date_created
  * date_created_display
  * date_modified_minutes
@@ -384,6 +385,7 @@ function getChecklist($checklistID) {
   SELECT Checklists.id,
          Checklists.name,
          Checklists.description,
+         Checklists.show_completed_items,
          Checklists.date_created,
          DATE_FORMAT(Checklists.date_created, "%c/%d/%Y") AS date_created_display,
          (SELECT ABS(TIMESTAMPDIFF(minute, NOW(), Items.date_modified))

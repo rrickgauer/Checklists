@@ -207,9 +207,9 @@ function getChecklistSidebarHtml(checklist) {
   return html;
 }
 
-//////////////////////////////////////////////////////////////
-// Adds the active class to any open checklists on the boar //
-//////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////
+// Adds the active class to any open checklists on the board //
+///////////////////////////////////////////////////////////////
 function rescanOpenChecklists() {
   var openChecklists = $('.card-checklist');
 
@@ -559,9 +559,11 @@ function getOpenedChecklist(checklistID) {
   return checklist = $('.card-checklist[data-checklist-id="' + checklistID + '"]');
 }
 
-// bool that says if there are any open checklists
+/////////////////////////////////////////////////////
+// Bool that says if there are any open checklists //
+/////////////////////////////////////////////////////
 function isAChecklistOpen() {
-  if ($('.list-group-item-checklist.active').length == 0)
+  if ($('.card-checklist').length == 0 && $('.list-group-item-checklist.active').length == 0)
     return false;
   else
     return true;

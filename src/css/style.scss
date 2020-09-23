@@ -136,6 +136,8 @@ a.btn-danger {
 
     .right {
       margin-left: 10px;
+      display: flex;
+      flex-wrap: nowrap;
 
       .bx:hover {
         cursor: pointer;
@@ -198,10 +200,8 @@ a.btn-danger {
 
   }
 
-  .item-completed {
-    .item-content {
-      text-decoration: line-through;
-    }
+  .item-completed .item-content { 
+    text-decoration: line-through;
   }
 }
 

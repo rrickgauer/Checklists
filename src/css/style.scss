@@ -22,6 +22,15 @@ h1.custom-font {
   font-size: 4em;
 }
 
+.login-github-link {
+  display: flex;
+  align-items: center;
+
+  span {
+    padding-bottom: 3px;
+  }
+}
+
 .wrapper {
   display: flex;
 }

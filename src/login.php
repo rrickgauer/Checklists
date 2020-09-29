@@ -204,6 +204,16 @@ function displayLoginErrorMessage() {
       </div>
 
     </div>
+
+
+    <div class="d-flex justify-content-around mt-5">
+      <a href="https://github.com/rrickgauer/Checklists" target="_blank" class="login-github-link">
+        <span>View the source code&nbsp;</span>
+        <i class='bx bx-link-external'></i></a>
+    </div>
+
+
+
   </div>
 
 

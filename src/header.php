@@ -21,5 +21,8 @@
 <!-- jquery toast -->
 <link rel="stylesheet" type="text/css" href="css/jquery.toast.min.css" />
 
+<!-- google font -->
+<link href="https://fonts.googleapis.com/css2?family=Catamaran:wght@800&display=swap" rel="stylesheet" />
+
 <!-- personal css -->
 <link rel="stylesheet" type="text/css" href="css/style.css" />

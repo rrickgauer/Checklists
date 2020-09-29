@@ -632,6 +632,9 @@ function editItem(btn) {
   html += '<button type="button" class="btn btn-sm btn-danger btn-edit-item-cancel">Cancel</button>';
   html += '</div></div>';
   $(item).html(html);
+
+  // set the width of the input to fully show the value
+  autosizeInput(document.querySelector('.edit-content-input'), { minWidth: true });
 }
 
 // saves an edit to an item

@@ -12,3 +12,6 @@
 
 <!-- autosize: https://github.com/jackmoore/autosize -->
 <script src="js/autosize.min.js"></script>
+
+<!-- autosize text input -->
+<script src="js/autosize-input.js"></script>

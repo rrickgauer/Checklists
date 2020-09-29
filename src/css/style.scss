@@ -14,6 +14,14 @@ body {
   background-color: white;
 }
 
+.custom-font {
+  font-family: 'Catamaran', sans-serif;
+}
+
+h1.custom-font {
+  font-size: 4em;
+}
+
 .wrapper {
   display: flex;
 }

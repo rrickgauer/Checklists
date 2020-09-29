@@ -64,7 +64,7 @@ function displayLoginErrorMessage() {
     
     <div class="mt-big"></div>
 
-    <h1 class="text-center mt-big">Checklists</h1>
+    <h1 class="text-center mt-big custom-font mb-5">Checklists</h1>
     
 
     <?php 
